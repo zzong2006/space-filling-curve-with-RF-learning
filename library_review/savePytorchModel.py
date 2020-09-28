@@ -3,6 +3,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 import torch.optim as optim
 
+
 # Define model
 class TheModelClass(nn.Module):
     def __init__(self):
@@ -23,6 +24,7 @@ class TheModelClass(nn.Module):
         x = self.fc3(x)
         return x
 
+
 class Net(nn.Module):
     def __init__(self, input_size, hidden_size, output_size, learning_rate):
         super(Net, self).__init__()
@@ -33,11 +35,13 @@ class Net(nn.Module):
     def forward(self, input, his=None):
         output, (hidden, cell) = self.a(input, his)
         # output [ :, -1, : ] 와 hidden 값은 같다.
-        output = output[ :, -1, :]
+        output = output[:, -1, :]
         # output = torch.relu(output)
         output = self.b(output)
 
         return output, (hidden, cell)
+
+
 # Initialize model
 model = TheModelClass()
 model2 = Net(16, 50, 8, 1e-4)
@@ -61,6 +65,6 @@ for param_tensor in loaded_model.state_dict():
 torch.save(model2.state_dict(), './model.pt')
 
 # Print optimizer's state_dict
-print("Optimizer's state_dict:")
+print("The state_dict of the optimizers :")
 for var_name in optimizer.state_dict():
     print(var_name, "\t", optimizer.state_dict()[var_name])

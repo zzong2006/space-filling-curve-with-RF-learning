@@ -15,7 +15,6 @@ def test_env():
     env = envs.Runner(env)
     replay = ch.ExperienceReplay()
 
-
     ob = env.reset()
     print(ob)
     env.step(0)

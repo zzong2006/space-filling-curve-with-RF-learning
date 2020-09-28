@@ -1,8 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
   <component name="ChangeListManager">
-    <list default="true" id="764d8ad5-a26e-4d98-a098-77a218712d28" name="Default Changelist" comment="" />
-    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <list default="true" id="764d8ad5-a26e-4d98-a098-77a218712d28" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/other.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/deployment.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/deployment.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/rlCurve.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/rlCurve.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Curve.py" beforeDir="false" afterPath="$PROJECT_DIR$/Curve.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Q-Network.py" beforeDir="false" afterPath="$PROJECT_DIR$/reinforcement_learning_review/Q-Network.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cherry_LSTM_ActorCritic.py" beforeDir="false" afterPath="$PROJECT_DIR$/reinforcement_learning_review/cherry_LSTM_ActorCritic.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/savePytorchModel.py" beforeDir="false" afterPath="$PROJECT_DIR$/library_review/savePytorchModel.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tensorflow_curve/rl_curve.py" beforeDir="false" afterPath="$PROJECT_DIR$/tensorflow_curve/rl_curve.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tensorflow_rl.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test001.py" beforeDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -22,9 +57,6 @@
     <expand />
     <select />
   </component>
-  <component name="FavoritesManager">
-    <favorites_list name="rlCurve" />
-  </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
@@ -34,22 +66,43 @@
       </list>
     </option>
   </component>
+  <component name="FlaskConsoleOptions" custom-start-script="import sys&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;from flask.cli import ScriptInfo&#10;locals().update(ScriptInfo(create_app=None).load_app().make_shell_context())&#10;print(&quot;Python %s on %s\nApp: %s [%s]\nInstance: %s&quot; % (sys.version, sys.platform, app.import_name, app.env, app.instance_path))">
+    <envs>
+      <env key="FLASK_APP" value="app" />
+    </envs>
+    <option name="myCustomStartScript" value="import sys&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;from flask.cli import ScriptInfo&#10;locals().update(ScriptInfo(create_app=None).load_app().make_shell_context())&#10;print(&quot;Python %s on %s\nApp: %s [%s]\nInstance: %s&quot; % (sys.version, sys.platform, app.import_name, app.env, app.instance_path))" />
+    <option name="myEnvs">
+      <map>
+        <entry key="FLASK_APP" value="app" />
+      </map>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="JupyterTrust" id="94ab6b38-3be6-4d8a-8346-534e3e7041e7" />
   <component name="ProjectId" id="1Rgctp7dhX5cRCBa1mH3KviNaAe" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
   <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="true" />
     <property name="WebServerToolWindowPanel.toolwindow.highlight.mappings" value="true" />
     <property name="WebServerToolWindowPanel.toolwindow.highlight.symlinks" value="true" />
     <property name="WebServerToolWindowPanel.toolwindow.show.date" value="false" />
     <property name="WebServerToolWindowPanel.toolwindow.show.permissions" value="false" />
     <property name="WebServerToolWindowPanel.toolwindow.show.size" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../SM_with_ID" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
     <property name="node.js.path.for.package.tslint" value="project" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
-    <property name="settings.editor.selected.configurable" value="org.jetbrains.plugins.notebooks.jupyter.connections.configuration.JupyterServerConfigurable" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="PyConsoleOptionsProvider">
     <option name="myPythonConsoleState">
@@ -59,50 +112,18 @@
     </option>
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\woosung\PycharmProjects\rlCurve" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\zzong\PycharmProjects\space-filling-curve-with-RF-learning\library_review" />
+      <recent name="C:\Users\zzong\PycharmProjects\space-filling-curve-with-RF-learning\reinforcement_learning_review" />
       <recent name="C:\Users\woosung\PycharmProjects\rlCurve\gym-foo\gym_foo" />
       <recent name="C:\Users\woosung\PycharmProjects\rlCurve" />
     </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\woosung\PycharmProjects\rlCurve" />
+    </key>
   </component>
-  <component name="RunDashboard">
-    <option name="ruleStates">
-      <list>
-        <RuleState>
-          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
-        </RuleState>
-        <RuleState>
-          <option name="name" value="StatusDashboardGroupingRule" />
-        </RuleState>
-      </list>
-    </option>
-  </component>
-  <component name="RunManager" selected="Python.main(Meta_Learning_ActorCritic)">
-    <configuration name="cherry_ppo" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <module name="rlCurve" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/tensorflow_curve" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/tensorflow_curve/cherry_ppo.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="main(LSTM_ActorCritic)" type="PythonConfigurationType" factoryName="Python" temporary="true">
+  <component name="RunManager" selected="Python.test001">
+    <configuration name="Curve" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="rlCurve" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -115,16 +136,16 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/main(LSTM_ActorCritic).py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Curve.py" />
       <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="SHOW_COMMAND_LINE" value="true" />
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
       <option name="REDIRECT_INPUT" value="false" />
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="main(LSTM_ActorCritic)_rev1" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration name="Q-Network" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="rlCurve" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -137,9 +158,31 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/main(LSTM_ActorCritic)_rev1.py" />
+      <option name="SCRIPT_NAME" value="C:\Users\zzong\PycharmProjects\space-filling-curve-with-RF-learning\reinforcement_learning_review\Q-Network.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration default="true" type="PythonConfigurationType" factoryName="Python">
+      <module name="rlCurve" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="true" />
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
       <option name="REDIRECT_INPUT" value="false" />
@@ -168,7 +211,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="savePytorchModel" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration name="test001" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="rlCurve" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -181,25 +224,43 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/savePytorchModel.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/test001.py" />
       <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="SHOW_COMMAND_LINE" value="true" />
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
       <option name="REDIRECT_INPUT" value="false" />
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="pytest for rl_curve.test_env" type="tests" factoryName="py.test" temporary="true" nameIsGenerated="true">
+      <module name="rlCurve" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/tensorflow_curve" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="_new_keywords" value="&quot;&quot;" />
+      <option name="_new_parameters" value="&quot;&quot;" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;rl_curve.test_env&quot;" />
+      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
+      <method v="2" />
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.test001" />
+        <item itemvalue="Python tests.pytest for rl_curve.test_env" />
+        <item itemvalue="Python.Curve" />
+        <item itemvalue="Python.Q-Network" />
         <item itemvalue="Python.main(Meta_Learning_ActorCritic)" />
-        <item itemvalue="Python.main(LSTM_ActorCritic)" />
-        <item itemvalue="Python.savePytorchModel" />
-        <item itemvalue="Python.main(LSTM_ActorCritic)_rev1" />
-        <item itemvalue="Python.cherry_ppo" />
       </list>
     </recent_temporary>
   </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -210,20 +271,67 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1570092396720</updated>
+      <workItem from="1601278427132" duration="3872000" />
+      <workItem from="1601286712543" duration="202000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="1" />
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="552" y="161" key="#Plugins" timestamp="1601278462594">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="552" y="161" key="#Plugins/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1601278462594" />
+    <state x="730" y="303" key="FileChooserDialogImpl" timestamp="1601280865376">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="730" y="303" key="FileChooserDialogImpl/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1601280865376" />
+    <state width="1877" height="196" key="GridCell.Tab.0.bottom" timestamp="1601286682161">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="196" key="GridCell.Tab.0.bottom/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1601286682161" />
+    <state width="1877" height="196" key="GridCell.Tab.0.center" timestamp="1601286682161">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="196" key="GridCell.Tab.0.center/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1601286682161" />
+    <state width="1877" height="196" key="GridCell.Tab.0.left" timestamp="1601286682161">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="196" key="GridCell.Tab.0.left/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1601286682161" />
+    <state width="1877" height="196" key="GridCell.Tab.0.right" timestamp="1601286682161">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1877" height="196" key="GridCell.Tab.0.right/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1601286682161" />
+    <state x="461" y="164" key="SettingsEditor" timestamp="1601280917379">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="461" y="164" key="SettingsEditor/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1601280917379" />
+    <state x="846" y="250" width="446" height="604" key="ftp.server.browser" timestamp="1601280902895">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="846" y="250" width="446" height="604" key="ftp.server.browser/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1601280902895" />
+    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1601278472826">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1601278472826" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/test001.py</url>
-          <line>123</line>
-          <option name="timeStamp" value="25" />
-        </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/main(PPO).py</url>
           <line>114</line>
@@ -287,16 +395,6 @@
           <option name="timeStamp" value="110" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/savePytorchModel.py</url>
-          <line>44</line>
-          <option name="timeStamp" value="111" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/savePytorchModel.py</url>
-          <line>46</line>
-          <option name="timeStamp" value="112" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/main(Meta_Learning_ActorCritic).py</url>
           <line>228</line>
           <option name="timeStamp" value="117" />
@@ -317,22 +415,7 @@
     </watches-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/rlCurve$main_LSTM_ActorCritic__rev1.coverage" NAME="main(LSTM_ActorCritic)_rev1 Coverage Results" MODIFIED="1571379995858" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/rlCurve$tensorflow_rl.coverage" NAME="tensorflow_rl Coverage Results" MODIFIED="1570275097451" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/rlCurve$cherry_ppo.coverage" NAME="cherry_ppo Coverage Results" MODIFIED="1571378979217" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tensorflow_curve" />
-    <SUITE FILE_PATH="coverage/rlCurve$linear_svm.coverage" NAME="linear_svm Coverage Results" MODIFIED="1570276530681" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="/" />
-    <SUITE FILE_PATH="coverage/rlCurve$cherry_LSTM_ActorCritic.coverage" NAME="cherry_LSTM_ActorCritic Coverage Results" MODIFIED="1570718060348" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/rlCurve$rl_curve_2.coverage" NAME="rl_curve_2 Coverage Results" MODIFIED="1571326608117" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tensorflow_curve" />
-    <SUITE FILE_PATH="coverage/rlCurve$rl_curve.coverage" NAME="rl_curve Coverage Results" MODIFIED="1571326309151" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tensorflow_curve" />
-    <SUITE FILE_PATH="coverage/rlCurve$curve_env.coverage" NAME="curve_env Coverage Results" MODIFIED="1571326501385" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/gym-curve/gym_curve/envs" />
-    <SUITE FILE_PATH="coverage/rlCurve$main_PPO_.coverage" NAME="main(PPO) Coverage Results" MODIFIED="1570179427003" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/rlCurve$rl_basic_2.coverage" NAME="rl_basic_2 Coverage Results" MODIFIED="1570896519407" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tensorflow_curve" />
-    <SUITE FILE_PATH="coverage/rlCurve$test001.coverage" NAME="test001 Coverage Results" MODIFIED="1570118956684" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/rlCurve$main_LSTM_ActorCritic_.coverage" NAME="main(LSTM_ActorCritic) Coverage Results" MODIFIED="1571514254171" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/rlCurve$pytest_in_custom_lstms_py.coverage" NAME="pytest in custom_lstms.py Coverage Results" MODIFIED="1570199666286" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/rlCurve$main_Meta_Learning_ActorCritic_.coverage" NAME="main(Meta_Learning_ActorCritic) Coverage Results" MODIFIED="1571585087103" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/rlCurve$savePytorchModel.coverage" NAME="savePytorchModel Coverage Results" MODIFIED="1571479565599" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/rlCurve$Lab11_SVM.coverage" NAME="Lab11-SVM Coverage Results" MODIFIED="1570277000487" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="/" />
-    <SUITE FILE_PATH="coverage/rlCurve$rl_basic.coverage" NAME="rl_basic Coverage Results" MODIFIED="1570724406623" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tensorflow_curve" />
+    <SUITE FILE_PATH="coverage/space_filling_curve_with_RF_learning$pytest_for_rl_curve_test_env.coverage" NAME="pytest for rl_curve.test_env Coverage Results" MODIFIED="1601286589596" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tensorflow_curve" />
+    <SUITE FILE_PATH="coverage/space_filling_curve_with_RF_learning$Q_Network.coverage" NAME="Q-Network Coverage Results" MODIFIED="1601286027337" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>
