@@ -3,11 +3,10 @@ import torch
 import torch.nn as nn
 from torch import optim
 from torch.autograd import Variable
-import torch.nn.functional as F
 import numpy as np
 import matplotlib.pyplot as plt
-from LSTM_PolicyGradient_rev1 import Net
-from LSTM_Sample import init_weights
+from reinforcement_learning_review.LSTM_PolicyGradient_rev1 import Net
+from reinforcement_learning_review.LSTM_Sample import init_weights
 from itertools import combinations
 
 '''

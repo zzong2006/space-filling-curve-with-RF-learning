@@ -1,14 +1,9 @@
 import sys
 from itertools import combinations
-from collections import OrderedDict
-import copy
 
 import torch
 import torch.nn as nn
 from torch import optim
-from torch.distributions import Categorical
-import torch.nn.functional as F
-from LSTM_Sample import init_weights
 from utils import *
 
 import cherry as ch

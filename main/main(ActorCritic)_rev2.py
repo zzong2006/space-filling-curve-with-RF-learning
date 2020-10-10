@@ -7,7 +7,6 @@ import numpy as np
 import matplotlib.pyplot as plt
 from itertools import combinations
 from torch.utils.tensorboard import SummaryWriter
-from torchviz import make_dot
 import matplotlib.image as mpimg
 from torch.autograd import Variable
 from multiprocessing import Process, Pipe

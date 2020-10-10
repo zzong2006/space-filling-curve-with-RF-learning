@@ -1,3 +1,10 @@
+"""
+Function for drawing space filling curve
+Two SFC supported
+1. Hilbert Curve class : HilbertCurve
+2. Z Curve class : ZCurve
+"""
+
 import numpy as np
 
 
@@ -46,11 +53,6 @@ class HilbertCurve():
         N = 2 ** (order * self.DIM)
         coordinates = list(map(self.d2xy, [N] * (N), range(N)))
         return coordinates
-
-
-'''
-생성된 SFC와 비교하기 위한 Z curve
-'''
 
 
 class ZCurve():

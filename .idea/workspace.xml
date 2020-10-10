@@ -23,20 +23,35 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="764d8ad5-a26e-4d98-a098-77a218712d28" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/other.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/deployment.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/deployment.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/rlCurve.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/rlCurve.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ActorCritic.py" beforeDir="false" afterPath="$PROJECT_DIR$/reinforcement_learning_review/ActorCritic_cartpole.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Curve.py" beforeDir="false" afterPath="$PROJECT_DIR$/Curve.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Q-Network.py" beforeDir="false" afterPath="$PROJECT_DIR$/reinforcement_learning_review/Q-Network.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LSTM_PPO.py" beforeDir="false" afterPath="$PROJECT_DIR$/reinforcement_learning_review/LSTM_PPO.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LSTM_PolicyGradient.py" beforeDir="false" afterPath="$PROJECT_DIR$/reinforcement_learning_review/LSTM_PolicyGradient.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LSTM_PolicyGradient_rev1.py" beforeDir="false" afterPath="$PROJECT_DIR$/reinforcement_learning_review/LSTM_PolicyGradient_rev1.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LSTM_Sample.py" beforeDir="false" afterPath="$PROJECT_DIR$/reinforcement_learning_review/LSTM_Sample.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PPO_continuous.py" beforeDir="false" afterPath="$PROJECT_DIR$/reinforcement_learning_review/PPO_continuous.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cherry_LSTM_ActorCritic.py" beforeDir="false" afterPath="$PROJECT_DIR$/reinforcement_learning_review/cherry_LSTM_ActorCritic.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/savePytorchModel.py" beforeDir="false" afterPath="$PROJECT_DIR$/library_review/savePytorchModel.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensorflow_curve/rl_curve.py" beforeDir="false" afterPath="$PROJECT_DIR$/tensorflow_curve/rl_curve.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tensorflow_rl.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test001.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RLSanityTest-2.py" beforeDir="false" afterPath="$PROJECT_DIR$/reinforcement_learning_review/RLSanityTest-2.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RLSanityTest-3.py" beforeDir="false" afterPath="$PROJECT_DIR$/reinforcement_learning_review/RLSanityTest-3.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RLSanityTest.py" beforeDir="false" afterPath="$PROJECT_DIR$/reinforcement_learning_review/RLSanityTest.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Simple-Policy.py" beforeDir="false" afterPath="$PROJECT_DIR$/reinforcement_learning_review/Simple-Policy.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Vanilla-Policy.py" beforeDir="false" afterPath="$PROJECT_DIR$/reinforcement_learning_review/Vanilla-Policy.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/custom_lstms.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logger.py" beforeDir="false" afterPath="$PROJECT_DIR$/tensorflow_curve/logger.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main(ActorCritic).py" beforeDir="false" afterPath="$PROJECT_DIR$/main/main(ActorCritic).py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main(ActorCritic)_rev1.py" beforeDir="false" afterPath="$PROJECT_DIR$/main/main(ActorCritic)_rev1.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main(ActorCritic)_rev2.py" beforeDir="false" afterPath="$PROJECT_DIR$/main/main(ActorCritic)_rev2.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main(ActorCritic)_rev_holiday.py" beforeDir="false" afterPath="$PROJECT_DIR$/main/main(ActorCritic)_rev_holiday.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main(LSTM_ActorCritic).py" beforeDir="false" afterPath="$PROJECT_DIR$/main/main(LSTM_ActorCritic).py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main(LSTM_ActorCritic)_rev1.py" beforeDir="false" afterPath="$PROJECT_DIR$/main/main(LSTM_ActorCritic)_rev1.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main(LSTM_PolicyGradient).py" beforeDir="false" afterPath="$PROJECT_DIR$/main/main(LSTM_PolicyGradient).py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main(Meta_Learning_ActorCritic).py" beforeDir="false" afterPath="$PROJECT_DIR$/main/main(Meta_Learning_ActorCritic).py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main(PPO).py" beforeDir="false" afterPath="$PROJECT_DIR$/main/main(PPO).py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main(PolicyGradient)_rev1.py" beforeDir="false" afterPath="$PROJECT_DIR$/main/main(PolicyGradient)_rev1.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main(PolicyGradient)_rev2.py" beforeDir="false" afterPath="$PROJECT_DIR$/main/main(PolicyGradient)_rev2.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main(PolicyGradient)_rev3.py" beforeDir="false" afterPath="$PROJECT_DIR$/main/main(PolicyGradient)_rev3.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main(QLearning).py" beforeDir="false" afterPath="$PROJECT_DIR$/main/main(QLearning).py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -80,7 +95,7 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="JupyterTrust" id="94ab6b38-3be6-4d8a-8346-534e3e7041e7" />
+  <component name="JupyterTrust" id="1c99ef78-8452-42e5-92f0-8aefccf54ce9" />
   <component name="ProjectId" id="1Rgctp7dhX5cRCBa1mH3KviNaAe" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -112,14 +127,15 @@
     </option>
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\zzong\PycharmProjects\space-filling-curve-with-RF-learning\library_review" />
-      <recent name="C:\Users\zzong\PycharmProjects\space-filling-curve-with-RF-learning\reinforcement_learning_review" />
-      <recent name="C:\Users\woosung\PycharmProjects\rlCurve\gym-foo\gym_foo" />
-      <recent name="C:\Users\woosung\PycharmProjects\rlCurve" />
-    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\woosung\PycharmProjects\rlCurve" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\zzong\PycharmProjects\space-filling-curve-with-RF-learning\reinforcement_learning_review" />
+      <recent name="C:\Users\zzong\PycharmProjects\space-filling-curve-with-RF-learning\main" />
+      <recent name="C:\Users\zzong\PycharmProjects\space-filling-curve-with-RF-learning\tensorflow_curve" />
+      <recent name="C:\Users\zzong\PycharmProjects\space-filling-curve-with-RF-learning\library_review" />
+      <recent name="C:\Users\woosung\PycharmProjects\rlCurve\gym-foo\gym_foo" />
     </key>
   </component>
   <component name="RunManager" selected="Python.test001">
@@ -202,7 +218,7 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/main(Meta_Learning_ActorCritic).py" />
+      <option name="SCRIPT_NAME" value="C:\Users\zzong\PycharmProjects\space-filling-curve-with-RF-learning\main\main(Meta_Learning_ActorCritic).py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -273,6 +289,7 @@
       <updated>1570092396720</updated>
       <workItem from="1601278427132" duration="3872000" />
       <workItem from="1601286712543" duration="202000" />
+      <workItem from="1602328956643" duration="4295000" />
     </task>
     <servers />
   </component>
@@ -296,9 +313,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="552" y="161" key="#Plugins/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1601278462594" />
-    <state x="730" y="303" key="FileChooserDialogImpl" timestamp="1601280865376">
-      <screen x="0" y="0" width="1920" height="1040" />
+    <state x="-669" y="102" key="FileChooserDialogImpl" timestamp="1602329208369">
+      <screen x="-1080" y="-446" width="1080" height="1880" />
     </state>
+    <state x="-669" y="102" key="FileChooserDialogImpl/0.0.1920.1040/-1080.-446.1080.1880@-1080.-446.1080.1880" timestamp="1602329208369" />
     <state x="730" y="303" key="FileChooserDialogImpl/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1601280865376" />
     <state width="1877" height="196" key="GridCell.Tab.0.bottom" timestamp="1601286682161">
       <screen x="0" y="0" width="1920" height="1040" />
@@ -320,35 +338,41 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="461" y="164" key="SettingsEditor/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1601280917379" />
-    <state x="846" y="250" width="446" height="604" key="ftp.server.browser" timestamp="1601280902895">
-      <screen x="0" y="0" width="1920" height="1040" />
+    <state x="-832" y="226" width="587" height="536" key="find.popup" timestamp="1602330045168">
+      <screen x="-1080" y="-446" width="1080" height="1880" />
     </state>
+    <state x="-832" y="226" width="587" height="536" key="find.popup/0.0.1920.1040/-1080.-446.1080.1880@-1080.-446.1080.1880" timestamp="1602330045168" />
+    <state x="-604" y="6" width="446" height="604" key="ftp.server.browser" timestamp="1602329546519">
+      <screen x="-1080" y="-446" width="1080" height="1880" />
+    </state>
+    <state x="-604" y="6" key="ftp.server.browser/0.0.1920.1040/-1080.-446.1080.1880@-1080.-446.1080.1880" timestamp="1602329546519" />
     <state x="846" y="250" width="446" height="604" key="ftp.server.browser/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1601280902895" />
-    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1601278472826">
-      <screen x="0" y="0" width="1920" height="1040" />
+    <state x="-730" y="-39" width="378" height="1226" key="search.everywhere.popup" timestamp="1602329210682">
+      <screen x="-1080" y="-446" width="1080" height="1880" />
     </state>
+    <state x="-730" y="-39" width="378" height="1226" key="search.everywhere.popup/0.0.1920.1040/-1080.-446.1080.1880@-1080.-446.1080.1880" timestamp="1602329210682" />
     <state x="623" y="225" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1601278472826" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/main(PPO).py</url>
+          <url>file://$PROJECT_DIR$/main/main(PPO).py</url>
           <line>114</line>
           <option name="timeStamp" value="33" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/main(PPO).py</url>
+          <url>file://$PROJECT_DIR$/main/main(PPO).py</url>
           <line>109</line>
           <option name="timeStamp" value="36" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/main(PPO).py</url>
+          <url>file://$PROJECT_DIR$/main/main(PPO).py</url>
           <line>128</line>
           <option name="timeStamp" value="40" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/main(PPO).py</url>
+          <url>file://$PROJECT_DIR$/main/main(PPO).py</url>
           <line>136</line>
           <option name="timeStamp" value="42" />
         </line-breakpoint>
@@ -358,7 +382,7 @@
           <option name="timeStamp" value="49" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/main(LSTM_ActorCritic).py</url>
+          <url>file://$PROJECT_DIR$/main/main(LSTM_ActorCritic).py</url>
           <line>217</line>
           <option name="timeStamp" value="57" />
         </line-breakpoint>
@@ -374,33 +398,33 @@
           <option name="timeStamp" value="65" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/main(LSTM_ActorCritic)_rev1.py</url>
+          <url>file://$PROJECT_DIR$/main/main(LSTM_ActorCritic)_rev1.py</url>
           <line>259</line>
           <option name="timeStamp" value="95" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/main(LSTM_ActorCritic)_rev1.py</url>
+          <url>file://$PROJECT_DIR$/main/main(LSTM_ActorCritic)_rev1.py</url>
           <line>327</line>
           <option name="timeStamp" value="106" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <condition expression="continuous=True" language="Python" />
-          <url>file://$PROJECT_DIR$/main(LSTM_ActorCritic)_rev1.py</url>
+          <url>file://$PROJECT_DIR$/main/main(LSTM_ActorCritic)_rev1.py</url>
           <line>368</line>
           <option name="timeStamp" value="108" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/main(LSTM_ActorCritic)_rev1.py</url>
+          <url>file://$PROJECT_DIR$/main/main(LSTM_ActorCritic)_rev1.py</url>
           <line>320</line>
           <option name="timeStamp" value="110" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/main(Meta_Learning_ActorCritic).py</url>
+          <url>file://$PROJECT_DIR$/main/main(Meta_Learning_ActorCritic).py</url>
           <line>228</line>
           <option name="timeStamp" value="117" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/main(Meta_Learning_ActorCritic).py</url>
+          <url>file://$PROJECT_DIR$/main/main(Meta_Learning_ActorCritic).py</url>
           <line>109</line>
           <option name="timeStamp" value="118" />
         </line-breakpoint>

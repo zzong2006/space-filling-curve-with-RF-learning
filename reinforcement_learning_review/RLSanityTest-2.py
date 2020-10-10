@@ -13,10 +13,6 @@ from multiprocessing import Process, Pipe
     Actor-Critic CartPole Version
 '''
 
-try:
-    xrange = xrange
-except:
-    xrange = range
 
 NOTEBOOK = False
 TEST = False
@@ -47,7 +43,7 @@ def discount_rewards(r):
     """ take 1D float array of rewards and compute discounted reward """
     discounted_r = np.zeros_like(r)
     running_add = 0
-    for t in reversed(xrange(0, r.size)):
+    for t in reversed(range(0, r.size)):
         running_add = running_add * GAMMA + r[t]
         discounted_r[t] = running_add
 

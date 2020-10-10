@@ -3,11 +3,9 @@ import torch.nn as nn
 import sys
 import numpy as np
 import torch.optim as optim
-import torch.nn.functional as F
-from torch.distributions import Categorical
 from torch.autograd import Variable
 from collections import deque
-from LSTM_Sample import init_weights, save_model, init_weights_from_loaded
+from reinforcement_learning_review.LSTM_Sample import init_weights, save_model, init_weights_from_loaded
 
 '''
     1 ~ NUM 까지의 숫자를 중복없이 모두 선택하는 RL Model
