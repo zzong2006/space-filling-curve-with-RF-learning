@@ -7,10 +7,6 @@ import numpy as np
 import matplotlib.pyplot as plt
 from itertools import combinations
 from torch.utils.tensorboard import SummaryWriter
-from torchviz import make_dot
-import matplotlib.image as mpimg
-from torch.autograd import Variable
-from multiprocessing import Process, Pipe
 
 '''
     * 완전 다른 action
@@ -26,7 +22,8 @@ DEVICE = "cuda:0" if torch.cuda.is_available() else "cpu"
 DIM = 2
 ORDER = 2
 side = np.sqrt(2 ** (ORDER * DIM)).astype('int')
-INDEX_TO_COORDINATE = np.array(list(map(lambda x: list([x // side, x % side]), np.arange(0, 2 ** (ORDER * DIM)))), dtype='int')
+INDEX_TO_COORDINATE = np.array(list(map(lambda x: list([x // side, x % side]), np.arange(0, 2 ** (ORDER * DIM)))),
+                               dtype='int')
 DATA_SIZE = 5
 MAX_EPISODE = 20000
 INIT_CURVE = 'hilbert'
@@ -41,8 +38,6 @@ OFFSET = 0  # 기존 state 좌표 값 외에 신경망에 추가로 들어갈 �
 NUM_PROCESSES = 1  # 동시 실행 환경 수
 KERNEL_SIZE = [-1, -1, 2, 3, 4, 4]  # ORDER 가 2 일때 부터 시작하는 kernel size
 NUM_CHANNEL = 9
-
-
 
 
 class HilbertCurve():
@@ -97,7 +92,7 @@ class HilbertCurve():
 '''
 
 
-class ZCurve():
+class ZCurve:
     def __init__(self, dimension):
         self.DIM = dimension
 
@@ -434,23 +429,25 @@ class Env():
     def isValid(self, selected_cells, action):
         if selected_cells.shape[0] > 0:
             check = (selected_cells == action)
-        else :
+        else:
             return True
 
         for i in range(DIM):
-            if i == 0 : c = check[:, i]
-            else : c *= check[:, i]
+            if i == 0:
+                c = check[:, i]
+            else:
+                c *= check[:, i]
 
-        if c.sum() > 0 :
+        if c.sum() > 0:
             return False
-        else :
+        else:
             return True
 
     def run(self):
         # Writer will output to ./runs/ directory by default
         writer = SummaryWriter()
 
-        order_np = list(np.empty((0,DIM), dtype='int') for _ in range(NUM_PROCESSES))
+        order_np = list(np.empty((0, DIM), dtype='int') for _ in range(NUM_PROCESSES))
         obs_np = np.zeros(
             [NUM_PROCESSES, NUM_CHANNEL, self.num_observation_space, self.num_observation_space])  # Numpy 배열
         reward_np = np.zeros([NUM_PROCESSES, 1])  # Numpy 배열
@@ -490,9 +487,9 @@ class Env():
                 # 한 단계를 실행
                 for i in range(NUM_PROCESSES):
                     if order_np[i].shape[0] != 2 ** (ORDER * DIM) - 1:
-                        if self.isValid(order_np[i], INDEX_TO_COORDINATE[action[i].item()]) :
+                        if self.isValid(order_np[i], INDEX_TO_COORDINATE[action[i].item()]):
                             reward_np[i] = 0
-                        else :
+                        else:
                             print('실패!', order_np[i], INDEX_TO_COORDINATE[action[i].item()])
                             reward_np[i] = - (2 ** (DIM * ORDER) / (order_np[i].shape[0]))
                             done_np[i] = True
@@ -502,9 +499,9 @@ class Env():
                                            init_state=init_obs)
 
                     if not done_np[i].item():
-                        order_np[i] = np.vstack( (order_np[i], INDEX_TO_COORDINATE[action[i]].reshape(1,-1)))
+                        order_np[i] = np.vstack((order_np[i], INDEX_TO_COORDINATE[action[i]].reshape(1, -1)))
 
-                    if order_np[i].shape[0] == 2 ** (ORDER * DIM) :
+                    if order_np[i].shape[0] == 2 ** (ORDER * DIM):
                         o_num[i] = self.analyzer.l2NormLocality(np.concatenate((avail, order_np[i]), axis=1))
                         print('완주!', order_np, INDEX_TO_COORDINATE[action[i]], o_num[i])
                         if min_o_num[i] < o_num[i]:
@@ -514,7 +511,7 @@ class Env():
                         else:
                             reward_np[i] = 100
                             min_o_num[i] = o_num[i]
-                        order_np[i] = np.empty((0,DIM), dtype='int')
+                        order_np[i] = np.empty((0, DIM), dtype='int')
 
                     # o_num[i] = self.analyzer.l2NormLocality(obs_next.copy())
                     # if i == 0:
@@ -536,9 +533,9 @@ class Env():
                 rollouts.insert(current_obs, action.data, reward, masks)
 
                 for i in range(NUM_PROCESSES):
-                    if done_np[i] :
+                    if done_np[i]:
                         done_np[i] = False
-                        order_np[i] = np.empty((0,DIM), dtype='int')
+                        order_np[i] = np.empty((0, DIM), dtype='int')
 
                 # advanced 학습 for문 끝
             # advanced 학습 대상 중 마지막 단계의 상태로 예측하는 상태가치를 계산

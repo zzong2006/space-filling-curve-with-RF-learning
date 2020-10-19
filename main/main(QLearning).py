@@ -6,6 +6,7 @@ from torch import optim
 import torch.nn.functional as F
 import numpy as np
 import matplotlib.pyplot as plt
+from curve import HilbertCurve, ZCurve
 
 CUDA = torch.cuda.is_available()
 DIM = 2
@@ -17,29 +18,34 @@ MAX_STEP = 200
 CAPACITY = 10000
 GAMMA = 0.99  # 시간 할인율
 
-Transition = namedtuple('Trainsition', ('state','action','next_state','reward'))
+Transition = namedtuple('Trainsition', ('state', 'action', 'next_state', 'reward'))
 
 '''
 초기 SFC 생성 함수 : 이후 class 형태로 바꿀거임
 '''
+
+
 def build_init_state(order, dimension):
-    whole_index = np.arange(2**(order * dimension))
-    side = np.sqrt(2**(order * dimension)).astype(int)
-    coords = np.array(list(map(lambda x :list([x // (side) , x % (side)]), whole_index)))
+    whole_index = np.arange(2 ** (order * dimension))
+    side = np.sqrt(2 ** (order * dimension)).astype(int)
+    coords = np.array(list(map(lambda x: list([x // (side), x % (side)]), whole_index)))
     return coords
+
 
 '''
 Grid (회색 선) 을 그릴 좌표를 써주는 함수
 Arg : pmax 값
 '''
+
+
 def getGridCooridnates(num):
-    grid_ticks = np.array([0, 2**num])
+    grid_ticks = np.array([0, 2 ** num])
     for _ in range(num):
         temp = np.array([])
-        for i,k in zip(grid_ticks[0::1], grid_ticks[1::1]):
-            if i == 0 :
+        for i, k in zip(grid_ticks[0::1], grid_ticks[1::1]):
+            if i == 0:
                 temp = np.append(temp, i)
-            temp = np.append(temp, (i+k)/2)
+            temp = np.append(temp, (i + k) / 2)
             temp = np.append(temp, k)
         grid_ticks = temp
     grid_ticks -= 0.5
@@ -73,21 +79,24 @@ def showPoints(data, ax=None, index=True):
     print(f'pmax: {pmax}')
     # return ax
 
-def showlineByIndexorder(data, ax = None, index = True):
+
+def showlineByIndexorder(data, ax=None, index=True):
     ax = ax or plt.gca()
-    if index :
-        coordinates = np.array(list(map(lambda x :list([x // (side) , x % (side)]), data)))
-    else :
+    if index:
+        coordinates = np.array(list(map(lambda x: list([x // (side), x % (side)]), data)))
+    else:
         coordinates = data
     # print(sample_data)
-    ax.plot(coordinates[:,0],coordinates[:,1], linewidth=1, linestyle='--')
+    ax.plot(coordinates[:, 0], coordinates[:, 1], linewidth=1, linestyle='--')
+
 
 def changeIndexOrder(indexD, a, b):
     a = a.cpu().numpy().astype(int).item()
     b = b.cpu().numpy().astype(int).item()
-    #set_trace()
+    # set_trace()
     indexD[[a, b]] = indexD[[b, a]]
     return indexD
+
 
 '''
 SFC를 만드는 모델
@@ -97,6 +106,8 @@ Notice
 2. gru는 하나만 만들고 for문으로 돌려서 쓰는것 (아무래도 2번만 필요하니까 range(2) 일 듯)
 3. embedding vector를 사용할지 말지 고민하고 있음 (각 데이터의 좌표로 유사성을 파악하기)
 '''
+
+
 class SFCNet(nn.Module):
     def __init__(self, input_size, hidden_size, output_size):
         super(SFCNet, self).__init__()
@@ -150,7 +161,8 @@ class ReplayMemory:
     def __len__(self):
         return len(self.memory)
 
-class Brain():
+
+class Brain:
     def __init__(self, num_states, num_actions, hidden_size=None):
         self.num_actions = num_actions
 
@@ -220,6 +232,7 @@ class Brain():
             action = torch.from_numpy(action).type(torch.cuda.LongTensor)
         return action
 
+
 class Agent():
     def __init__(self, num_states, num_actions):
         self.brain = Brain(num_states, num_actions)
@@ -234,109 +247,6 @@ class Agent():
     def memorize(self, state, action, state_next, reward):
         self.brain.memory.push(state, action, state_next, reward)
 
-class HilbertCurve():
-    def __init__(self, dimension):
-        self.DIM = dimension
-
-    # convert (x,y) to d
-    def xy2d(self, n, x, y):
-        d = 0
-        s = n // 2
-        while s > 0:
-            rx = ((x & s) > 0);
-            ry = ((y & s) > 0);
-            d += s * s * ((3 * rx) ^ ry)
-            x, y = self.rot(n, x, y, rx, ry)
-            s = s // 2
-        return d
-
-    def d2xy(self, n, d):
-        t = d
-        x = 0
-        y = 0
-        s = 1
-        while s < n:
-            rx = 1 & t // 2
-            ry = 1 & t ^ rx
-            x, y = self.rot(s, x, y, rx, ry)
-            x += s * rx
-            y += s * ry
-            t = t // 4
-            s *= 2
-        return [x, y]
-
-    def rot(self, n, x, y, rx, ry):
-        if (ry == 0):
-            if rx == 1:
-                x = n - 1 - x
-                y = n - 1 - y
-            t = x
-            x = y
-            y = t
-        return x, y
-
-    def getCoords(self, order):
-        N = 2 ** (order * self.DIM)
-        coordinates = list(map(self.d2xy, [N] * (N), range(N)))
-        return coordinates
-
-'''
-생성된 SFC와 비교하기 위한 Z curve
-'''
-class ZCurve():
-    def __init__(self, dimension):
-        self.DIM = dimension
-
-    def part1by1(self, n):
-        n &= 0x0000ffff
-        n = (n | (n << 8)) & 0x00FF00FF
-        n = (n | (n << 4)) & 0x0F0F0F0F
-        n = (n | (n << 2)) & 0x33333333
-        n = (n | (n << 1)) & 0x55555555
-        return n
-
-    def unpart1by1(self, n):
-        n &= 0x55555555
-        n = (n ^ (n >> 1)) & 0x33333333
-        n = (n ^ (n >> 2)) & 0x0f0f0f0f
-        n = (n ^ (n >> 4)) & 0x00ff00ff
-        n = (n ^ (n >> 8)) & 0x0000ffff
-        return n
-
-    def part1by2(self, n):
-        n &= 0x000003ff
-        n = (n ^ (n << 16)) & 0xff0000ff
-        n = (n ^ (n << 8)) & 0x0300f00f
-        n = (n ^ (n << 4)) & 0x030c30c3
-        n = (n ^ (n << 2)) & 0x09249249
-        return n
-
-    def unpart1by2(self, n):
-        n &= 0x09249249
-        n = (n ^ (n >> 2)) & 0x030c30c3
-        n = (n ^ (n >> 4)) & 0x0300f00f
-        n = (n ^ (n >> 8)) & 0xff0000ff
-        n = (n ^ (n >> 16)) & 0x000003ff
-        return n
-
-    # 2 차원 데이터를 비트로 변환하고 교차 생성
-    def interleave2(self, x, y):
-        return self.part1by1(x) | (self.part1by1(y) << 1)
-
-    # 교차 생성된 값을 2 차원 데이터로 되돌림
-    def deinterleave2(self, n):
-        return [self.unpart1by1(n), self.unpart1by1(n >> 1)]
-
-    def interleave3(self, x, y, z):
-        return self.part1by2(x) | (self.part1by2(y) << 1) | (self.part1by2(z) << 2)
-
-    def deinterleave3(self, n):
-        return [self.unpart1by2(n), self.unpart1by2(n >> 1), self.unpart1by2(n >> 2)]
-
-    def getCoords(self, order):
-        # temp_index = np.arange(2**(self.DIM * order))
-        coords = list(map(self.deinterleave2, np.arange(2 ** (self.DIM * order))))
-        return np.array(coords)
 
 
 class Env():
@@ -458,6 +368,8 @@ class Env():
 '''
 주어진 state와 활성화된 데이터를 기반으로 reward를 위한 metrics을 측정하는 함수
 '''
+
+
 class Analyzer():
     def __init__(self, index, init_state, order, dim):
         self.iteration = order
@@ -517,20 +429,19 @@ n 의 최댓값은 DIM * ORDER - 1
 
 np.random.seed(150)
 
-side = np.sqrt(2**(ORDER*DIM))
-scan_index = np.random.choice(2**(DIM*ORDER),size=DATA_SIZE,replace=False)
-sample_data = np.array(list(map(lambda x :list([x // (side) , x % (side)]), scan_index)))
+side = np.sqrt(2 ** (ORDER * DIM))
+scan_index = np.random.choice(2 ** (DIM * ORDER), size=DATA_SIZE, replace=False)
+sample_data = np.array(list(map(lambda x: list([x // (side), x % (side)]), scan_index)))
 # print(sample_index,'\n', sample_data)
-fig, ax = plt.subplots(1, figsize=(10,10))
+fig, ax = plt.subplots(1, figsize=(10, 10))
 showPoints(sample_data, ax, index=False)
-grid_index = np.arange(2**(ORDER*DIM))
+grid_index = np.arange(2 ** (ORDER * DIM))
 showlineByIndexorder(grid_index, ax)
 
 plt.show()
 
-
-env = Env(data_index = scan_index, order = ORDER, max_episode = 1000, max_step = 1000, dimension= DIM)
+env = Env(data_index=scan_index, order=ORDER, max_episode=1000, max_step=1000, dimension=DIM)
 result_state = env.run()
 
-rl_anal = Analyzer(scan_index, build_init_state(ORDER, DIM), order = ORDER, dim = DIM)
+rl_anal = Analyzer(scan_index, build_init_state(ORDER, DIM), order=ORDER, dim=DIM)
 rl_anal.sumEachPath(result_state)

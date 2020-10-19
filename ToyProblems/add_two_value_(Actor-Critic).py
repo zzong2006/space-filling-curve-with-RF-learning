@@ -9,6 +9,7 @@ import matplotlib.pyplot as plt
 
 GAMMA = 0.99
 
+
 class Environment():
     def __init__(self):
         self.a = 1.232
@@ -37,12 +38,12 @@ class Environment():
             self.b += 0.01
         curr = np.abs(self.a - self.b)
 
-        if self.prev > curr :
+        if self.prev > curr:
             done = True
             reward = -1
         elif self.prev == curr:
             reward = 0
-        else :
+        else:
             reward = 1
 
         self.prev = curr
@@ -51,22 +52,22 @@ class Environment():
     def modified_step(self, action):
         done = False
 
-        if action[0] == 0 :
+        if action[0] == 0:
             self.a += 0.001
-        elif action[0] == 1 :
+        elif action[0] == 1:
             self.a -= 0.001
-        elif action[0] == 2 :
+        elif action[0] == 2:
             self.a = 1
-        elif action[0] == 3 :
+        elif action[0] == 3:
             self.a = 3
 
-        if action[1] == 0 :
+        if action[1] == 0:
             self.b += 0.001
-        elif action[1] == 1 :
+        elif action[1] == 1:
             self.b -= 0.001
-        elif action[1] == 2 :
+        elif action[1] == 2:
             self.b = 2
-        elif action[1] == 3 :
+        elif action[1] == 3:
             self.b = 1
 
         curr = np.abs(self.a - self.b)
@@ -120,6 +121,7 @@ class RolloutStorage(object):
         for ad_step in reversed(range(self.rewards.size(0))):
             self.returns[ad_step] = self.returns[ad_step + 1] * GAMMA * self.masks[ad_step + 1] + self.rewards[ad_step]
 
+
 def discount_rewards(r):
     """ take 1D float array of rewards and compute discounted reward """
     discounted_r = np.zeros_like(r)
@@ -131,9 +133,10 @@ def discount_rewards(r):
     # Normalize reward to avoid a big variability in rewards
     mean = np.mean(discounted_r)
     std = np.std(discounted_r)
-    if std == 0 : std = 1
+    if std == 0: std = 1
     normalized_discounted_r = (discounted_r - mean) / std
     return normalized_discounted_r
+
 
 class ActorCriticAgent(nn.Module):
     def __init__(self, input_size, hidden_size, output_size):
@@ -153,14 +156,14 @@ class ActorCriticAgent(nn.Module):
 
         return [first_action, second_action], value
 
+
 def init_weights(m):
     if type(m) == nn.Linear:
         torch.nn.init.xavier_uniform_(m.weight)
         m.bias.data.fill_(0.01)
 
 
-
-#Set total number of episodes to train agent on.
+# Set total number of episodes to train agent on.
 total_episodes = 1000
 max_ep = 999
 update_frequency = 5
@@ -184,7 +187,7 @@ MAX_GRAD_NORM = 0.5
 
 model = ActorCriticAgent(s_size, h_size, a_size)
 model.apply(init_weights).to(DEVICE)
-optimizer = optim.Adam(model.parameters(), lr = lr)
+optimizer = optim.Adam(model.parameters(), lr=lr)
 env = np.array([Environment()] * NUM_PROCESSES)
 
 done_np = np.zeros([NUM_PROCESSES, 1])
@@ -192,7 +195,7 @@ obs_np = np.zeros([NUM_PROCESSES, s_size])  # Numpy 배열
 reward_np = np.zeros([NUM_PROCESSES, 1])  # Numpy 배열
 rollouts = RolloutStorage(NUM_ADVANCED_STEP, NUM_PROCESSES, s_size)  # rollouts 객체
 
-s = np.array( [env[k].reset()  for k in range(NUM_PROCESSES) ] )
+s = np.array([env[k].reset() for k in range(NUM_PROCESSES)])
 rollouts.observations[0].copy_(torch.from_numpy(s).float().to(DEVICE))
 
 print('DEVICE (CUDA) : ', DEVICE)
@@ -212,13 +215,14 @@ while i < total_episodes:
             selected_action = torch.cat((a, b), 1)
 
         for z in range(NUM_PROCESSES):
-            obs_np[z], reward_np[z], done_np[z] = env[z].modified_step([a[z],b[z]]) # Get our reward for taking an action
-            if z == 0 :
+            obs_np[z], reward_np[z], done_np[z] = env[z].modified_step(
+                [a[z], b[z]])  # Get our reward for taking an action
+            if z == 0:
                 total_reward += (reward_np[z].item())
                 rlist.append(total_reward)
             if done_np[z] == True:
                 # obs_np[z] = env[z].reset()
-                if z == 0 :
+                if z == 0:
                     total_reward = 0
         accumulated_reward = np.append(accumulated_reward, reward_np)
         reward = torch.from_numpy(reward_np).float().to(DEVICE)
@@ -226,7 +230,6 @@ while i < total_episodes:
 
         current_obs = torch.from_numpy(obs_np).float().to(DEVICE)
         rollouts.insert(current_obs, selected_action.data, reward, masks)
-
 
     # advanced 학습 대상 중 마지막 단계의 상태로 예측하는 상태가치를 계산
     with torch.no_grad():
@@ -266,8 +269,8 @@ while i < total_episodes:
     # detach 메서드를 호출하여 advantages를 상수로 취급
 
     # 오차함수의 총합
-    loss_1 =  - action_gain_1 # + (value_loss * VALUE_COEFF - entropy1 * ENTROPY_COEFF)
-    loss_2 =  - action_gain_2 # + (value_loss * VALUE_COEFF - entropy2 * ENTROPY_COEFF)
+    loss_1 = - action_gain_1  # + (value_loss * VALUE_COEFF - entropy1 * ENTROPY_COEFF)
+    loss_2 = - action_gain_2  # + (value_loss * VALUE_COEFF - entropy2 * ENTROPY_COEFF)
     total_loss = (loss_1 + loss_2) / a_size
 
     model.train()
@@ -280,6 +283,6 @@ while i < total_episodes:
     i += 1
 
 fig = plt.figure()
-ax1 = fig.add_subplot(1,1,1)
+ax1 = fig.add_subplot(1, 1, 1)
 ax1.plot(rlist, 'b')
 plt.show()

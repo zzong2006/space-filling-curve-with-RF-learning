@@ -1,3 +1,7 @@
+"""
+
+
+"""
 import sys
 from itertools import combinations
 
@@ -7,7 +11,7 @@ import torch.nn as nn
 from torch import optim
 from torch.distributions import Categorical
 import torch.nn.functional as F
-from reinforcement_learning_review.LSTM_Sample import init_weights
+from library_review.PyTorch_LSTM_Sample import init_weights
 from utils import *
 
 '''
@@ -35,9 +39,9 @@ LEARNING_RATE = 0.0005  # 학습률
 
 ##### Meta 학습
 ## 총 meta learning 횟수 : META_STEP * #_of_TASKS * Horizon
-META_LEARNING_STEP = 1000        # 메타 learning 횟수
-TASKS_PER_META_BATCH =  20       # 메타 학습 1회 당 생성할 총 task 의 갯수
-HORIZON = 32                    # task 1개 당 수행할 action step 수
+META_LEARNING_STEP = 1000  # 메타 learning 횟수
+TASKS_PER_META_BATCH = 20  # 메타 학습 1회 당 생성할 총 task 의 갯수
+HORIZON = 32  # task 1개 당 수행할 action step 수
 META_LEARNING_RATE = 0.005  # 메타 학습률
 
 NUM_OF_CELLS = 2 ** (DIM * ORDER)
@@ -68,7 +72,6 @@ class SFCNet(nn.Module):
         self.GAMMA = 0.999
         self.tau = 1.00
         self.DEVICE = DEVICE
-
 
     def forward(self, input, avail_id, his=None, action=None):
 
@@ -264,7 +267,7 @@ class Env():
     def run(self):
         o_num_list_per_episode = []
         value_list_per_episode = []
-        optimizer = optim.Adam(lr=LEARNING_RATE, params= self.model.parameters())
+        optimizer = optim.Adam(lr=LEARNING_RATE, params=self.model.parameters())
         analyzer = Analyzer(self.data_index)
         self.model.avail_index = self.data_index.copy()
         self.model.done = True
@@ -381,7 +384,7 @@ class Env():
         state[[id[0], id[1]]] = state[[id[1], id[0]]]
         return state
 
-    def give_reward(self, min_num, num, action,init_o_num,  finish):
+    def give_reward(self, min_num, num, action, init_o_num, finish):
         done = False
         if min_num < num:
             if finish:
@@ -458,12 +461,11 @@ if __name__ == '__main__':
     #         showlineByIndexorder(grid_index, INDEX_TO_COORDINATE, ax)
     #     plt.show(block=True)
 
-
     env = Env(data_index=scan_index, max_episode=MAX_EPISODE, max_step=MAX_STEP, init_curve=INIT_CURVE)
-    if LOAD_AND_SAVE :
+    if LOAD_AND_SAVE:
         print('load meta model (y / any key except y )?')
         answer = 'y'
-        if answer =='y' :
+        if answer == 'y':
             name = 'model_ORDER+' + str(ORDER) + '_DIM+' + str(DIM) + '.pt'
             try:
                 saved_model = torch.load(name)
@@ -485,7 +487,7 @@ if __name__ == '__main__':
     #     plt.show(block=True)
 
     # Test trained model
-    if TEST :
+    if TEST:
         np.random.seed(175)
 
         print(f'Start testing trained model ... ')

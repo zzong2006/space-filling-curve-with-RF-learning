@@ -1,3 +1,10 @@
+"""
+    PyTorch의 LSTM을 사용해보기 위한 연습용 코드
+
+    Usage:
+        python PyTorch_LSTM_Sample.py
+"""
+
 import torch
 import torch.nn as nn
 import numpy as np
@@ -7,17 +14,34 @@ import matplotlib.pyplot as plt
 
 
 class Net(nn.Module):
+    """
+    신경망 구성 클래스
+    """
     def __init__(self, input_size, hidden_size, output_size):
+        """
+        신경망 정의를 위한 초기화 method
+
+        :param input_size: 입력 레이어 유닛 개수
+        :param hidden_size: 히든 레이어 유닛 개수
+        :param output_size: 출력 레이어 유닛 개수
+        """
         super(Net, self).__init__()
         self.a = nn.LSTM(input_size, hidden_size, batch_first=True)
         self.b = nn.Linear(hidden_size, output_size)
 
     def forward(self, input, his=None):
-        output, (hidden, cell) = self.a(input, his)
-        output = torch.relu(output)
-        output = torch.relu(self.b(output))
+        """
 
-        return output, (hidden, cell)
+        :param input:
+        :param his: 초기
+        :return:
+        """
+        net_output, (hidden, cell) = self.a(input, his)
+        net_output = torch.relu(net_output)
+        net_output = torch.relu(self.b(net_output))
+
+        return net_output, (hidden, cell)
+
 
 def init_weights(m):
     if type(m) == nn.Linear:
@@ -30,22 +54,28 @@ def init_weights(m):
             elif 'weight' in name:
                 nn.init.orthogonal_(param)
 
-'''
-    불러온 모델에 기반해서 현재 모델을 초기화 하는 함수
-    size 가 같다면 parameters 를 덮어 씌우지만 그렇지 않다면, 
-    불러온 모델이 가진 parameters 의 mean, std 를 이용함 
-    * 주의할 점은 초기화할 모델과 불러올 모델의 구조가 같아야 한다는 것 
-    (i.e. 모델에 입력될 node size 만 다를 수 있음, layer 구조는 같아야 함)
-'''
+
 def init_weights_from_loaded(m, loaded_m):
+    """
+    불러온 모델에 기반해서 현재 모델을 초기화 하는 함수
+    size 가 같다면 parameters 를 덮어 씌우지만 그렇지 않다면,
+    불러온 모델이 가진 parameters 의 mean, std 를 이용함
+    * 주의할 점은 초기화할 모델과 불러올 모델의 구조가 같아야 한다는 것
+    (i.e. 모델에 입력될 node size 만 다를 수 있음, layer 구조는 같아야 함)
+
+    :param m:
+    :param loaded_m:
+    :return: 없음
+    """
     for name, param in m.named_parameters():
         if loaded_m.get(name) is not None:
-            if param.shape == loaded_m[name].shape :
+            if param.shape == loaded_m[name].shape:
                 param.data = loaded_m[name].data
-            else :
+            else:
                 mean = torch.mean(loaded_m[name].data).item()
                 std = torch.std(loaded_m[name].data).item()
                 nn.init.normal_(param, mean=mean, std=std)
+
 
 def save_model(m, path):
     directory = os.path.dirname(path)
@@ -54,7 +84,7 @@ def save_model(m, path):
     torch.save(m.state_dict(), path)
 
 
-if __name__  == "__main__" :
+if __name__ == "__main__":
     x = np.array([np.sin(x / 10) for x in range(100)], dtype='float');
     x += 1
     net = Net(input_size=1, hidden_size=50, output_size=1)
@@ -83,7 +113,8 @@ if __name__  == "__main__" :
         history = []
     # 입력 데이터의 사이즈 (seq, batch, input)
     # 출력 데이터의 사이즈 (seq, batch, hidden)
-    result = np.empty((len(x))); output = output.detach().numpy().reshape(-1, seq_length)
+    result = np.empty((len(x)));
+    output = output.detach().numpy().reshape(-1, seq_length)
     result[0] = x[0]
     for i in range(0, len(x) - seq_length):
         result[i + 1:i + seq_length + 1] = output[i]

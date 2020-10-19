@@ -30,11 +30,6 @@ from multiprocessing import Process, Pipe
             CNN 을 이용하여 입력데이터를 바꾸기
 '''
 
-try:
-    xrange = xrange
-except:
-    xrange = range
-
 NOTEBOOK = True
 TEST = False
 CUDA = torch.cuda.is_available()
@@ -253,7 +248,7 @@ def discount_rewards(r):
     """ take 1D float array of rewards and compute discounted reward """
     discounted_r = np.zeros_like(r)
     running_add = 0
-    for t in reversed(xrange(0, r.size)):
+    for t in reversed(range(0, r.size)):
         running_add = running_add * GAMMA + r[t]
         discounted_r[t] = running_add
 
@@ -338,7 +333,8 @@ class Brain():
         self.num_states = num_states
 
         self.model = SFCNet(num_states, hidden_size, num_actions)
-        if CUDA: self.model.cuda()
+        if CUDA:
+            self.model.cuda()
         self.optimizer = optim.Adam(self.model.parameters(), lr=LEARNING_RATE)
         print(self.model)
 
@@ -355,14 +351,14 @@ class Brain():
         log_probs_1 = F.log_softmax(actor_output[0], dim=1)
         log_probs_2 = F.log_softmax(actor_output[1], dim=1)
 
-        action_log_probs_1 = log_probs_1.gather(1, rollouts.actions[:,:,0].view(-1,1))
-        action_log_probs_2 = log_probs_2.gather(1, rollouts.actions[:,:,1].view(-1,1))
+        action_log_probs_1 = log_probs_1.gather(1, rollouts.actions[:, :, 0].view(-1, 1))
+        action_log_probs_2 = log_probs_2.gather(1, rollouts.actions[:, :, 1].view(-1, 1))
 
         probs_1 = F.softmax(actor_output[0], dim=1)
         probs_2 = F.softmax(actor_output[1], dim=1)
 
         # 엔트로피 H : action이 확률적으로 얼마나 퍼져 있는가? (비슷한 확률의 다중 액션 -> high, 단일 액션 -> low)
-        entropy = -( (log_probs_1 * probs_1 + log_probs_2 * probs_2)).sum(-1).mean()
+        entropy = -((log_probs_1 * probs_1 + log_probs_2 * probs_2)).sum(-1).mean()
 
         values = values.view(NUM_ADVANCED_STEP, NUM_PROCESSES, 1)
         action_log_probs_1 = action_log_probs_1.view(NUM_ADVANCED_STEP, NUM_PROCESSES, 1)
@@ -375,7 +371,7 @@ class Brain():
         value_loss = advantages.pow(2).mean()
 
         # Actor의 gain 계산, 나중에 -1을 곱하면 loss가 된다
-        action_gain = ( (action_log_probs_1 + action_log_probs_2) * advantages.detach()).mean()
+        action_gain = ((action_log_probs_1 + action_log_probs_2) * advantages.detach()).mean()
         # detach 메서드를 호출하여 advantages를 상수로 취급
 
         # 오차함수의 총합
@@ -402,7 +398,7 @@ class Brain():
             # a, b = np.random.choice(dist, size=2, replace=False, p=dist)
             # a = np.argmax(dist == a)
             # b = np.argmax(dist == b)
-            return torch.cat((a,b),1)
+            return torch.cat((a, b), 1)
 
     def compute_value(self, state):
         _, value = self.model(state)
@@ -522,7 +518,7 @@ class Env():
                         global_min_o_num = o_num[i]
                         global_min_state = obs_next.copy()
 
-                    #Reward Part
+                    # Reward Part
                     # if ((prev_action[0][0].data == action[0][0].data) and (
                     #                 prev_action[0][1].data == action[0][1].data)):
                     #     reward_np[i] = -10.0

@@ -1,3 +1,9 @@
+"""
+책에서 소개된 TensorFlow library를 사용한 Q-Learning code를 pyTorch로 변경하여 연습
+책 제목: 강화학습 첫 걸음
+Github Link: https://github.com/kyoseoksong/RL_Book/blob/master/Chap5-2.Q-Network.ipynb
+"""
+
 import torch
 import random
 import torch.nn as nn

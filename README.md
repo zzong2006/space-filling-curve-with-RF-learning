@@ -3,8 +3,6 @@
 This is the deep learning project for building the optimal space filling curve with reinforcement learning.
 
 ### 폴더 설명
-* `tensorflow_curve`
-    * TensorFlow library를 활용하여 space filling curve를 구축 시도한 프로그램들을 담은 폴더
 * `reinforcement_learning_review` 
     * 강화 학습 공부를 위해 참고한 파일들을 저장한 폴더
     * 

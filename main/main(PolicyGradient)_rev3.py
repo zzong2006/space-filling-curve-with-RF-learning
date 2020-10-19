@@ -271,12 +271,13 @@ class SFCNet(nn.Module):
         return first_output
 
 
-class Brain():
+class Brain:
     def __init__(self, num_states, num_actions, hidden_size=None):
         self.num_actions = num_actions
 
         self.model = SFCNet(num_states, hidden_size, num_actions)
-        if CUDA: self.model.cuda()
+        if CUDA:
+            self.model.cuda()
         self.optimizer = optim.Adam(self.model.parameters(), lr=LEARNING_RATE)
         print(self.model)
 

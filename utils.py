@@ -1,4 +1,4 @@
-from Curve import HilbertCurve, ZCurve
+from curve import HilbertCurve, ZCurve
 import numpy as np
 import matplotlib.pyplot as plt
 

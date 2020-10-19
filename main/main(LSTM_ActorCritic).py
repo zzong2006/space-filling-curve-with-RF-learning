@@ -6,7 +6,7 @@ import torch.nn as nn
 from torch import optim
 from torch.distributions import Categorical
 import torch.nn.functional as F
-from reinforcement_learning_review.LSTM_Sample import init_weights
+from library_review.PyTorch_LSTM_Sample import init_weights
 from utils import *
 
 xrange = range
@@ -21,27 +21,28 @@ NUM_OF_CELLS = 2 ** (DIM * ORDER)
 side = np.sqrt(NUM_OF_CELLS).astype('int')
 INDEX_TO_COORDINATE = np.array(list(map(lambda x: list([x // side, x % side]), np.arange(0, NUM_OF_CELLS))))
 DATA_SIZE = 5
-MAX_EPISODE = 10000
+MAX_EPISODE = 1000
 MAX_STEP = 10
 TASKS_PER_META_BATCH = 1000
 HORIZON = 32
 INIT_CURVE = 'zig-zag'
-LEARNING_RATE = 3e-4            # 학습률
+LEARNING_RATE = 3e-4  # 학습률
 MAX_GRAD_NORM = 1
-
 
 '''
 SFC를 만드는 모델
 '''
+
+
 class SFCNet(nn.Module):
     def __init__(self, vocab_size, embedding_size, hidden_size, output_size, learning_rate):
         super(SFCNet, self).__init__()
         self.emb = nn.Embedding(vocab_size, embedding_size)
         self.a = nn.LSTM(embedding_size + 2, hidden_size, batch_first=True)
-        self.critic_hidden_1 = nn.Linear(hidden_size, hidden_size // 2 )
-        self.actor_hidden_1 = nn.Linear(hidden_size, hidden_size // 2 )
-        self.critic_hidden_2 = nn.Linear(hidden_size // 2, hidden_size // 4 )
-        self.actor_hidden_2 = nn.Linear(hidden_size // 2, hidden_size // 4 )
+        self.critic_hidden_1 = nn.Linear(hidden_size, hidden_size // 2)
+        self.actor_hidden_1 = nn.Linear(hidden_size, hidden_size // 2)
+        self.critic_hidden_2 = nn.Linear(hidden_size // 2, hidden_size // 4)
+        self.actor_hidden_2 = nn.Linear(hidden_size // 2, hidden_size // 4)
         self.critic_linear = nn.Linear(hidden_size // 4, 1)
         self.actor_linear = nn.Linear(hidden_size // 4, output_size)
 
@@ -119,7 +120,6 @@ class SFCNet(nn.Module):
         return total_loss
 
 
-
 class EpisodeMemory():
     def __init__(self):
         self.value_list = []
@@ -138,6 +138,7 @@ class EpisodeMemory():
         self.log_prob_list = []
         self.reward_list = []
         self.entropy_list = []
+
 
 class Env():
     def __init__(self, data_index, max_episode, max_step, init_curve):
@@ -160,6 +161,7 @@ class Env():
         self.z = ZCurve(dimension=DIM)
 
         print(self.model)
+
     '''
     초기 state를 생성하는 함수; 
     2. query area 단위 따른 clustering 갯수 (max, average) : (미구현) 
@@ -176,7 +178,6 @@ class Env():
         avail_index = np.random.choice(NUM_OF_CELLS, size=DATA_SIZE, replace=False)
         obs = self.reset(state)
         return avail_index, obs
-
 
     def run(self):
         locality_list_per_episode = []
@@ -205,7 +206,7 @@ class Env():
             step = len(info)
             mean_o_num = np.mean(info)
 
-            if global_min_o_num > min_o_num :
+            if global_min_o_num > min_o_num:
                 global_min_o_num = min_o_num
 
             print(f'[GLOB {global_min_o_num:.3f} / INIT {init_o_num:.3f} / EP_NUM {episode}] '
@@ -238,7 +239,7 @@ class Env():
         if model.done:
             model.state = np.arange(0, NUM_OF_CELLS)
             model.his = (torch.zeros(1, 1, model.hidden_size).to(DEVICE),
-                              torch.zeros(1, 1, model.hidden_size).to(DEVICE))
+                         torch.zeros(1, 1, model.hidden_size).to(DEVICE))
             model.done = False
         else:
             model.his = ((model.his[0].data).to(DEVICE), (model.his[1].data).to(DEVICE))
@@ -281,6 +282,7 @@ class Env():
 
         # for step 종료
         return em, o_num_list
+
     '''
     주어진 action 을 수행하고 난 뒤의 state를 반환
     '''
@@ -295,7 +297,7 @@ class Env():
 
     def give_reward(self, min_num, num, init_num, done):
         if min_num < num:
-            if done :
+            if done:
                 self.model.done = True
             reward = -1
         elif min_num == num:
@@ -303,6 +305,8 @@ class Env():
         else:
             reward = (init_num - num)
         return reward
+
+
 '''
 주어진 state와 활성화된 데이터를 기반으로 reward를 위한 metrics을 측정하는 함수
 '''
@@ -314,7 +318,7 @@ class Analyzer():
 
         avail = np.zeros((NUM_OF_CELLS, 1))
         avail[index] = 1
-        if init_state is not None :
+        if init_state is not None:
             self.init_state = np.concatenate((avail, init_state), axis=1)
 
     def l2_norm_locality(self, compared_state):
@@ -347,7 +351,7 @@ n 의 최댓값은 DIM * ORDER - 1
 '''
 
 if __name__ == '__main__':
-    np.random.seed(210) # original : 210
+    np.random.seed(210)  # original : 210
 
     scan_index = np.random.choice(NUM_OF_CELLS, size=DATA_SIZE, replace=False)
     sample_data = INDEX_TO_COORDINATE[scan_index]
@@ -355,7 +359,7 @@ if __name__ == '__main__':
 
     if NOTEBOOK:
         fig, ax = plt.subplots(1, figsize=(10, 10))
-        showPoints(sample_data, order = ORDER, dim = DIM,  ax = ax, index=False)
+        showPoints(sample_data, order=ORDER, dim=DIM, ax=ax, index=False)
 
         if INIT_CURVE == 'hilbert':
             showlineByIndexorder(np.array(HilbertCurve(DIM).getCoords(ORDER)), INDEX_TO_COORDINATE, ax, index=False)
@@ -367,8 +371,6 @@ if __name__ == '__main__':
     env = Env(data_index=scan_index, max_episode=MAX_EPISODE, max_step=MAX_STEP, init_curve=INIT_CURVE)
 
     result_value = env.run()
-
-
 
     print(f'Recorded the minimum reverse of the locality :{result_value}')
 

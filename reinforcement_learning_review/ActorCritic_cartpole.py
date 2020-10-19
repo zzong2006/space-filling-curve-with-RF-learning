@@ -129,13 +129,6 @@ class Brain(object):
             rollouts.observations[:-1].view(-1, 4),
             rollouts.actions.view(-1, 1))
 
-        # 주의 : 각 변수의 크기
-        # rollouts.observations[:-1].view(-1, 4) torch.Size([80, 4])
-        # rollouts.actions.view(-1, 1) torch.Size([80, 1])
-        # values torch.Size([80, 1])
-        # action_log_probs torch.Size([80, 1])
-        # entropy torch.Size([])
-
         values = values.view(num_steps, num_processes, 1)  # torch.Size([5, 16, 1])
         action_log_probs = action_log_probs.view(num_steps, num_processes, 1)
 

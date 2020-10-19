@@ -7,7 +7,6 @@ import numpy as np
 import matplotlib.pyplot as plt
 from itertools import combinations
 from torch.utils.tensorboard import SummaryWriter
-from torchviz import make_dot
 import matplotlib.image as mpimg
 from torch.autograd import Variable
 from multiprocessing import Process, Pipe
@@ -37,7 +36,6 @@ from multiprocessing import Process, Pipe
  * 09-11 : softmax 값 자체를 순서로 볼 수 있지 않을까? 
 '''
 
-xrange = range
 
 NOTEBOOK = True
 TEST = False
