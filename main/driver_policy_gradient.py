@@ -7,7 +7,6 @@ import matplotlib.pyplot as plt
 from itertools import combinations
 from curve import HilbertCurve, ZCurve
 from utils import *
-from rl_network import PolicyGradient
 from environment import CurveEnvironment
 from agent import Agent
 
@@ -84,4 +83,3 @@ if __name__ == '__main__':
     driver = PGDriver(dimension=DIM, order=ORDER, data_size=DATA_SIZE, learning_rate=LEARNING_RATE)
     driver.run(max_episode=5000, max_step=1000)
 
-    # print(f'Recorded the minimum reverse of the locality :{result_value}')

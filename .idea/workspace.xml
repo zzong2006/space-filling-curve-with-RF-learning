@@ -22,20 +22,13 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="764d8ad5-a26e-4d98-a098-77a218712d28" name="Default Changelist" comment="class 분리">
-      <change afterPath="$PROJECT_DIR$/main/driver_actor_critic.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/main/driver_policy_gradient.py" afterDir="false" />
+    <list default="true" id="764d8ad5-a26e-4d98-a098-77a218712d28" name="Default Changelist" comment="policy Gradient 수정">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ToyProblems/add_two_value_(Q-Learning).py" beforeDir="false" afterPath="$PROJECT_DIR$/ToyProblems/add_two_value_(Q-Learning).py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/actorcritic_utils.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/main/agent.py" beforeDir="false" afterPath="$PROJECT_DIR$/main/agent.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/environment.py" beforeDir="false" afterPath="$PROJECT_DIR$/main/environment.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/driver_actor_critic.py" beforeDir="false" afterPath="$PROJECT_DIR$/main/driver_actor_critic.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/driver_policy_gradient.py" beforeDir="false" afterPath="$PROJECT_DIR$/main/driver_policy_gradient.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/driver_q_learning.py" beforeDir="false" afterPath="$PROJECT_DIR$/main/driver_q_learning.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main/main(ActorCritic).py" beforeDir="false" afterPath="$PROJECT_DIR$/deprecated/main(ActorCritic).py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/main(ActorCritic)_CNN.py" beforeDir="false" afterPath="$PROJECT_DIR$/deprecated/main(ActorCritic)_CNN.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/main(LSTM_ActorCritic).py" beforeDir="false" afterPath="$PROJECT_DIR$/deprecated/main(LSTM_ActorCritic).py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/main(LSTM_PolicyGradient).py" beforeDir="false" afterPath="$PROJECT_DIR$/deprecated/main(LSTM_PolicyGradient).py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/main(PolicyGradient).py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/main(QLearning).py" beforeDir="false" afterPath="$PROJECT_DIR$/main/driver_q_learning.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main/rl_network.py" beforeDir="false" afterPath="$PROJECT_DIR$/main/rl_network.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -135,7 +128,7 @@
       <recent name="C:\Users\zzong\PycharmProjects\space-filling-curve-with-RF-learning\main" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.driver_policy_gradient (1)">
+  <component name="RunManager" selected="Python.driver_actor_critic">
     <configuration default="true" type="PythonConfigurationType" factoryName="Python">
       <module name="rlCurve" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -184,9 +177,6 @@
       <module name="rlCurve" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
       <option name="SDK_HOME" value="" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/main" />
       <option name="IS_MODULE_SDK" value="true" />
@@ -261,8 +251,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.driver_policy_gradient (1)" />
         <item itemvalue="Python.driver_actor_critic" />
+        <item itemvalue="Python.driver_policy_gradient (1)" />
         <item itemvalue="Python.driver_policy_gradient" />
         <item itemvalue="Python.agent" />
         <item itemvalue="Python.environment" />
@@ -289,7 +279,7 @@
       <workItem from="1606584428903" duration="680000" />
       <workItem from="1606585316593" duration="2930000" />
       <workItem from="1606588287721" duration="306000" />
-      <workItem from="1606622684786" duration="41123000" />
+      <workItem from="1606622684786" duration="45844000" />
     </task>
     <task id="LOCAL-00001" summary="README.md 추가 수정">
       <created>1602346141058</created>
@@ -319,7 +309,14 @@
       <option name="project" value="LOCAL" />
       <updated>1606642611894</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="policy Gradient 수정">
+      <created>1606673085906</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1606673085906</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -342,7 +339,8 @@
     <MESSAGE value="README.md 추가 수정" />
     <MESSAGE value="파일 추가 수정" />
     <MESSAGE value="class 분리" />
-    <option name="LAST_COMMIT_MESSAGE" value="class 분리" />
+    <MESSAGE value="policy Gradient 수정" />
+    <option name="LAST_COMMIT_MESSAGE" value="policy Gradient 수정" />
   </component>
   <component name="WindowStateProjectService">
     <state x="552" y="178" key="#Deployment" timestamp="1605520299801">
@@ -353,14 +351,14 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="552" y="161" key="#Plugins/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1601278462594" />
-    <state x="1081" y="316" width="730" height="677" key="#xdebugger.evaluate" timestamp="1606669733955">
+    <state x="-730" y="337" width="730" height="677" key="#xdebugger.evaluate" timestamp="1606674025325">
+      <screen x="-1080" y="-446" width="1080" height="1880" />
+    </state>
+    <state x="-730" y="337" width="730" height="677" key="#xdebugger.evaluate/0.0.1920.1040/-1080.-446.1080.1880@0.0.1920.1040" timestamp="1606674025325" />
+    <state width="1413" height="440" key="DebuggerActiveHint" timestamp="1606673846678">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="1081" y="316" width="730" height="677" key="#xdebugger.evaluate/0.0.1920.1040/-1080.-446.1080.1880@0.0.1920.1040" timestamp="1606669733955" />
-    <state width="1413" height="440" key="DebuggerActiveHint" timestamp="1606672304020">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state width="1413" height="440" key="DebuggerActiveHint/0.0.1920.1040/-1080.-446.1080.1880@0.0.1920.1040" timestamp="1606672304020" />
+    <state width="1413" height="440" key="DebuggerActiveHint/0.0.1920.1040/-1080.-446.1080.1880@0.0.1920.1040" timestamp="1606673846678" />
     <state x="92" y="92" width="1736" height="856" key="DiffContextDialog" timestamp="1603123415996">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -371,51 +369,51 @@
     <state x="-669" y="102" key="FileChooserDialogImpl/0.0.1920.1040/-1080.-446.1080.1880@-1080.-446.1080.1880" timestamp="1602329208369" />
     <state x="731" y="303" key="FileChooserDialogImpl/0.0.1920.1040/-1080.-446.1080.1880@0.0.1920.1040" timestamp="1606586022470" />
     <state x="730" y="303" key="FileChooserDialogImpl/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1601280865376" />
-    <state width="1877" height="384" key="GridCell.Tab.0.bottom" timestamp="1606672368677">
+    <state width="1877" height="384" key="GridCell.Tab.0.bottom" timestamp="1606674028565">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="384" key="GridCell.Tab.0.bottom/0.0.1920.1040/-1080.-446.1080.1880@0.0.1920.1040" timestamp="1606672368677" />
+    <state width="1877" height="384" key="GridCell.Tab.0.bottom/0.0.1920.1040/-1080.-446.1080.1880@0.0.1920.1040" timestamp="1606674028565" />
     <state width="1877" height="196" key="GridCell.Tab.0.bottom/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1601286682161" />
-    <state width="1877" height="384" key="GridCell.Tab.0.center" timestamp="1606672368677">
+    <state width="1877" height="384" key="GridCell.Tab.0.center" timestamp="1606674028565">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="384" key="GridCell.Tab.0.center/0.0.1920.1040/-1080.-446.1080.1880@0.0.1920.1040" timestamp="1606672368677" />
+    <state width="1877" height="384" key="GridCell.Tab.0.center/0.0.1920.1040/-1080.-446.1080.1880@0.0.1920.1040" timestamp="1606674028565" />
     <state width="1877" height="196" key="GridCell.Tab.0.center/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1601286682161" />
-    <state width="1877" height="384" key="GridCell.Tab.0.left" timestamp="1606672368677">
+    <state width="1877" height="384" key="GridCell.Tab.0.left" timestamp="1606674028565">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="384" key="GridCell.Tab.0.left/0.0.1920.1040/-1080.-446.1080.1880@0.0.1920.1040" timestamp="1606672368677" />
+    <state width="1877" height="384" key="GridCell.Tab.0.left/0.0.1920.1040/-1080.-446.1080.1880@0.0.1920.1040" timestamp="1606674028565" />
     <state width="1877" height="196" key="GridCell.Tab.0.left/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1601286682161" />
-    <state width="1877" height="384" key="GridCell.Tab.0.right" timestamp="1606672368677">
+    <state width="1877" height="384" key="GridCell.Tab.0.right" timestamp="1606674028565">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="384" key="GridCell.Tab.0.right/0.0.1920.1040/-1080.-446.1080.1880@0.0.1920.1040" timestamp="1606672368677" />
+    <state width="1877" height="384" key="GridCell.Tab.0.right/0.0.1920.1040/-1080.-446.1080.1880@0.0.1920.1040" timestamp="1606674028565" />
     <state width="1877" height="196" key="GridCell.Tab.0.right/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1601286682161" />
-    <state width="1877" height="384" key="GridCell.Tab.1.bottom" timestamp="1606672368677">
+    <state width="1877" height="384" key="GridCell.Tab.1.bottom" timestamp="1606674028565">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="384" key="GridCell.Tab.1.bottom/0.0.1920.1040/-1080.-446.1080.1880@0.0.1920.1040" timestamp="1606672368677" />
-    <state width="1877" height="384" key="GridCell.Tab.1.center" timestamp="1606672368677">
+    <state width="1877" height="384" key="GridCell.Tab.1.bottom/0.0.1920.1040/-1080.-446.1080.1880@0.0.1920.1040" timestamp="1606674028565" />
+    <state width="1877" height="384" key="GridCell.Tab.1.center" timestamp="1606674028565">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="384" key="GridCell.Tab.1.center/0.0.1920.1040/-1080.-446.1080.1880@0.0.1920.1040" timestamp="1606672368677" />
-    <state width="1877" height="384" key="GridCell.Tab.1.left" timestamp="1606672368677">
+    <state width="1877" height="384" key="GridCell.Tab.1.center/0.0.1920.1040/-1080.-446.1080.1880@0.0.1920.1040" timestamp="1606674028565" />
+    <state width="1877" height="384" key="GridCell.Tab.1.left" timestamp="1606674028565">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="384" key="GridCell.Tab.1.left/0.0.1920.1040/-1080.-446.1080.1880@0.0.1920.1040" timestamp="1606672368677" />
-    <state width="1877" height="384" key="GridCell.Tab.1.right" timestamp="1606672368677">
+    <state width="1877" height="384" key="GridCell.Tab.1.left/0.0.1920.1040/-1080.-446.1080.1880@0.0.1920.1040" timestamp="1606674028565" />
+    <state width="1877" height="384" key="GridCell.Tab.1.right" timestamp="1606674028565">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="384" key="GridCell.Tab.1.right/0.0.1920.1040/-1080.-446.1080.1880@0.0.1920.1040" timestamp="1606672368677" />
+    <state width="1877" height="384" key="GridCell.Tab.1.right/0.0.1920.1040/-1080.-446.1080.1880@0.0.1920.1040" timestamp="1606674028565" />
     <state x="461" y="164" key="SettingsEditor" timestamp="1606588167434">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="461" y="164" key="SettingsEditor/0.0.1920.1040/-1080.-446.1080.1880@0.0.1920.1040" timestamp="1606588167434" />
     <state x="461" y="164" key="SettingsEditor/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1601280917379" />
-    <state x="552" y="253" key="Vcs.Push.Dialog.v2" timestamp="1606642612975">
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2" timestamp="1606673087139">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="552" y="253" key="Vcs.Push.Dialog.v2/0.0.1920.1040/-1080.-446.1080.1880@0.0.1920.1040" timestamp="1606642612975" />
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2/0.0.1920.1040/-1080.-446.1080.1880@0.0.1920.1040" timestamp="1606673087139" />
     <state width="968" height="528" key="XDebugger.FullValuePopup" timestamp="1606672360017">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -478,16 +476,6 @@
           <line>361</line>
           <option name="timeStamp" value="139" />
         </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/main/driver_actor_critic.py</url>
-          <line>53</line>
-          <option name="timeStamp" value="183" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/main/rl_network.py</url>
-          <line>65</line>
-          <option name="timeStamp" value="186" />
-        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
     <watches-manager>
@@ -506,7 +494,7 @@
     <SUITE FILE_PATH="coverage/space_filling_curve_with_RF_learning$main_PolicyGradient_.coverage" NAME="driver_policy_gradient Coverage Results" MODIFIED="1606653898643" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/main" />
     <SUITE FILE_PATH="coverage/space_filling_curve_with_RF_learning$main_ActorCritic_.coverage" NAME="main(ActorCritic) Coverage Results" MODIFIED="1606633888354" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/main" />
     <SUITE FILE_PATH="coverage/space_filling_curve_with_RF_learning$agent.coverage" NAME="agent Coverage Results" MODIFIED="1606650372311" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/main" />
-    <SUITE FILE_PATH="coverage/space_filling_curve_with_RF_learning$driver_actor_critic.coverage" NAME="driver_actor_critic Coverage Results" MODIFIED="1606672347500" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/main" />
+    <SUITE FILE_PATH="coverage/space_filling_curve_with_RF_learning$driver_actor_critic.coverage" NAME="driver_actor_critic Coverage Results" MODIFIED="1606673996675" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/main" />
     <SUITE FILE_PATH="coverage/space_filling_curve_with_RF_learning$main_LSTM_ActorCritic_.coverage" NAME="main(LSTM_ActorCritic) Coverage Results" MODIFIED="1606635606822" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/main" />
     <SUITE FILE_PATH="coverage/space_filling_curve_with_RF_learning$main_LSTM_PolicyGradient_.coverage" NAME="main(LSTM_PolicyGradient) Coverage Results" MODIFIED="1606636144629" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/main" />
     <SUITE FILE_PATH="coverage/space_filling_curve_with_RF_learning$Q_Network.coverage" NAME="Q-Network Coverage Results" MODIFIED="1601286027337" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />

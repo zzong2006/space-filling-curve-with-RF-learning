@@ -13,8 +13,8 @@ from agent import Agent
 
 CUDA = torch.cuda.is_available()
 DIM = 2
-ORDER = 2
-DATA_SIZE = 5
+ORDER = 3
+DATA_SIZE = 15
 MAX_STEP = 200
 GAMMA = 0.99  # 시간 할인율
 LEARNING_RATE = 1e-3  # 학습률
@@ -52,12 +52,13 @@ class ACDriver:
             for step in range(1, max_step + 1):
                 action, log_prob, entropy, value = self.agent.get_action(state)
                 next_obs, reward, done, infos = self.env.step(action)
-                ep_history.append([log_prob, reward, entropy, value, next_obs])
+
+                ep_history.append([log_prob, reward, entropy, value, next_obs, done])
 
                 state = torch.tensor(next_obs, dtype=torch.float32).view(1, -1)
+                self.agent.update(ep_history)
 
                 if done:
-                    self.agent.update(ep_history)
                     break
 
                 # 추가 정보

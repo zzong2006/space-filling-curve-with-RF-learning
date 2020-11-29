@@ -35,6 +35,10 @@ class Critic(nn.Module):
 
 
 class ActorCritic(nn.Module):
+    """
+        One-step Actor-Critic
+    """
+
     def __init__(self, n_in, n_out, n_mid=None):
         super(ActorCritic, self).__init__()
         n_mid = n_mid or (n_in + n_out) // 2
@@ -72,48 +76,44 @@ class ActorCritic(nn.Module):
             actions.append(selected_action.item())
             log_prob.append(log_act_prob)
             entropy.append(act_entropy)
-        return action
+        return actions, log_prob, entropy, value
 
-    def get_value(self, state):
-        """상태 x로부터 상태가치를 계산"""
-        value, actor_output = self(state)
+class DQN(nn.Module):
+    """
+        DQN with replay buffer and double network
+    """
 
-        action = []
-        log_prob = []
-        entropy = []
-        for prob in self(state):
-            act = torch.multinomial(prob, num_samples=1)
-            act_prob = torch.gather(prob, dim=1, index=act)
-            log_act_prob = torch.log(act_prob)
-            act_entropy = -torch.sum((act_prob * log_act_prob))
+    def __init__(self, input_size, output_size, hidden_size=None, lstm=False):
+        m_in = hidden_size or ((input_size + output_size) // 2)
 
-            action.append(act.item())
-            log_prob.append(log_act_prob)
-            entropy.append(act_entropy)
+        self.first = nn.Linear(input_size, m_in)
+        self.first_out = nn.Linear(m_in, output_size)
+        self.second = nn.Linear(m_in, m_in)
+        self.second_out = nn.Linear(self.hidden_size, output_size)
 
-        return action, log_prob, entropy
+    def forward(self, x):
+        output = torch.relu(self.first(x))
+        first_output = self.first_out(output)
+        output = torch.relu(self.second(output))
+        second_output = self.second_out(output)
+        return first_output, second_output
 
-        return value
-
-    def evaluate_actions(self, x, actions):
-        """상태 x로부터 상태가치, 실제 행동 actions의 로그 확률, 엔트로피를 계산"""
-        value, actor_output = self(x)
-
-        log_probs = F.log_softmax(actor_output, dim=1)  # dim=1이므로 행동의 종류에 대해 확률을 계산
-        action_log_probs = log_probs.gather(1, actions)  # 실제 행동의 로그 확률(log_probs)을 구함
-
-        probs = F.softmax(actor_output, dim=1)  # dim=1이므로 행동의 종류에 대한 계산
-        entropy = -(log_probs * probs).sum(-1).mean()
-
-        return value, action_log_probs, entropy
+    def get_action(self):
+        pass
 
 
 class PolicyGradient(nn.Module):
-    def __init__(self, input_size, output_size, hidden_size=None):
+    """
+        REINFORCE with Entropy (Monte Carlo)
+    """
+
+    def __init__(self, input_size, output_size, hidden_size=None, lstm=False):
         super(PolicyGradient, self).__init__()
         self.hidden_size = hidden_size or ((input_size + output_size) // 2)
-
-        self.first = nn.Linear(input_size, self.hidden_size)
+        if lstm is False:
+            self.first = nn.Linear(input_size, self.hidden_size)
+        else:
+            self.first = nn.LSTM(input_size, self.hidden_size, num_layers=1, batch_first=True)
         self.first_add = nn.Linear(self.hidden_size, self.hidden_size)
         self.first_out = nn.Linear(self.hidden_size, output_size)
         self.second = nn.Linear(self.hidden_size, self.hidden_size)

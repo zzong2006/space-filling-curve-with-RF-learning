@@ -44,11 +44,16 @@ class Agent:
             self.optimizer.step()
         elif self.network_type == 'actor_critic':
             loss = torch.zeros(1, 1)
-            log_prob, reward, entropy, value, next_state = history
+            log_prob, reward, entropy, value, next_state, done = history[-1]
             with torch.no_grad():
-                _, next_value = self.network(next_state)
+                if not done:
+                    next_state = torch.tensor(next_state, dtype=torch.float32).view(1, -1)
+                    next_value, _, _ = self.network(next_state)
+                else:
+                    next_value = 0
                 delta = reward + self.gamma * next_value - value
-            loss -= (delta * value + (self.large_i * log_prob) + (1e-3 * entropy))
+            for lpb, etp in zip(log_prob, entropy):
+                loss -= (delta * value + (self.large_i * lpb) + (1e-3 * etp))
             self.large_i *= self.gamma
 
             self.optimizer.zero_grad()
