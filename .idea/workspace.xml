@@ -22,14 +22,9 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="764d8ad5-a26e-4d98-a098-77a218712d28" name="Default Changelist" comment="policy Gradient 수정">
+    <list default="true" id="764d8ad5-a26e-4d98-a098-77a218712d28" name="Default Changelist" comment="Actor Critic 수정">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/agent.py" beforeDir="false" afterPath="$PROJECT_DIR$/main/agent.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/driver_actor_critic.py" beforeDir="false" afterPath="$PROJECT_DIR$/main/driver_actor_critic.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/driver_policy_gradient.py" beforeDir="false" afterPath="$PROJECT_DIR$/main/driver_policy_gradient.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/driver_q_learning.py" beforeDir="false" afterPath="$PROJECT_DIR$/main/driver_q_learning.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/main(ActorCritic).py" beforeDir="false" afterPath="$PROJECT_DIR$/deprecated/main(ActorCritic).py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/rl_network.py" beforeDir="false" afterPath="$PROJECT_DIR$/main/rl_network.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -279,7 +274,7 @@
       <workItem from="1606584428903" duration="680000" />
       <workItem from="1606585316593" duration="2930000" />
       <workItem from="1606588287721" duration="306000" />
-      <workItem from="1606622684786" duration="45844000" />
+      <workItem from="1606622684786" duration="46427000" />
     </task>
     <task id="LOCAL-00001" summary="README.md 추가 수정">
       <created>1602346141058</created>
@@ -316,7 +311,21 @@
       <option name="project" value="LOCAL" />
       <updated>1606673085906</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Actor Critic 수정">
+      <created>1606677970439</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1606677970439</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Actor Critic 수정">
+      <created>1606677992780</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1606677992780</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -340,7 +349,8 @@
     <MESSAGE value="파일 추가 수정" />
     <MESSAGE value="class 분리" />
     <MESSAGE value="policy Gradient 수정" />
-    <option name="LAST_COMMIT_MESSAGE" value="policy Gradient 수정" />
+    <MESSAGE value="Actor Critic 수정" />
+    <option name="LAST_COMMIT_MESSAGE" value="Actor Critic 수정" />
   </component>
   <component name="WindowStateProjectService">
     <state x="552" y="178" key="#Deployment" timestamp="1605520299801">
@@ -410,10 +420,10 @@
     </state>
     <state x="461" y="164" key="SettingsEditor/0.0.1920.1040/-1080.-446.1080.1880@0.0.1920.1040" timestamp="1606588167434" />
     <state x="461" y="164" key="SettingsEditor/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1601280917379" />
-    <state x="552" y="253" key="Vcs.Push.Dialog.v2" timestamp="1606673087139">
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2" timestamp="1606677997613">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="552" y="253" key="Vcs.Push.Dialog.v2/0.0.1920.1040/-1080.-446.1080.1880@0.0.1920.1040" timestamp="1606673087139" />
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2/0.0.1920.1040/-1080.-446.1080.1880@0.0.1920.1040" timestamp="1606677997613" />
     <state width="968" height="528" key="XDebugger.FullValuePopup" timestamp="1606672360017">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
