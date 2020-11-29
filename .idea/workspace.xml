@@ -22,22 +22,21 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="764d8ad5-a26e-4d98-a098-77a218712d28" name="Default Changelist" comment="파일 추가 수정">
-      <change afterPath="$PROJECT_DIR$/main/actorcritic_utils.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/main/rl_network.py" afterDir="false" />
+    <list default="true" id="764d8ad5-a26e-4d98-a098-77a218712d28" name="Default Changelist" comment="class 분리">
+      <change afterPath="$PROJECT_DIR$/main/driver_actor_critic.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/main/driver_policy_gradient.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ToyProblems/add_two_value_(Q-Learning).py" beforeDir="false" afterPath="$PROJECT_DIR$/ToyProblems/add_two_value_(Q-Learning).py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/curve.py" beforeDir="false" afterPath="$PROJECT_DIR$/curve.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/actorcritic_utils.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/agent.py" beforeDir="false" afterPath="$PROJECT_DIR$/main/agent.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main/environment.py" beforeDir="false" afterPath="$PROJECT_DIR$/main/environment.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/main(ActorCritic).py" beforeDir="false" afterPath="$PROJECT_DIR$/main/main(ActorCritic).py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/main(ActorCritic)_rev1.py" beforeDir="false" afterPath="$PROJECT_DIR$/main/main(ActorCritic)_CNN.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/main(ActorCritic)_rev_holiday.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/main(LSTM_ActorCritic).py" beforeDir="false" afterPath="$PROJECT_DIR$/main/main(LSTM_ActorCritic).py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/main(LSTM_PolicyGradient).py" beforeDir="false" afterPath="$PROJECT_DIR$/main/main(LSTM_PolicyGradient).py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/main(PolicyGradient)_rev2.py" beforeDir="false" afterPath="$PROJECT_DIR$/main/main(PolicyGradient).py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/main(QLearning).py" beforeDir="false" afterPath="$PROJECT_DIR$/main/main(QLearning).py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/main(ActorCritic).py" beforeDir="false" afterPath="$PROJECT_DIR$/deprecated/main(ActorCritic).py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/main(ActorCritic)_CNN.py" beforeDir="false" afterPath="$PROJECT_DIR$/deprecated/main(ActorCritic)_CNN.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/main(LSTM_ActorCritic).py" beforeDir="false" afterPath="$PROJECT_DIR$/deprecated/main(LSTM_ActorCritic).py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/main(LSTM_PolicyGradient).py" beforeDir="false" afterPath="$PROJECT_DIR$/deprecated/main(LSTM_PolicyGradient).py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/main(PolicyGradient).py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/main(QLearning).py" beforeDir="false" afterPath="$PROJECT_DIR$/main/driver_q_learning.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main/rl_network.py" beforeDir="false" afterPath="$PROJECT_DIR$/main/rl_network.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -129,14 +128,14 @@
       <recent name="C:\Users\woosung\PycharmProjects\rlCurve" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\zzong\PycharmProjects\space-filling-curve-with-RF-learning\deprecated" />
       <recent name="C:\Users\zzong\PycharmProjects\space-filling-curve-with-RF-learning\library_review" />
       <recent name="C:\Users\zzong\PycharmProjects\space-filling-curve-with-RF-learning\ToyProblems" />
       <recent name="C:\Users\zzong\PycharmProjects\space-filling-curve-with-RF-learning\reinforcement_learning_review" />
       <recent name="C:\Users\zzong\PycharmProjects\space-filling-curve-with-RF-learning\main" />
-      <recent name="C:\Users\zzong\PycharmProjects\space-filling-curve-with-RF-learning\tensorflow_curve" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.environment">
+  <component name="RunManager" selected="Python.driver_policy_gradient (1)">
     <configuration default="true" type="PythonConfigurationType" factoryName="Python">
       <module name="rlCurve" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -151,6 +150,88 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="true" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="agent" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="rlCurve" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/main" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/main/agent.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="true" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="driver_actor_critic" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="rlCurve" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/main" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/main/driver_actor_critic.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="true" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="driver_policy_gradient (1)" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="rlCurve" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/main" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/main/driver_policy_gradient.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="true" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="driver_policy_gradient" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="rlCurve" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/main" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="C:\Users\zzong\PycharmProjects\space-filling-curve-with-RF-learning\main\driver_policy_gradient.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="true" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -178,95 +259,13 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="main(ActorCritic)" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="rlCurve" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/main" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/main/main(ActorCritic).py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="true" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="main(LSTM_ActorCritic)" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="rlCurve" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/main" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/main/main(LSTM_ActorCritic).py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="true" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="main(LSTM_PolicyGradient)" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="rlCurve" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/main" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/main/main(LSTM_PolicyGradient).py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="true" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="main(PolicyGradient)" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="rlCurve" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/main" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/main/main(PolicyGradient).py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="true" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.driver_policy_gradient (1)" />
+        <item itemvalue="Python.driver_actor_critic" />
+        <item itemvalue="Python.driver_policy_gradient" />
+        <item itemvalue="Python.agent" />
         <item itemvalue="Python.environment" />
-        <item itemvalue="Python.main(PolicyGradient)" />
-        <item itemvalue="Python.main(LSTM_PolicyGradient)" />
-        <item itemvalue="Python.main(LSTM_ActorCritic)" />
-        <item itemvalue="Python.main(ActorCritic)" />
       </list>
     </recent_temporary>
   </component>
@@ -290,7 +289,7 @@
       <workItem from="1606584428903" duration="680000" />
       <workItem from="1606585316593" duration="2930000" />
       <workItem from="1606588287721" duration="306000" />
-      <workItem from="1606622684786" duration="18335000" />
+      <workItem from="1606622684786" duration="41123000" />
     </task>
     <task id="LOCAL-00001" summary="README.md 추가 수정">
       <created>1602346141058</created>
@@ -313,7 +312,14 @@
       <option name="project" value="LOCAL" />
       <updated>1606624981904</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="class 분리">
+      <created>1606642611894</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1606642611894</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -335,7 +341,8 @@
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <MESSAGE value="README.md 추가 수정" />
     <MESSAGE value="파일 추가 수정" />
-    <option name="LAST_COMMIT_MESSAGE" value="파일 추가 수정" />
+    <MESSAGE value="class 분리" />
+    <option name="LAST_COMMIT_MESSAGE" value="class 분리" />
   </component>
   <component name="WindowStateProjectService">
     <state x="552" y="178" key="#Deployment" timestamp="1605520299801">
@@ -346,14 +353,14 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="552" y="161" key="#Plugins/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1601278462594" />
-    <state x="1190" y="363" width="730" height="677" key="#xdebugger.evaluate" timestamp="1606641198953">
+    <state x="1081" y="316" width="730" height="677" key="#xdebugger.evaluate" timestamp="1606669733955">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="1190" y="363" width="730" height="677" key="#xdebugger.evaluate/0.0.1920.1040/-1080.-446.1080.1880@0.0.1920.1040" timestamp="1606641198953" />
-    <state width="1393" height="440" key="DebuggerActiveHint" timestamp="1606641413260">
+    <state x="1081" y="316" width="730" height="677" key="#xdebugger.evaluate/0.0.1920.1040/-1080.-446.1080.1880@0.0.1920.1040" timestamp="1606669733955" />
+    <state width="1413" height="440" key="DebuggerActiveHint" timestamp="1606672304020">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1393" height="440" key="DebuggerActiveHint/0.0.1920.1040/-1080.-446.1080.1880@0.0.1920.1040" timestamp="1606641413260" />
+    <state width="1413" height="440" key="DebuggerActiveHint/0.0.1920.1040/-1080.-446.1080.1880@0.0.1920.1040" timestamp="1606672304020" />
     <state x="92" y="92" width="1736" height="856" key="DiffContextDialog" timestamp="1603123415996">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -364,55 +371,55 @@
     <state x="-669" y="102" key="FileChooserDialogImpl/0.0.1920.1040/-1080.-446.1080.1880@-1080.-446.1080.1880" timestamp="1602329208369" />
     <state x="731" y="303" key="FileChooserDialogImpl/0.0.1920.1040/-1080.-446.1080.1880@0.0.1920.1040" timestamp="1606586022470" />
     <state x="730" y="303" key="FileChooserDialogImpl/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1601280865376" />
-    <state width="1877" height="348" key="GridCell.Tab.0.bottom" timestamp="1606641431740">
+    <state width="1877" height="384" key="GridCell.Tab.0.bottom" timestamp="1606672368677">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="348" key="GridCell.Tab.0.bottom/0.0.1920.1040/-1080.-446.1080.1880@0.0.1920.1040" timestamp="1606641431740" />
+    <state width="1877" height="384" key="GridCell.Tab.0.bottom/0.0.1920.1040/-1080.-446.1080.1880@0.0.1920.1040" timestamp="1606672368677" />
     <state width="1877" height="196" key="GridCell.Tab.0.bottom/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1601286682161" />
-    <state width="1877" height="348" key="GridCell.Tab.0.center" timestamp="1606641431740">
+    <state width="1877" height="384" key="GridCell.Tab.0.center" timestamp="1606672368677">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="348" key="GridCell.Tab.0.center/0.0.1920.1040/-1080.-446.1080.1880@0.0.1920.1040" timestamp="1606641431740" />
+    <state width="1877" height="384" key="GridCell.Tab.0.center/0.0.1920.1040/-1080.-446.1080.1880@0.0.1920.1040" timestamp="1606672368677" />
     <state width="1877" height="196" key="GridCell.Tab.0.center/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1601286682161" />
-    <state width="1877" height="348" key="GridCell.Tab.0.left" timestamp="1606641431740">
+    <state width="1877" height="384" key="GridCell.Tab.0.left" timestamp="1606672368677">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="348" key="GridCell.Tab.0.left/0.0.1920.1040/-1080.-446.1080.1880@0.0.1920.1040" timestamp="1606641431740" />
+    <state width="1877" height="384" key="GridCell.Tab.0.left/0.0.1920.1040/-1080.-446.1080.1880@0.0.1920.1040" timestamp="1606672368677" />
     <state width="1877" height="196" key="GridCell.Tab.0.left/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1601286682161" />
-    <state width="1877" height="348" key="GridCell.Tab.0.right" timestamp="1606641431740">
+    <state width="1877" height="384" key="GridCell.Tab.0.right" timestamp="1606672368677">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="348" key="GridCell.Tab.0.right/0.0.1920.1040/-1080.-446.1080.1880@0.0.1920.1040" timestamp="1606641431740" />
+    <state width="1877" height="384" key="GridCell.Tab.0.right/0.0.1920.1040/-1080.-446.1080.1880@0.0.1920.1040" timestamp="1606672368677" />
     <state width="1877" height="196" key="GridCell.Tab.0.right/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1601286682161" />
-    <state width="1877" height="348" key="GridCell.Tab.1.bottom" timestamp="1606641431740">
+    <state width="1877" height="384" key="GridCell.Tab.1.bottom" timestamp="1606672368677">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="348" key="GridCell.Tab.1.bottom/0.0.1920.1040/-1080.-446.1080.1880@0.0.1920.1040" timestamp="1606641431740" />
-    <state width="1877" height="348" key="GridCell.Tab.1.center" timestamp="1606641431740">
+    <state width="1877" height="384" key="GridCell.Tab.1.bottom/0.0.1920.1040/-1080.-446.1080.1880@0.0.1920.1040" timestamp="1606672368677" />
+    <state width="1877" height="384" key="GridCell.Tab.1.center" timestamp="1606672368677">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="348" key="GridCell.Tab.1.center/0.0.1920.1040/-1080.-446.1080.1880@0.0.1920.1040" timestamp="1606641431740" />
-    <state width="1877" height="348" key="GridCell.Tab.1.left" timestamp="1606641431740">
+    <state width="1877" height="384" key="GridCell.Tab.1.center/0.0.1920.1040/-1080.-446.1080.1880@0.0.1920.1040" timestamp="1606672368677" />
+    <state width="1877" height="384" key="GridCell.Tab.1.left" timestamp="1606672368677">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="348" key="GridCell.Tab.1.left/0.0.1920.1040/-1080.-446.1080.1880@0.0.1920.1040" timestamp="1606641431740" />
-    <state width="1877" height="348" key="GridCell.Tab.1.right" timestamp="1606641431740">
+    <state width="1877" height="384" key="GridCell.Tab.1.left/0.0.1920.1040/-1080.-446.1080.1880@0.0.1920.1040" timestamp="1606672368677" />
+    <state width="1877" height="384" key="GridCell.Tab.1.right" timestamp="1606672368677">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="348" key="GridCell.Tab.1.right/0.0.1920.1040/-1080.-446.1080.1880@0.0.1920.1040" timestamp="1606641431740" />
+    <state width="1877" height="384" key="GridCell.Tab.1.right/0.0.1920.1040/-1080.-446.1080.1880@0.0.1920.1040" timestamp="1606672368677" />
     <state x="461" y="164" key="SettingsEditor" timestamp="1606588167434">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="461" y="164" key="SettingsEditor/0.0.1920.1040/-1080.-446.1080.1880@0.0.1920.1040" timestamp="1606588167434" />
     <state x="461" y="164" key="SettingsEditor/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1601280917379" />
-    <state x="552" y="253" key="Vcs.Push.Dialog.v2" timestamp="1606624983361">
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2" timestamp="1606642612975">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="552" y="253" key="Vcs.Push.Dialog.v2/0.0.1920.1040/-1080.-446.1080.1880@0.0.1920.1040" timestamp="1606624983361" />
-    <state width="968" height="528" key="XDebugger.FullValuePopup" timestamp="1606634595030">
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2/0.0.1920.1040/-1080.-446.1080.1880@0.0.1920.1040" timestamp="1606642612975" />
+    <state width="968" height="528" key="XDebugger.FullValuePopup" timestamp="1606672360017">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="968" height="528" key="XDebugger.FullValuePopup/0.0.1920.1040/-1080.-446.1080.1880@0.0.1920.1040" timestamp="1606634595030" />
+    <state width="968" height="528" key="XDebugger.FullValuePopup/0.0.1920.1040/-1080.-446.1080.1880@0.0.1920.1040" timestamp="1606672360017" />
     <state x="828" y="364" key="cloudConfig.SelfSettingsDialog" timestamp="1606586009137">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -435,11 +442,11 @@
     <state x="-604" y="6" key="ftp.server.browser/0.0.1920.1040/-1080.-446.1080.1880@-1080.-446.1080.1880" timestamp="1602329546519" />
     <state x="846" y="59" width="793" height="526" key="ftp.server.browser/0.0.1920.1040/-1080.-446.1080.1880@0.0.1920.1040" timestamp="1606586082344" />
     <state x="846" y="250" width="446" height="604" key="ftp.server.browser/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1601280902895" />
-    <state x="622" y="225" width="672" height="679" key="search.everywhere.popup" timestamp="1606588579735">
+    <state x="622" y="225" width="672" height="679" key="search.everywhere.popup" timestamp="1606670621808">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="-730" y="-39" width="378" height="1226" key="search.everywhere.popup/0.0.1920.1040/-1080.-446.1080.1880@-1080.-446.1080.1880" timestamp="1602329210682" />
-    <state x="622" y="225" width="672" height="679" key="search.everywhere.popup/0.0.1920.1040/-1080.-446.1080.1880@0.0.1920.1040" timestamp="1606588579735" />
+    <state x="622" y="225" width="672" height="679" key="search.everywhere.popup/0.0.1920.1040/-1080.-446.1080.1880@0.0.1920.1040" timestamp="1606670621808" />
     <state x="623" y="225" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1601278472826" />
   </component>
   <component name="XDebuggerManager">
@@ -462,39 +469,24 @@
           <option name="timeStamp" value="65" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/main/main(PolicyGradient).py</url>
-          <line>228</line>
-          <option name="timeStamp" value="127" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/main/main(PolicyGradient).py</url>
-          <line>214</line>
-          <option name="timeStamp" value="129" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/main/main(PolicyGradient).py</url>
-          <line>307</line>
-          <option name="timeStamp" value="133" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/main/main(LSTM_ActorCritic).py</url>
+          <url>file://$PROJECT_DIR$/deprecated/main(LSTM_ActorCritic).py</url>
           <line>268</line>
           <option name="timeStamp" value="138" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/main/main(LSTM_PolicyGradient).py</url>
+          <url>file://$PROJECT_DIR$/deprecated/main(LSTM_PolicyGradient).py</url>
           <line>361</line>
           <option name="timeStamp" value="139" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/main/environment.py</url>
-          <line>120</line>
-          <option name="timeStamp" value="143" />
+          <url>file://$PROJECT_DIR$/main/driver_actor_critic.py</url>
+          <line>53</line>
+          <option name="timeStamp" value="183" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/main/environment.py</url>
-          <line>45</line>
-          <option name="timeStamp" value="147" />
+          <url>file://$PROJECT_DIR$/main/rl_network.py</url>
+          <line>65</line>
+          <option name="timeStamp" value="186" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
@@ -503,14 +495,18 @@
         <watch expression="replay.action()" language="Python" />
         <watch expression="tf_agent.trainable_variables[1]" />
         <watch expression="copied_tf_agent.trainable_variables[1]" />
+        <watch expression="self.life" language="Python" />
       </configuration>
     </watches-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/space_filling_curve_with_RF_learning$PPO_continuous.coverage" NAME="PPO_continuous Coverage Results" MODIFIED="1603119842592" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/reinforcement_learning_review" />
     <SUITE FILE_PATH="coverage/space_filling_curve_with_RF_learning$pytest_for_rl_curve_test_env.coverage" NAME="pytest for rl_curve.test_env Coverage Results" MODIFIED="1601286589596" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tensorflow_curve" />
-    <SUITE FILE_PATH="coverage/space_filling_curve_with_RF_learning$main_PolicyGradient_.coverage" NAME="main(PolicyGradient) Coverage Results" MODIFIED="1606633943158" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/main" />
+    <SUITE FILE_PATH="coverage/space_filling_curve_with_RF_learning$driver_policy_gradient__1_.coverage" NAME="driver_policy_gradient (1) Coverage Results" MODIFIED="1606671089751" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/main" />
+    <SUITE FILE_PATH="coverage/space_filling_curve_with_RF_learning$main_PolicyGradient_.coverage" NAME="driver_policy_gradient Coverage Results" MODIFIED="1606653898643" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/main" />
     <SUITE FILE_PATH="coverage/space_filling_curve_with_RF_learning$main_ActorCritic_.coverage" NAME="main(ActorCritic) Coverage Results" MODIFIED="1606633888354" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/main" />
+    <SUITE FILE_PATH="coverage/space_filling_curve_with_RF_learning$agent.coverage" NAME="agent Coverage Results" MODIFIED="1606650372311" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/main" />
+    <SUITE FILE_PATH="coverage/space_filling_curve_with_RF_learning$driver_actor_critic.coverage" NAME="driver_actor_critic Coverage Results" MODIFIED="1606672347500" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/main" />
     <SUITE FILE_PATH="coverage/space_filling_curve_with_RF_learning$main_LSTM_ActorCritic_.coverage" NAME="main(LSTM_ActorCritic) Coverage Results" MODIFIED="1606635606822" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/main" />
     <SUITE FILE_PATH="coverage/space_filling_curve_with_RF_learning$main_LSTM_PolicyGradient_.coverage" NAME="main(LSTM_PolicyGradient) Coverage Results" MODIFIED="1606636144629" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/main" />
     <SUITE FILE_PATH="coverage/space_filling_curve_with_RF_learning$Q_Network.coverage" NAME="Q-Network Coverage Results" MODIFIED="1601286027337" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />

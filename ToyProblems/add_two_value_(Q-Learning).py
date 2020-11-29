@@ -87,7 +87,8 @@ def discount_rewards(r):
     # Normalize reward to avoid a big variability in rewards
     mean = np.mean(discounted_r)
     std = np.std(discounted_r)
-    if std == 0: std = 1
+    if std == 0:
+        std = 1
     normalized_discounted_r = (discounted_r - mean) / std
     return normalized_discounted_r
 

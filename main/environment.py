@@ -30,6 +30,8 @@ class CurveEnvironment:
         self.side = int(np.sqrt(self.total_grid))  # grid 세로 또는 가로 개수
         self.init_curve = init_curve
         self.normalized = normalize
+        self.debug = dict()         # 디버그용 정보가 담긴 dictionary. 주로, cost 정보를 담음
+
 
         np.random.seed(seed)
         # 임의의 데이터 분포 생성
@@ -37,15 +39,16 @@ class CurveEnvironment:
         self.data_coord = np.array(
             list(map(lambda x: list([x // self.side, x % self.side]), self.data_index)))  # 생성된 데이터의 좌표 구성
 
+        # episode 종료 기준
+        self.life = life  # life 가 0에 도달하면 episode 종료
+        self.ori_life = life
+
         # 커브 생성
         self.curve_coord = self.reset()
-        if normalize:  # do feature scaling
-            self.curve_coord = CurveEnvironment.normalize_state(self.curve_coord)
 
         # reward 측정용 기준
         self.min_cost = self.get_l2_norm_locality()
         self.prev_cost = self.min_cost
-        self.life = life  # life 가 0에 도달하면 episode 종료
 
     @staticmethod
     def normalize_state(state):
@@ -79,8 +82,10 @@ class CurveEnvironment:
     def reset(self):
         """
         n 차원 곡선 좌표 list를 생성하고, 해당 좌표의 활성화 데이터 여부를 표시하는 함수
+        또한 reward 측정을 위한 기준을 초기화함
         :return: 
         """
+
         self.curve_coord = self.build_init_coords()  # 곡선을 n 차원 좌표 list로 구성
         avail = np.zeros(shape=(self.total_grid, 1), dtype=np.int)
 
@@ -89,6 +94,14 @@ class CurveEnvironment:
             avail[index] = 1  # 활성화 데이터 여부 표시
 
         self.curve_coord = np.concatenate((avail, self.curve_coord), axis=1)
+
+        if self.normalized:  # do feature scaling
+            self.curve_coord = CurveEnvironment.normalize_state(self.curve_coord)
+
+        self.min_cost = self.get_l2_norm_locality()
+        self.prev_cost = self.min_cost
+        self.life = self.ori_life
+
         return self.curve_coord
 
     def plot_curve(self, ):
@@ -132,20 +145,21 @@ class CurveEnvironment:
         :return: 
         """
         curr_cost = self.get_l2_norm_locality()
-        reward = torch.zeros([0])
+        reward = 0
+        self.debug['cost'] = curr_cost
 
         if self.min_cost < curr_cost:  # 최소 cost 보다 작아지지 못할 경우
             if self.prev_cost < curr_cost:
                 self.life -= 1
-                reward = torch.tensor([-1])
+                reward = -1
             elif self.prev_cost > curr_cost:  # 최소 cost 보다 작아지지 못했지만, 이전 커브 cost 보다는 작아졌을 경우
-                reward = torch.tensor([0.25])
+                reward = 0
             else:
-                reward = torch.tensor([0])
+                reward = 0
         elif self.prev_cost == curr_cost:
-            reward = torch.tensor([0.0])
+            reward = 0
         else:
-            reward = torch.tensor([1])
+            reward = max(1, abs(curr_cost - self.min_cost))
             self.min_cost = curr_cost  # 최소 cost 갱신
         self.prev_cost = curr_cost  # 이전 cost 갱신
 
@@ -154,11 +168,13 @@ class CurveEnvironment:
     def step(self, action: tuple):
         a, b = action
         self.curve_coord[[a, b]] = self.curve_coord[[b, a]]     # grid 순서 swap
+        reward = self.get_reward()
 
         done = False
         if self.life == 0:
             done = True
-        return done
+
+        return self.curve_coord, reward, done, self.debug
 
 
 if '__main__' == __name__:
