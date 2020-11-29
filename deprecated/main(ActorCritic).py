@@ -244,7 +244,7 @@ class Agent():
         return value
 
 
-class Env():
+class Env:
     def __init__(self, data_index, order, max_episode, max_step, init_curve, dimension=2):
         self.DIM = dimension
         self.iteration = order
