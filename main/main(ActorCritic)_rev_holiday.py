@@ -7,6 +7,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from itertools import combinations
 from torch.utils.tensorboard import SummaryWriter
+from utils import *
 
 '''
     * 완전 다른 action
@@ -38,115 +39,6 @@ OFFSET = 0  # 기존 state 좌표 값 외에 신경망에 추가로 들어갈 �
 NUM_PROCESSES = 1  # 동시 실행 환경 수
 KERNEL_SIZE = [-1, -1, 2, 3, 4, 4]  # ORDER 가 2 일때 부터 시작하는 kernel size
 NUM_CHANNEL = 9
-
-
-class HilbertCurve():
-    def __init__(self, dimension):
-        self.DIM = dimension
-
-    # convert (x,y) to d
-    def xy2d(self, n, x, y):
-        d = 0
-        s = n // 2
-        while s > 0:
-            rx = ((x & s) > 0);
-            ry = ((y & s) > 0);
-            d += s * s * ((3 * rx) ^ ry)
-            x, y = self.rot(n, x, y, rx, ry)
-            s = s // 2
-        return d
-
-    def d2xy(self, n, d):
-        t = d
-        x = 0
-        y = 0
-        s = 1
-        while s < n:
-            rx = 1 & t // 2
-            ry = 1 & t ^ rx
-            x, y = self.rot(s, x, y, rx, ry)
-            x += s * rx
-            y += s * ry
-            t = t // 4
-            s *= 2
-        return [x, y]
-
-    def rot(self, n, x, y, rx, ry):
-        if (ry == 0):
-            if rx == 1:
-                x = n - 1 - x
-                y = n - 1 - y
-            t = x
-            x = y
-            y = t
-        return x, y
-
-    def getCoords(self, order):
-        N = 2 ** (order * self.DIM)
-        coordinates = list(map(self.d2xy, [N] * (N), range(N)))
-        return coordinates
-
-
-'''
-생성된 SFC와 비교하기 위한 Z curve
-'''
-
-
-class ZCurve:
-    def __init__(self, dimension):
-        self.DIM = dimension
-
-    def part1by1(self, n):
-        n &= 0x0000ffff
-        n = (n | (n << 8)) & 0x00FF00FF
-        n = (n | (n << 4)) & 0x0F0F0F0F
-        n = (n | (n << 2)) & 0x33333333
-        n = (n | (n << 1)) & 0x55555555
-        return n
-
-    def unpart1by1(self, n):
-        n &= 0x55555555
-        n = (n ^ (n >> 1)) & 0x33333333
-        n = (n ^ (n >> 2)) & 0x0f0f0f0f
-        n = (n ^ (n >> 4)) & 0x00ff00ff
-        n = (n ^ (n >> 8)) & 0x0000ffff
-        return n
-
-    def part1by2(self, n):
-        n &= 0x000003ff
-        n = (n ^ (n << 16)) & 0xff0000ff
-        n = (n ^ (n << 8)) & 0x0300f00f
-        n = (n ^ (n << 4)) & 0x030c30c3
-        n = (n ^ (n << 2)) & 0x09249249
-        return n
-
-    def unpart1by2(self, n):
-        n &= 0x09249249
-        n = (n ^ (n >> 2)) & 0x030c30c3
-        n = (n ^ (n >> 4)) & 0x0300f00f
-        n = (n ^ (n >> 8)) & 0xff0000ff
-        n = (n ^ (n >> 16)) & 0x000003ff
-        return n
-
-    # 2 차원 데이터를 비트로 변환하고 교차 생성
-    def interleave2(self, x, y):
-        return self.part1by1(x) | (self.part1by1(y) << 1)
-
-    # 교차 생성된 값을 2 차원 데이터로 되돌림
-    def deinterleave2(self, n):
-        return [self.unpart1by1(n), self.unpart1by1(n >> 1)]
-
-    def interleave3(self, x, y, z):
-        return self.part1by2(x) | (self.part1by2(y) << 1) | (self.part1by2(z) << 2)
-
-    def deinterleave3(self, n):
-        return [self.unpart1by2(n), self.unpart1by2(n >> 1), self.unpart1by2(n >> 2)]
-
-    def getCoords(self, order):
-        # temp_index = np.arange(2**(self.DIM * order))
-        coords = list(map(self.deinterleave2, np.arange(2 ** (self.DIM * order))))
-        return np.array(coords)
-
 
 '''
 초기 SFC 생성 함수 : 이후 class 형태로 바꿀거임
@@ -183,32 +75,6 @@ def getGridCooridnates(num):
         grid_ticks = temp
     grid_ticks -= 0.5
     return grid_ticks
-
-
-def showPoints(data, ax=None, index=True):
-    ax = ax or plt.gca()
-    pmax = np.ceil(np.log2(np.max(data)))
-    pmax = pmax.astype(int)
-    offset = 0.5
-    cmin = 0
-    cmax = 2 ** (pmax) - 1
-    side = np.sqrt(2 ** (ORDER * DIM)).astype(int)
-
-    grid_ticks = getGridCooridnates(pmax)
-
-    ax.set_yticks(grid_ticks, minor=False)
-    ax.set_xticks(grid_ticks, minor=False)
-    plt.xlim(cmin - offset, cmax + offset)
-    plt.ylim(cmin - offset, cmax + offset)
-    ax.grid(alpha=0.5)
-
-    if index:
-        coordinates = np.array(list(map(lambda x: list([x // (side), x % (side)]), data)))
-    else:
-        coordinates = data
-
-    ax.plot(coordinates[:, 0], coordinates[:, 1], 'o')
-    print(f'pmax: {pmax}')
 
 
 def showlineByIndexorder(data, ax=None, index=True):
@@ -697,13 +563,13 @@ def main():
     # 초기 curve 와 활성화 데이터 plot
     if NOTEBOOK and False:
         fig, ax = plt.subplots(1, figsize=(10, 10))
-        showPoints(sample_data, ax, index=False)
+        show_points(sample_data, ax, index=False)
 
         if INIT_CURVE == 'hilbert':
-            showlineByIndexorder(np.array(HilbertCurve(DIM).getCoords(ORDER)), ax, index=False)
+            show_line_by_index_order(np.array(HilbertCurve(DIM).getCoords(ORDER)), ax, index=False)
         elif INIT_CURVE == 'zig-zag':
             grid_index = np.arange(2 ** (ORDER * DIM))
-            showlineByIndexorder(grid_index, ax)
+            show_line_by_index_order(grid_index, ax)
         plt.show(block=True)
 
     env = Env(data_index=scan_index, order=ORDER, max_episode=MAX_EPISODE, max_step=10,
@@ -713,8 +579,8 @@ def main():
     print(f'Recorded the minimum reverse of the locality :{result_value}')
     if NOTEBOOK:
         fig, ax = plt.subplots(1, figsize=(10, 10))
-        showPoints(sample_data, ax, index=False)
-        showlineByIndexorder(result_state[:, 1:3].reshape([-1, 2]), ax, index=False)
+        show_points(sample_data, ax, index=False)
+        show_line_by_index_order(result_state[:, 1:3].reshape([-1, 2]), ax, index=False)
         plt.show(block=True)
 
     # Test trained model
@@ -729,8 +595,8 @@ def main():
 
         if NOTEBOOK:
             fig, ax = plt.subplots(1, figsize=(10, 10))
-            showPoints(sample_data, ax, index=False)
-            showlineByIndexorder(result_state[:, 1:3].reshape([-1, 2]), ax, index=False)
+            show_points(sample_data, ax, index=False)
+            show_line_by_index_order(result_state[:, 1:3].reshape([-1, 2]), ax, index=False)
             plt.show(block=True)
     return 0
 

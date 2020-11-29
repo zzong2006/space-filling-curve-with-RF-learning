@@ -6,6 +6,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from itertools import combinations
 from curve import HilbertCurve, ZCurve
+from utils import *
 
 '''
  * 08-26 : state 를 normalize 한 버전. Locality 계산을 위해 original 버전은 지울 수 없고, 
@@ -59,44 +60,6 @@ def getGridCooridnates(num):
     return grid_ticks
 
 
-def showPoints(data, ax=None, index=True):
-    ax = ax or plt.gca()
-    pmax = np.ceil(np.log2(np.max(sample_data)))
-    pmax = pmax.astype(int)
-    offset = 0.5
-    cmin = 0
-    cmax = 2 ** (pmax) - 1
-
-    grid_ticks = getGridCooridnates(pmax)
-
-    ax.set_yticks(grid_ticks, minor=False)
-    ax.set_xticks(grid_ticks, minor=False)
-    plt.xlim(cmin - offset, cmax + offset)
-    plt.ylim(cmin - offset, cmax + offset)
-    ax.grid(alpha=0.5)
-
-    if index:
-        coordinates = np.array(list(map(lambda x: list([x // (side), x % (side)]), data)))
-    else:
-        coordinates = data
-
-    ax.plot(coordinates[:, 0], coordinates[:, 1], 'o')
-    # plt.show()
-
-    print(f'pmax: {pmax}')
-    # return ax
-
-
-def showlineByIndexorder(data, ax=None, index=True):
-    ax = ax or plt.gca()
-    if index:
-        coordinates = np.array(list(map(lambda x: list([x // (side), x % (side)]), data)))
-    else:
-        coordinates = data
-
-    ax.plot(coordinates[:, 0], coordinates[:, 1], linewidth=1, linestyle='--')
-
-
 def changeIndexOrder(indexD, a, b):
     a = a.cpu().numpy().astype(int).item()
     b = b.cpu().numpy().astype(int).item()
@@ -148,11 +111,12 @@ class SFCNet(nn.Module):
         self.second_add = nn.Linear(self.hidden_size, self.hidden_size)
         self.second_out = nn.Linear(self.hidden_size, output_size)
 
-    def forward(self, input):
-        output = torch.relu(self.first(input))
+    def forward(self, input_val):
+        output = torch.relu(self.first(input_val))
         output = torch.relu(self.first_add(output))
         first = self.first_out(output)
         first_output = torch.softmax(first, dim=-1)
+
         output = torch.relu(self.second(output))
         second = torch.relu(self.second_add(output))
         second = self.second_out(second)
@@ -160,12 +124,14 @@ class SFCNet(nn.Module):
         return first_output, second_output
 
 
-class Brain():
+class Brain:
     def __init__(self, num_states, num_actions, hidden_size=None):
         self.num_actions = num_actions
 
         self.model = SFCNet(num_states, hidden_size, num_actions)
-        if CUDA: self.model.cuda()
+        if CUDA:
+            self.model.cuda()
+
         self.optimizer = optim.Adam(self.model.parameters(), lr=LEARNING_RATE)
         print(self.model)
 
@@ -190,7 +156,6 @@ class Brain():
         responsible_outputs_1 = output_1.gather(1, indexes_1.view(-1, 1))
         responsible_outputs_2 = output_2.gather(1, indexes_2.view(-1, 1))
 
-        # print(loss)
         self.model.train()
         loss_1 = -torch.sum(torch.log(responsible_outputs_1.view(-1)) * reward)
         loss_2 = -torch.sum(torch.log(responsible_outputs_2.view(-1)) * reward)
@@ -212,7 +177,7 @@ class Brain():
             return torch.cuda.FloatTensor([[a, b]])
 
 
-class Agent():
+class Agent:
     def __init__(self, num_states, num_actions):
         self.brain = Brain(num_states, num_actions)
 
@@ -224,7 +189,7 @@ class Agent():
         return action
 
 
-class Env():
+class Env:
     def __init__(self, data_index, order, max_episode, max_step, dimension=2):
         self.DIM = dimension
         self.iteration = order
@@ -455,9 +420,9 @@ scan_index = np.random.choice(2 ** (DIM * ORDER), size=DATA_SIZE, replace=False)
 sample_data = np.array(list(map(lambda x: list([x // (side), x % (side)]), scan_index)))
 # print(sample_index,'\n', sample_data)
 fig, ax = plt.subplots(1, figsize=(10, 10))
-showPoints(sample_data, ax, index=False)
+# show_points(sample_data, ax, index=False)
 grid_index = np.arange(2 ** (ORDER * DIM))
-showlineByIndexorder(grid_index, ax)
+# show_line_by_index_order(grid_index, ax)
 # plt.show(block=True)
 
 env = Env(data_index=scan_index, order=ORDER, max_episode=5000, max_step=1000, dimension=DIM)

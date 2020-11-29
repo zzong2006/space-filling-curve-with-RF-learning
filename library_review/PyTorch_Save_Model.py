@@ -1,3 +1,6 @@
+"""
+    PyTorch 모델의 parameter들을 저장하고 불러오는 연습
+"""
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
@@ -46,6 +49,7 @@ class Net(nn.Module):
 model = TheModelClass()
 model2 = Net(16, 50, 8, 1e-4)
 model3 = Net(2, 100, 1, 1e-4)
+# 모델 불러오기
 loaded_model = torch.load('model.pt')
 # Initialize optimizer
 optimizer = optim.SGD(model.parameters(), lr=0.001, momentum=0.9)

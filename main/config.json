@@ -1,0 +1,24 @@
+{
+  "DEFAULT": {
+    "NOTEBOOK" : "True",
+    "TEST" : "False"
+  },
+  "CURVE" : {
+    "DIM" : 2,
+    "ORDER" : 3,
+    "DATA_SIZE" : 6,
+    "MAX_STEP" : 10,
+    "MAX_EPISODE" : 3000,
+    "INIT_CURVE" : "zig-zag"
+  },
+  "HYPER_PARAMETER" : {
+    "LEARNING_RATE" : 1e-4,
+    "GAMMA" : 0.99,
+    "ENTROPY_COEFFICIENT" : 0.001,
+    "VALUE_COEFFICIENT" : 0.5,
+    "STEP_SIZE" : 5,
+    "GRAD_GRIPPING" : 0.5,
+    "CNN_CHANNEL_NUM" : 7,
+    "NUM_OF_PROCESSES" : 4
+  }
+}

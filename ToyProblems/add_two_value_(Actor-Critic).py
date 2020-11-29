@@ -1,3 +1,5 @@
+
+
 import torch
 import torch.nn as nn
 import numpy as np
@@ -10,7 +12,7 @@ import matplotlib.pyplot as plt
 GAMMA = 0.99
 
 
-class Environment():
+class Environment:
     def __init__(self):
         self.a = 1.232
         self.b = 1.545

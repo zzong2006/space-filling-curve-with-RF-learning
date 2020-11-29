@@ -10,6 +10,7 @@ from torch.utils.tensorboard import SummaryWriter
 import matplotlib.image as mpimg
 from torch.autograd import Variable
 from multiprocessing import Process, Pipe
+from utils import *
 
 '''
  * 08-22 : 기존 방식은 locality가 조금이라도 떨어지면 바로 다음 episode로 넘어갔기 때문에 충분히 학습할 여유가 되지않음
@@ -37,138 +38,11 @@ from multiprocessing import Process, Pipe
 '''
 
 
-NOTEBOOK = True
-TEST = False
 CUDA = torch.cuda.is_available()
 DEVICE = "cuda:0" if torch.cuda.is_available() else "cpu"
-# ------------ Curve ------------------------- #
-DIM = 2
-ORDER = 3
 side = np.sqrt(2 ** (ORDER * DIM)).astype('int')
 INDEX_TO_COORDINATE = np.array(list(map(lambda x: list([x // side, x % side]), np.arange(0, 2 ** (ORDER * DIM)))))
-DATA_SIZE = 6
-MAX_STEP = 10
-MAX_EPISODE = 3000
-INIT_CURVE = 'zig-zag'
-NUM_ADVANCED_STEP = 5  # 총 보상을 계산할 때 Advantage 학습을 할 단계 수
-# -------- Hyper Parameter --------------- #
-LEARNING_RATE = 1e-4  # 학습률
-GAMMA = 0.99  # 시간 할인율
-ENTROPY_COEFF = 0.001
-VALUE_COEFF = 0.5
-MAX_GRAD_NORM = 40.
-OFFSET = 0  # 기존 state 좌표 값 외에 신경망에 추가로 들어갈 정보의 갯수
-NUM_PROCESSES = 4  # 동시 실행 환경 수
 KERNEL_SIZE = [-1, -1, 2, 3, 4, 4]  # ORDER 가 2 일때 부터 시작하는 kernel size
-NUM_CHANNEL =  7
-
-
-class HilbertCurve():
-    def __init__(self, dimension):
-        self.DIM = dimension
-
-    # convert (x,y) to d
-    def xy2d(self, n, x, y):
-        d = 0
-        s = n // 2
-        while s > 0:
-            rx = ((x & s) > 0);
-            ry = ((y & s) > 0);
-            d += s * s * ((3 * rx) ^ ry)
-            x, y = self.rot(n, x, y, rx, ry)
-            s = s // 2
-        return d
-
-    def d2xy(self, n, d):
-        t = d
-        x = 0
-        y = 0
-        s = 1
-        while s < n:
-            rx = 1 & t // 2
-            ry = 1 & t ^ rx
-            x, y = self.rot(s, x, y, rx, ry)
-            x += s * rx
-            y += s * ry
-            t = t // 4
-            s *= 2
-        return [x, y]
-
-    def rot(self, n, x, y, rx, ry):
-        if (ry == 0):
-            if rx == 1:
-                x = n - 1 - x
-                y = n - 1 - y
-            t = x
-            x = y
-            y = t
-        return x, y
-
-    def getCoords(self, order):
-        N = 2 ** (order * self.DIM)
-        coordinates = list(map(self.d2xy, [N] * (N), range(N)))
-        return coordinates
-
-
-'''
-생성된 SFC와 비교하기 위한 Z curve
-'''
-class ZCurve():
-    def __init__(self, dimension):
-        self.DIM = dimension
-
-    def part1by1(self, n):
-        n &= 0x0000ffff
-        n = (n | (n << 8)) & 0x00FF00FF
-        n = (n | (n << 4)) & 0x0F0F0F0F
-        n = (n | (n << 2)) & 0x33333333
-        n = (n | (n << 1)) & 0x55555555
-        return n
-
-    def unpart1by1(self, n):
-        n &= 0x55555555
-        n = (n ^ (n >> 1)) & 0x33333333
-        n = (n ^ (n >> 2)) & 0x0f0f0f0f
-        n = (n ^ (n >> 4)) & 0x00ff00ff
-        n = (n ^ (n >> 8)) & 0x0000ffff
-        return n
-
-    def part1by2(self, n):
-        n &= 0x000003ff
-        n = (n ^ (n << 16)) & 0xff0000ff
-        n = (n ^ (n << 8)) & 0x0300f00f
-        n = (n ^ (n << 4)) & 0x030c30c3
-        n = (n ^ (n << 2)) & 0x09249249
-        return n
-
-    def unpart1by2(self, n):
-        n &= 0x09249249
-        n = (n ^ (n >> 2)) & 0x030c30c3
-        n = (n ^ (n >> 4)) & 0x0300f00f
-        n = (n ^ (n >> 8)) & 0xff0000ff
-        n = (n ^ (n >> 16)) & 0x000003ff
-        return n
-
-    # 2 차원 데이터를 비트로 변환하고 교차 생성
-    def interleave2(self, x, y):
-        return self.part1by1(x) | (self.part1by1(y) << 1)
-
-    # 교차 생성된 값을 2 차원 데이터로 되돌림
-    def deinterleave2(self, n):
-        return [self.unpart1by1(n), self.unpart1by1(n >> 1)]
-
-    def interleave3(self, x, y, z):
-        return self.part1by2(x) | (self.part1by2(y) << 1) | (self.part1by2(z) << 2)
-
-    def deinterleave3(self, n):
-        return [self.unpart1by2(n), self.unpart1by2(n >> 1), self.unpart1by2(n >> 2)]
-
-    def getCoords(self, order):
-        # temp_index = np.arange(2**(self.DIM * order))
-        coords = list(map(self.deinterleave2, np.arange(2 ** (self.DIM * order))))
-        return np.array(coords)
-
-
 '''
 초기 SFC 생성 함수 : 이후 class 형태로 바꿀거임
 '''

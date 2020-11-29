@@ -5,6 +5,8 @@ import matplotlib.pyplot as plt
 '''
 초기 SFC 생성 함수 : 이후 class 형태로 바꿀거임
 '''
+
+
 def build_init_coords(order, dimension, init_curve):
     if init_curve == 'zig-zag':
         whole_index = np.arange(2 ** (order * dimension))
@@ -23,7 +25,7 @@ Arg : pmax 값
 '''
 
 
-def getGridCooridnates(num):
+def get_grid_coordinate(num):
     grid_ticks = np.array([0, 2 ** num])
     for _ in range(num):
         temp = np.array([])
@@ -37,16 +39,15 @@ def getGridCooridnates(num):
     return grid_ticks
 
 
-def showPoints(data, order, dim,  ax=None, index=True):
+def show_points(data, side, ax=None, index=True):
     ax = ax or plt.gca()
     pmax = np.ceil(np.log2(np.max(data)))
     pmax = pmax.astype(int)
     offset = 0.5
     cmin = 0
     cmax = 2 ** (pmax) - 1
-    side = np.sqrt(2 ** (order * dim)).astype(int)
 
-    grid_ticks = getGridCooridnates(pmax)
+    grid_ticks = get_grid_coordinate(pmax)
 
     ax.set_yticks(grid_ticks, minor=False)
     ax.set_xticks(grid_ticks, minor=False)
@@ -55,7 +56,7 @@ def showPoints(data, order, dim,  ax=None, index=True):
     ax.grid(alpha=0.5)
 
     if index:
-        coordinates = np.array(list(map(lambda x: list([x // (side), x % (side)]), data)))
+        coordinates = np.array(list(map(lambda x: list([x // side, x % side]), data)))
     else:
         coordinates = data
 
@@ -63,10 +64,10 @@ def showPoints(data, order, dim,  ax=None, index=True):
     print(f'pmax: {pmax}')
 
 
-def showlineByIndexorder(data, index_to_coordinate, ax=None, index=True):
+def show_line_by_index_order(data, ax=None, index_to_coordinate=None):
     ax = ax or plt.gca()
 
-    if index:
+    if index_to_coordinate:
         coordinates = index_to_coordinate[data]
     else:
         coordinates = data

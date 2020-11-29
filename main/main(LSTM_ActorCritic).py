@@ -359,13 +359,13 @@ if __name__ == '__main__':
 
     if NOTEBOOK:
         fig, ax = plt.subplots(1, figsize=(10, 10))
-        showPoints(sample_data, order=ORDER, dim=DIM, ax=ax, index=False)
+        show_points(sample_data, order=ORDER, dim=DIM, ax=ax, index=False)
 
         if INIT_CURVE == 'hilbert':
-            showlineByIndexorder(np.array(HilbertCurve(DIM).getCoords(ORDER)), INDEX_TO_COORDINATE, ax, index=False)
+            show_line_by_index_order(np.array(HilbertCurve(DIM).getCoords(ORDER)), INDEX_TO_COORDINATE, ax, index=False)
         elif INIT_CURVE == 'zig-zag':
             grid_index = np.arange(NUM_OF_CELLS)
-            showlineByIndexorder(grid_index, INDEX_TO_COORDINATE, ax)
+            show_line_by_index_order(grid_index, INDEX_TO_COORDINATE, ax)
         plt.show(block=True)
 
     env = Env(data_index=scan_index, max_episode=MAX_EPISODE, max_step=MAX_STEP, init_curve=INIT_CURVE)

@@ -233,7 +233,7 @@ class Brain:
         return action
 
 
-class Agent():
+class Agent:
     def __init__(self, num_states, num_actions):
         self.brain = Brain(num_states, num_actions)
 
