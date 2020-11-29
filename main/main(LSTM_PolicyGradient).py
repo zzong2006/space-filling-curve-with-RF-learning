@@ -31,13 +31,13 @@ NOTEBOOK = True
 TEST = False
 DEVICE = "cuda:0" if torch.cuda.is_available() else "cpu"
 DIM = 2
-ORDER = 2
+ORDER = 3
 NUM_OF_CELLS = 2 ** (DIM * ORDER)
 side = np.sqrt(NUM_OF_CELLS).astype('int')
 INDEX_TO_COORDINATE = np.array(list(map(lambda x: list([x // side, x % side]), np.arange(0, NUM_OF_CELLS))))
-DATA_SIZE = 10
+DATA_SIZE = 15
 MAX_EPISODE = 1000
-MAX_STEP = 5
+MAX_STEP = 20
 INIT_CURVE = 'zig-zag'
 LEARNING_RATE = 5e-4  # 학습률
 OFFSET = 0  # 기존 state 좌표 값 외에 신경망에 추가로 들어갈 정보의 갯수
@@ -115,6 +115,7 @@ def showlineByIndexorder(data, ax=None, index=True):
 
     ax.plot(coordinates[:, 0], coordinates[:, 1], linewidth=1, linestyle='--')
 
+
 '''
 SFC를 만드는 모델
 
@@ -122,6 +123,7 @@ Notice
 1. dropout은 쓸지 말지 고민중임
 2. embedding vector를 사용할지 말지 고민하고 있음 (각 데이터의 좌표로 유사성을 파악하기)
 '''
+
 
 class SFCNet(Net):
     def __init__(self, vocab_size, embedding_size, hidden_size, output_size, learning_rate):
@@ -145,7 +147,7 @@ class SFCNet(Net):
             for x in action:
                 action_binary[np.argwhere(x == temp).item()] = 1
 
-        embeds = torch.cat((embeds, avail_binary, action_binary), dim =1)
+        embeds = torch.cat((embeds, avail_binary, action_binary), dim=1)
 
         # cell 교체를 위해 하나를 선택했다면 해당 cell id 에 binary 형태로 알림 (아니면 모두 0로)
         output, (hidden, cell) = self.a(embeds.view(1, len(input), -1), his)
@@ -168,8 +170,8 @@ class Env():
 
         # Reward 설정용
         self.init_coords = build_init_coords(ORDER, DIM, init_curve)
-        self.model = SFCNet(vocab_size = NUM_OF_CELLS, embedding_size = self.embedding_size, hidden_size = self.hidden_size,
-                            output_size = NUM_OF_CELLS, learning_rate = LEARNING_RATE)
+        self.model = SFCNet(vocab_size=NUM_OF_CELLS, embedding_size=self.embedding_size, hidden_size=self.hidden_size,
+                            output_size=NUM_OF_CELLS, learning_rate=LEARNING_RATE)
         init_weights(self.model.to(DEVICE))
         self.analyzer = Analyzer(data_index, self.init_coords.copy(), order=ORDER, dim=DIM)
         self.hilbert = HilbertCurve(dimension=DIM)
@@ -222,11 +224,12 @@ class Env():
             min_o_num = self.analyzer.l2_norm_locality(observation)
 
             # print(curr_state_np)
-            curr_his = (Variable(torch.zeros(1, 1, self.hidden_size).to(DEVICE)), Variable(torch.zeros(1, 1, self.hidden_size).to(DEVICE)))
+            curr_his = (Variable(torch.zeros(1, 1, self.hidden_size).to(DEVICE)),
+                        Variable(torch.zeros(1, 1, self.hidden_size).to(DEVICE)))
             done = False
 
             for step in range(self.MAX_STEP * 2):
-                logit, his = self.model(input=curr_state_t, avail_id = self.data_index, his = curr_his, action=action_list)
+                logit, his = self.model(input=curr_state_t, avail_id=self.data_index, his=curr_his, action=action_list)
                 prob = torch.softmax(logit, dim=-1)
                 log_prob = torch.log_softmax(logit, dim=-1)
                 entropy = -(log_prob * prob).sum()
@@ -238,9 +241,9 @@ class Env():
                 self.model.log_probs.append(log_prob)
 
                 # Reward Part
-                if len(action_list) <= 1 :
+                if len(action_list) <= 1:
                     reward = 0
-                else :
+                else:
                     curr_state_np[action_list[0]], curr_state_np[action_list[1]] \
                         = curr_state_np[action_list[1]], curr_state_np[action_list[0]]
                     # Action 에 따른 Lc 값 측정
@@ -253,7 +256,7 @@ class Env():
                     elif min_o_num == o_num:
                         if action_list[0] == action_list[1]:
                             reward = -1
-                        else :
+                        else:
                             reward = -1
                     else:
                         reward = (init_o_num - o_num)
@@ -269,7 +272,7 @@ class Env():
                 self.model.rewards.append(reward)
                 curr_state_t = torch.from_numpy(curr_state_np).long().to(DEVICE)
                 curr_his = his
-                if done :
+                if done:
                     break
             print(f'[GLOB {global_min_o_num:.3f} / INIT {init_o_num:.3f} / EP_NUM {episode}] '
                   f'stop after {step}.. so far [MIN:{min_o_num:.3f}/LAST:{o_num:.3f}/RW {np.mean(self.model.rewards):.3f}]')
@@ -409,7 +412,7 @@ if __name__ == '__main__':
         plt.show(block=True)
 
     # Test trained model
-    if TEST :
+    if TEST:
         np.random.seed(175)
 
         print(f'Start testing trained model ... ')

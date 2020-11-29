@@ -9,18 +9,17 @@ import torch.nn.functional as F
 from library_review.PyTorch_LSTM_Sample import init_weights
 from utils import *
 
-xrange = range
 
 torch.manual_seed(123456789)
-NOTEBOOK = True
+NOTEBOOK = False
 TEST = False
 DEVICE = "cuda:0" if torch.cuda.is_available() else "cpu"
 DIM = 2
-ORDER = 2
+ORDER = 3
 NUM_OF_CELLS = 2 ** (DIM * ORDER)
 side = np.sqrt(NUM_OF_CELLS).astype('int')
 INDEX_TO_COORDINATE = np.array(list(map(lambda x: list([x // side, x % side]), np.arange(0, NUM_OF_CELLS))))
-DATA_SIZE = 5
+DATA_SIZE = 15
 MAX_EPISODE = 1000
 MAX_STEP = 10
 TASKS_PER_META_BATCH = 1000
@@ -120,7 +119,7 @@ class SFCNet(nn.Module):
         return total_loss
 
 
-class EpisodeMemory():
+class EpisodeMemory:
     def __init__(self):
         self.value_list = []
         self.log_prob_list = []
@@ -140,7 +139,7 @@ class EpisodeMemory():
         self.entropy_list = []
 
 
-class Env():
+class Env:
     def __init__(self, data_index, max_episode, max_step, init_curve):
         self.MAX_STEP = max_step
         self.MAX_EPISODE = max_episode
@@ -259,7 +258,6 @@ class Env():
             action_list.append(a.item())
             log_prob = log_prob.view(-1).gather(0, a)
 
-            #
             #  Part
             if len(action_list) <= 1:
                 reward = 0
@@ -310,38 +308,6 @@ class Env():
 '''
 주어진 state와 활성화된 데이터를 기반으로 reward를 위한 metrics을 측정하는 함수
 '''
-
-
-class Analyzer():
-    def __init__(self, index, init_state=None):
-        self.scan_index = index
-
-        avail = np.zeros((NUM_OF_CELLS, 1))
-        avail[index] = 1
-        if init_state is not None:
-            self.init_state = np.concatenate((avail, init_state), axis=1)
-
-    def l2_norm_locality(self, compared_state):
-        for x in INDEX_TO_COORDINATE[self.scan_index]:
-            compared_state[((compared_state[:, 1] == x[0]) * (compared_state[:, 2] == x[1])).argmax(), 0] = 1
-
-        # 활성화된 데이터만 모음, 결과는 (x, y, 데이터 순서)
-        avail_data = np.array([np.append(x[1:], np.array([i])) for i, x in enumerate(compared_state) if x[0] == 1])
-        cost = 0
-
-        for (x, y) in combinations(avail_data, 2):
-            dist_2d = np.sum((x[0:2] - y[0:2]) ** 2)
-            dist_1d = np.abs(x[2] - y[2])
-            # Locality Ratio 가 1과 가까운지 측정
-            cost += np.abs(1 - (dist_1d / dist_2d))
-
-        return cost
-
-    def sort(self, init, moved):
-        moved_argsorted = np.lexsort((moved[:, 1], moved[:, 2]))
-        init_argsorted = np.lexsort((init[:, 1], init[:, 2]))
-        moved[moved_argsorted, 0] = init[init_argsorted, 0]
-        return moved
 
 
 '''

@@ -38,11 +38,33 @@ from utils import *
 '''
 
 
+NOTEBOOK = True
+TEST = False
 CUDA = torch.cuda.is_available()
 DEVICE = "cuda:0" if torch.cuda.is_available() else "cpu"
+# ------------ Curve ------------------------- #
+DIM = 2
+ORDER = 3
 side = np.sqrt(2 ** (ORDER * DIM)).astype('int')
 INDEX_TO_COORDINATE = np.array(list(map(lambda x: list([x // side, x % side]), np.arange(0, 2 ** (ORDER * DIM)))))
+DATA_SIZE = 6
+MAX_STEP = 10
+MAX_EPISODE = 3000
+INIT_CURVE = 'zig-zag'
+NUM_ADVANCED_STEP = 5  # 총 보상을 계산할 때 Advantage 학습을 할 단계 수
+# -------- Hyper Parameter --------------- #
+LEARNING_RATE = 1e-4  # 학습률
+GAMMA = 0.99  # 시간 할인율
+ENTROPY_COEFF = 0.001
+VALUE_COEFF = 0.5
+MAX_GRAD_NORM = 40.
+OFFSET = 0  # 기존 state 좌표 값 외에 신경망에 추가로 들어갈 정보의 갯수
+NUM_PROCESSES = 4  # 동시 실행 환경 수
 KERNEL_SIZE = [-1, -1, 2, 3, 4, 4]  # ORDER 가 2 일때 부터 시작하는 kernel size
+NUM_CHANNEL =  7
+
+
+
 '''
 초기 SFC 생성 함수 : 이후 class 형태로 바꿀거임
 '''
@@ -57,6 +79,41 @@ def build_init_coords(order, dimension, init_curve):
         coords = ZCurve(dimension=dimension).getCoords(order=order)
     return np.array(coords)
 
+class RolloutStorage(object):
+    '''Advantage 학습에 사용할 메모리 클래스'''
+
+    def __init__(self, num_steps, num_processes, obs_size):
+        self.observations = torch.zeros(num_steps + 1, num_processes, NUM_CHANNEL, obs_size, obs_size).to(DEVICE)
+        self.masks = torch.ones(num_steps + 1, num_processes, 1).to(DEVICE)
+        self.rewards = torch.zeros(num_steps, num_processes, 1).to(DEVICE)
+        self.actions = torch.zeros(num_steps, num_processes, 2).long().to(DEVICE)
+
+        # 할인 총보상 저장
+        self.returns = torch.zeros(num_steps + 1, num_processes, 1).to(DEVICE)
+        self.index = 0  # insert할 인덱스
+
+    def insert(self, current_obs, action, reward, mask):
+        '''현재 인덱스 위치에 transition을 저장'''
+        self.observations[self.index + 1].copy_(current_obs)
+        self.masks[self.index + 1].copy_(mask)
+        self.rewards[self.index].copy_(reward)
+        self.actions[self.index].copy_(action)
+
+        self.index = (self.index + 1) % NUM_ADVANCED_STEP  # 인덱스 값 업데이트
+
+    def after_update(self):
+        '''Advantage학습 단계만큼 단계가 진행되면 가장 새로운 transition을 index0에 저장'''
+        self.observations[0].copy_(self.observations[-1])
+        self.masks[0].copy_(self.masks[-1])
+
+    def compute_returns(self, next_value):
+        '''Advantage 학습 범위 안의 각 단계에 대해 할인 총보상을 계산'''
+
+        # 주의 : 5번째 단계부터 거슬러 올라오며 계산
+        # 주의 : 5번째 단계가 Advantage1, 4번째 단계는 Advantage2가 됨
+        self.returns[-1] = next_value
+        for ad_step in reversed(range(self.rewards.size(0))):
+            self.returns[ad_step] = self.returns[ad_step + 1] * GAMMA * self.masks[ad_step + 1] + self.rewards[ad_step]
 
 '''
 Grid (회색 선) 을 그릴 좌표를 써주는 함수
@@ -119,43 +176,6 @@ def changeIndexOrder(indexD, a, b):
 
     indexD[[a, b]] = indexD[[b, a]]
     return indexD
-
-
-class RolloutStorage(object):
-    '''Advantage 학습에 사용할 메모리 클래스'''
-
-    def __init__(self, num_steps, num_processes, obs_size):
-        self.observations = torch.zeros(num_steps + 1, num_processes, NUM_CHANNEL, obs_size, obs_size).to(DEVICE)
-        self.masks = torch.ones(num_steps + 1, num_processes, 1).to(DEVICE)
-        self.rewards = torch.zeros(num_steps, num_processes, 1).to(DEVICE)
-        self.actions = torch.zeros(num_steps, num_processes, 2).long().to(DEVICE)
-
-        # 할인 총보상 저장
-        self.returns = torch.zeros(num_steps + 1, num_processes, 1).to(DEVICE)
-        self.index = 0  # insert할 인덱스
-
-    def insert(self, current_obs, action, reward, mask):
-        '''현재 인덱스 위치에 transition을 저장'''
-        self.observations[self.index + 1].copy_(current_obs)
-        self.masks[self.index + 1].copy_(mask)
-        self.rewards[self.index].copy_(reward)
-        self.actions[self.index].copy_(action)
-
-        self.index = (self.index + 1) % NUM_ADVANCED_STEP  # 인덱스 값 업데이트
-
-    def after_update(self):
-        '''Advantage학습 단계만큼 단계가 진행되면 가장 새로운 transition을 index0에 저장'''
-        self.observations[0].copy_(self.observations[-1])
-        self.masks[0].copy_(self.masks[-1])
-
-    def compute_returns(self, next_value):
-        '''Advantage 학습 범위 안의 각 단계에 대해 할인 총보상을 계산'''
-
-        # 주의 : 5번째 단계부터 거슬러 올라오며 계산
-        # 주의 : 5번째 단계가 Advantage1, 4번째 단계는 Advantage2가 됨
-        self.returns[-1] = next_value
-        for ad_step in reversed(range(self.rewards.size(0))):
-            self.returns[ad_step] = self.returns[ad_step + 1] * GAMMA * self.masks[ad_step + 1] + self.rewards[ad_step]
 
 
 '''
@@ -223,7 +243,7 @@ class SFCNet(nn.Module):
         return [first_action, second_action], value
 
 
-class Brain():
+class Brain:
     def __init__(self, num_states, num_actions, hidden_size=None):
         self.num_actions = num_actions
         self.num_states = num_states
@@ -590,7 +610,7 @@ def stateMaker(data_index, grid_coords, action=None, init=False, init_state=None
 '''
 
 
-class Analyzer():
+class Analyzer:
     def __init__(self, index, init_state, order, dim):
         self.iteration = order
         self.DIM = dim

@@ -8,7 +8,7 @@ Two SFC supported
 import numpy as np
 
 
-class HilbertCurve():
+class HilbertCurve:
     def __init__(self, dimension):
         self.DIM = dimension
 
@@ -17,8 +17,8 @@ class HilbertCurve():
         d = 0
         s = n // 2
         while s > 0:
-            rx = ((x & s) > 0);
-            ry = ((y & s) > 0);
+            rx = ((x & s) > 0)
+            ry = ((y & s) > 0)
             d += s * s * ((3 * rx) ^ ry)
             x, y = self.rot(n, x, y, rx, ry)
             s = s // 2
@@ -40,7 +40,7 @@ class HilbertCurve():
         return [x, y]
 
     def rot(self, n, x, y, rx, ry):
-        if (ry == 0):
+        if ry == 0:
             if rx == 1:
                 x = n - 1 - x
                 y = n - 1 - y
@@ -50,12 +50,12 @@ class HilbertCurve():
         return x, y
 
     def getCoords(self, order):
-        N = 2 ** (order * self.DIM)
-        coordinates = list(map(self.d2xy, [N] * (N), range(N)))
+        n = 2 ** (order * self.DIM)
+        coordinates = list(map(self.d2xy, [n] * n, range(n)))
         return coordinates
 
 
-class ZCurve():
+class ZCurve:
     def __init__(self, dimension):
         self.DIM = dimension
 

@@ -7,17 +7,6 @@ import matplotlib.pyplot as plt
 '''
 
 
-def build_init_coords(order, dimension, init_curve):
-    if init_curve == 'zig-zag':
-        whole_index = np.arange(2 ** (order * dimension))
-        side = np.sqrt(2 ** (order * dimension)).astype(int)
-        coords = np.array(list(map(lambda x: list([x // (side), x % (side)]), whole_index)))
-    elif init_curve == 'hilbert':
-        coords = HilbertCurve(dimension=dimension).getCoords(order=order)
-    elif init_curve == 'z':
-        coords = ZCurve(dimension=dimension).getCoords(order=order)
-    return coords
-
 
 '''
 Grid (회색 선) 을 그릴 좌표를 써주는 함수

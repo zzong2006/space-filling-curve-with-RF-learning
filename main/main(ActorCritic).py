@@ -55,40 +55,9 @@ OFFSET = 0  # 기존 state 좌표 값 외에 신경망에 추가로 들어갈 �
 NUM_PROCESSES = 32  # 동시 실행 환경 수
 
 '''
-초기 SFC 생성 함수 : 이후 class 형태로 바꿀거임
-'''
-
-
-def build_init_coords(order, dimension, init_curve):
-    if init_curve == 'zig-zag':
-        whole_index = np.arange(2 ** (order * dimension))
-        side = np.sqrt(2 ** (order * dimension)).astype(int)
-        coords = np.array(list(map(lambda x: list([x // (side), x % (side)]), whole_index)))
-    elif init_curve == 'hilbert':
-        coords = HilbertCurve(dimension=dimension).getCoords(order=order)
-    elif init_curve == 'z':
-        coords = ZCurve(dimension=dimension).getCoords(order=order)
-    return coords
-
-
-'''
 Grid (회색 선) 을 그릴 좌표를 써주는 함수
 Arg : pmax 값
 '''
-
-
-def getGridCooridnates(num):
-    grid_ticks = np.array([0, 2 ** num])
-    for _ in range(num):
-        temp = np.array([])
-        for i, k in zip(grid_ticks[0::1], grid_ticks[1::1]):
-            if i == 0:
-                temp = np.append(temp, i)
-            temp = np.append(temp, (i + k) / 2)
-            temp = np.append(temp, k)
-        grid_ticks = temp
-    grid_ticks -= 0.5
-    return grid_ticks
 
 def changeIndexOrder(indexD, a, b):
     a = a.cpu().numpy().astype(int).item()
@@ -181,7 +150,7 @@ class SFCNet(nn.Module):
         return [first_action, second_action], value
 
 
-class Brain():
+class Brain:
     def __init__(self, num_states, num_actions, hidden_size=None):
         self.num_actions = num_actions
         self.num_states = num_states
@@ -297,7 +266,7 @@ class Env():
     '''
     초기 state를 생성하는 함수; 
     1. 활성화된 데이터의 binary 표현
-    2. query area 단위 따른 clustering 갯수 (max, average) : (미구현) 
+
     3. 전체 area에서 curve를 따라서 모든 활성화된 데이터를 지날 수 있는 curve의 최소 길이 (또는 query area에서만 구할 수 있는 길이) : (미구현) 
     '''
 
@@ -479,77 +448,6 @@ class Env():
         next_state = changeIndexOrder(state, choosenAction[:, 0], choosenAction[:, 1])
         return next_state
 
-
-'''
-주어진 state와 활성화된 데이터를 기반으로 reward를 위한 metrics을 측정하는 함수
-'''
-
-
-class Analyzer():
-    def __init__(self, index, init_state, order, dim):
-        self.iteration = order
-        self.DIM = dim
-        self.scan_index = index
-
-        avail = np.zeros((2 ** (self.iteration * self.DIM), 1))
-        avail[index] = 1
-
-        self.init_state = np.concatenate((avail, init_state), axis=1)
-
-    '''
-    전체 활성화 데이터를 모두 거치는데 필요한 path의 최소 비용을 계산함
-    '''
-
-    def miniPath(self, compared_state):
-        # 활성화된 데이터의 좌표값을 기준으로 현재 변경된 좌표값을 변화를 줌 (의미가 있는지?)
-        self.sort(self.init_state, compared_state)
-
-        onlyIndex = compared_state[:, 0]
-        reverseIndex = onlyIndex[::-1]
-        start_idx = np.argmax(onlyIndex == 1)
-        end_idx = len(reverseIndex) - np.argmax(reverseIndex == 1) - 1
-        cost = end_idx - start_idx
-        return cost
-
-    '''
-    각 활성화 데이터간 존재하는 거리(비용)을 모두 더한 값을 반환
-    '''
-
-    def sumEachPath(self, compared_state):
-        self.sort(self.init_state, compared_state)
-
-        onlyIndex = compared_state[:, 0]
-        prev = -1
-        cost = 0
-        for i, v in enumerate(onlyIndex):
-            if v == 1:
-                if prev != -1:
-                    cost += (i - prev)
-                prev = i
-        return cost
-
-    def l2NormLocality(self, compared_state):
-        self.sort(self.init_state, compared_state)
-
-        # 활성화된 데이터만 모음, 결과는 (x, y, 데이터 순서)
-        avail_data = np.array([np.append(x[1:], np.array([i])) for i, x in enumerate(compared_state) if x[0] == 1])
-        cost = 0
-
-        for (x, y) in combinations(avail_data, 2):
-            dist_2d = np.sum((x[0:2] - y[0:2]) ** 2)
-            dist_1d = np.abs(x[2] - y[2])
-            # Locality Ratio 가 1과 가까운지 측정
-            cost += np.abs(1 - (dist_1d / dist_2d))
-
-        return cost
-
-    def sort(self, init, moved):
-        moved_argsorted = np.lexsort((moved[:, 1], moved[:, 2]))
-        init_argsorted = np.lexsort((init[:, 1], init[:, 2]))
-        moved[moved_argsorted, 0] = init[init_argsorted, 0]
-        return moved
-
-
 '''
 index (n) 은 다음과 같이 좌표로 표시됨
 n 의 최댓값은 DIM * ORDER - 1 
@@ -562,7 +460,7 @@ def main():
 
     side = np.sqrt(2 ** (ORDER * DIM))
     scan_index = np.random.choice(2 ** (DIM * ORDER), size=DATA_SIZE, replace=False)
-    sample_data = np.array(list(map(lambda x: list([x // (side), x % (side)]), scan_index)))
+    sample_data = np.array(list(map(lambda x: list([x // side, x % side]), scan_index)))
     if NOTEBOOK:
         fig, ax = plt.subplots(1, figsize=(10, 10))
         show_points(sample_data, ax, index=False)

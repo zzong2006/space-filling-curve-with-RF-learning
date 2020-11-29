@@ -7,8 +7,8 @@ from torch.autograd import Variable
 import torch.nn.functional as F
 import matplotlib.pyplot as plt
 
-
 gamma = 0.99
+
 
 class Environment():
     def __init__(self):
@@ -38,12 +38,12 @@ class Environment():
             self.b += 0.01
         curr = np.abs(self.a - self.b)
 
-        if self.prev > curr :
+        if self.prev > curr:
             done = True
             reward = -1
         elif self.prev == curr:
             reward = 0
-        else :
+        else:
             reward = 1
 
         self.prev = curr
@@ -52,14 +52,14 @@ class Environment():
     def modified_step(self, action):
         done = False
 
-        if action[0] == 0 :
+        if action[0] == 0:
             self.a += 0.01
-        else :
+        else:
             self.a -= 0.01
 
-        if action[1] == 0 :
+        if action[1] == 0:
             self.b += 0.01
-        else :
+        else:
             self.b -= 0.01
 
         curr = np.abs(self.a - self.b)
@@ -87,9 +87,10 @@ def discount_rewards(r):
     # Normalize reward to avoid a big variability in rewards
     mean = np.mean(discounted_r)
     std = np.std(discounted_r)
-    if std == 0 : std = 1
+    if std == 0: std = 1
     normalized_discounted_r = (discounted_r - mean) / std
     return normalized_discounted_r
+
 
 class Agent(nn.Module):
     def __init__(self, input_size, hidden_size, output_size):
@@ -99,8 +100,9 @@ class Agent(nn.Module):
 
     def forward(self, input):
         output = torch.relu(self.a(input))
-        output = torch.softmax(self.b(output), dim = -1)
+        output = torch.softmax(self.b(output), dim=-1)
         return output
+
 
 class Modified_Agent(nn.Module):
     def __init__(self, input_size, hidden_size, output_size):
@@ -116,18 +118,20 @@ class Modified_Agent(nn.Module):
         output_a = torch.relu(self.a(input))
         output = self.a_1(output_a)
         output = self.a_2(output)
-        first = torch.softmax(output, dim = -1)
+        first = torch.softmax(output, dim=-1)
         output = torch.relu(self.b(torch.relu(output_a)))
         output = self.b_1(output)
-        second = torch.softmax(self.b_2(output), dim = -1)
+        second = torch.softmax(self.b_2(output), dim=-1)
         return first, second
+
 
 def init_weights(m):
     if type(m) == nn.Linear:
         torch.nn.init.xavier_uniform_(m.weight)
         m.bias.data.fill_(0.01)
 
-#Set total number of episodes to train agent on.
+
+# Set total number of episodes to train agent on.
 total_episodes = 1000
 max_ep = 999
 update_frequency = 5
@@ -143,7 +147,7 @@ h_size = 16  # hidden
 
 model = Modified_Agent(s_size, h_size, a_size)
 model.apply(init_weights)
-optimizer = optim.Adam(model.parameters(), lr = lr)
+optimizer = optim.Adam(model.parameters(), lr=lr)
 env = Environment()
 
 while i < total_episodes:
@@ -159,15 +163,15 @@ while i < total_episodes:
             s = torch.from_numpy(s).type(torch.FloatTensor)
             chosen_action_1, chosen_action_2 = model(s)
             a_dist = chosen_action_1.detach().numpy()
-            a = np.random.choice(a_dist, p = a_dist)
+            a = np.random.choice(a_dist, p=a_dist)
             a = np.argmax(a_dist == a)
             b_dist = chosen_action_2.detach().numpy()
             b = np.random.choice(b_dist, p=b_dist)
             b = np.argmax(b_dist == b)
 
-        s1, r, d = env.modified_step([a,b]) # Get our reward for taking an action
+        s1, r, d = env.modified_step([a, b])  # Get our reward for taking an action
         ep_history.append([s.numpy(), np.array([a, b]), r, s1])
-        s = s1 # Next state
+        s = s1  # Next state
         running_reward += r
         rlist.append(running_reward)
 
@@ -188,8 +192,8 @@ while i < total_episodes:
             indexes_1 = torch.from_numpy(indexes[:, 0].astype('int32')).type(torch.LongTensor)
             indexes_2 = torch.from_numpy(indexes[:, 1].astype('int32')).type(torch.LongTensor)
             reward = torch.from_numpy(ep_history[:, 2].astype('float32')).type(torch.FloatTensor)
-            responsible_outputs_1 = output_1.gather(1, indexes_1.view(-1,1))
-            responsible_outputs_2 = output_2.gather(1, indexes_2.view(-1,1))
+            responsible_outputs_1 = output_1.gather(1, indexes_1.view(-1, 1))
+            responsible_outputs_2 = output_2.gather(1, indexes_2.view(-1, 1))
 
             # print(loss)
             model.train()
@@ -206,6 +210,6 @@ while i < total_episodes:
     i += 1
 
 fig = plt.figure()
-ax1 = fig.add_subplot(1,1,1)
+ax1 = fig.add_subplot(1, 1, 1)
 ax1.plot(rlist, 'b')
 plt.show()

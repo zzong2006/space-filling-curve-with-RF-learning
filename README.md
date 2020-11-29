@@ -14,7 +14,7 @@ This is the deep learning project for building the optimal space filling curve w
     * pyTorch Framework 사용
     * 주로 `main({B}_{A}).py` 형식으로 파일들이 저장됨
         * `{A}`: 사용한 강화 학습 알고리즘들 
-            * Actor-Critic, Policy Gradient, Q-Learning, Proximal Policy Optimization(PPO), Meta Learning for RL
+            * Actor-Critic, Policy Gradient, Q-Learning
         * `{B}`: 사용한 신경망 (`{B}`는 표기가 되어있지 않은 경우가 많음)
             * Convolutional Neural Network (CNN),Deep Neural Network(DNN), Long Short-Term Memory Model(LSTM)
     

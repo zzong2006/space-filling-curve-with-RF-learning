@@ -7,6 +7,8 @@ import matplotlib.pyplot as plt
 from itertools import combinations
 from curve import HilbertCurve, ZCurve
 from utils import *
+from rl_network import PolicyGradient
+from environment import CurveEnvironment
 
 '''
  * 08-26 : state 를 normalize 한 버전. Locality 계산을 위해 original 버전은 지울 수 없고, 
@@ -23,10 +25,8 @@ DIM = 2
 ORDER = 3
 DATA_SIZE = 15
 MAX_STEP = 200
-CAPACITY = 10000
 GAMMA = 0.99  # 시간 할인율
 LEARNING_RATE = 1e-4  # 학습률
-OFFSET = 0  # 기존 state 좌표 값 외에 신경망에 추가로 들어갈 정보의 갯수
 
 '''
 초기 SFC 생성 함수 : 이후 class 형태로 바꿀거임
@@ -46,18 +46,6 @@ Arg : pmax 값
 '''
 
 
-def getGridCooridnates(num):
-    grid_ticks = np.array([0, 2 ** num])
-    for _ in range(num):
-        temp = np.array([])
-        for i, k in zip(grid_ticks[0::1], grid_ticks[1::1]):
-            if i == 0:
-                temp = np.append(temp, i)
-            temp = np.append(temp, (i + k) / 2)
-            temp = np.append(temp, k)
-        grid_ticks = temp
-    grid_ticks -= 0.5
-    return grid_ticks
 
 
 def changeIndexOrder(indexD, a, b):
@@ -99,36 +87,11 @@ Notice
 '''
 
 
-class SFCNet(nn.Module):
-    def __init__(self, input_size, hidden_size, output_size):
-        super(SFCNet, self).__init__()
-        self.hidden_size = hidden_size or ((input_size + output_size) // 2)
-
-        self.first = nn.Linear(input_size, self.hidden_size)
-        self.first_add = nn.Linear(self.hidden_size, self.hidden_size)
-        self.first_out = nn.Linear(self.hidden_size, output_size)
-        self.second = nn.Linear(self.hidden_size, self.hidden_size)
-        self.second_add = nn.Linear(self.hidden_size, self.hidden_size)
-        self.second_out = nn.Linear(self.hidden_size, output_size)
-
-    def forward(self, input_val):
-        output = torch.relu(self.first(input_val))
-        output = torch.relu(self.first_add(output))
-        first = self.first_out(output)
-        first_output = torch.softmax(first, dim=-1)
-
-        output = torch.relu(self.second(output))
-        second = torch.relu(self.second_add(output))
-        second = self.second_out(second)
-        second_output = torch.softmax(second, dim=-1)
-        return first_output, second_output
-
-
 class Brain:
     def __init__(self, num_states, num_actions, hidden_size=None):
         self.num_actions = num_actions
 
-        self.model = SFCNet(num_states, hidden_size, num_actions)
+        self.model = PolicyGradient(num_states, hidden_size, num_actions)
         if CUDA:
             self.model.cuda()
 
@@ -252,9 +215,6 @@ class Env:
             original_state = self.observation.copy()  # Normalize 하기 전의 state 값
             min_o_num = self.analyzer.l2NormLocality(original_state)
             prev_o_num = -1
-            # 추가 정보 부여 (후에 함수로 만들 것)
-            # observation = np.append(self.observation.reshape(1, -1), min_o_num)
-            # observation = np.append(observation, 0)
 
             observation = normalize_state(self.observation)
             state = torch.from_numpy(observation).type(torch.cuda.FloatTensor)
@@ -279,7 +239,6 @@ class Env:
                     global_min_state = original_state.copy()
 
                 # Reward Part
-
                 if min_o_num < o_num:
                     if prev_o_num == -1 or prev_o_num <= o_num:
                         life -= 1
@@ -317,14 +276,6 @@ class Env:
                 print(f'episode {episode} is over within step {step + 1}. '
                       f'Average of the cost in the {span} episodes : {episode_list.mean()} And Reward : {reward_list.mean()}')
 
-        # ax1 = plt.subplot(1,1,1)
-        # plt.plot(locality_list, 'r-')
-        # plt.xlabel('episode')
-        # plt.ylabel('Reverse of the locality')
-        #
-        # plt.tight_layout()
-        # plt.show(block=True)
-
         return global_min_o_num, global_min_state
 
     '''
@@ -352,38 +303,6 @@ class Analyzer:
 
         self.init_state = np.concatenate((avail, init_state), axis=1)
 
-    '''
-    전체 활성화 데이터를 모두 거치는데 필요한 path의 최소 비용을 계산함
-    '''
-
-    def miniPath(self, compared_state):
-        # 활성화된 데이터의 좌표값을 기준으로 현재 변경된 좌표값을 변화를 줌 (의미가 있는지?)
-        self.sort(self.init_state, compared_state)
-
-        onlyIndex = compared_state[:, 0]
-        reverseIndex = onlyIndex[::-1]
-        start_idx = np.argmax(onlyIndex == 1)
-        end_idx = len(reverseIndex) - np.argmax(reverseIndex == 1) - 1
-        cost = end_idx - start_idx
-        return cost
-
-    '''
-    각 활성화 데이터간 존재하는 거리(비용)을 모두 더한 값을 반환
-    '''
-
-    def sumEachPath(self, compared_state):
-        self.sort(self.init_state, compared_state)
-
-        onlyIndex = compared_state[:, 0]
-        prev = -1
-        cost = 0
-        for i, v in enumerate(onlyIndex):
-            if v == 1:
-                if prev != -1:
-                    cost += (i - prev)
-                prev = i
-        return cost
-
     def l2NormLocality(self, compared_state):
         self.sort(self.init_state, compared_state)
 
@@ -407,30 +326,31 @@ class Analyzer:
         return moved
 
 
-'''
-index (n) 은 다음과 같이 좌표로 표시됨
-n 의 최댓값은 DIM * ORDER - 1 
-좌표 값은 ( n // (DIM * ORDER), n % (DIM * ORDER) ) 
-'''
+if __name__ == '__main__':
+    '''
+    index (n) 은 다음과 같이 좌표로 표시됨
+    n 의 최댓값은 DIM * ORDER - 1 
+    좌표 값은 ( n // (DIM * ORDER), n % (DIM * ORDER) ) 
+    '''
 
-np.random.seed(210)
+    np.random.seed(210)
 
-side = np.sqrt(2 ** (ORDER * DIM))
-scan_index = np.random.choice(2 ** (DIM * ORDER), size=DATA_SIZE, replace=False)
-sample_data = np.array(list(map(lambda x: list([x // (side), x % (side)]), scan_index)))
-# print(sample_index,'\n', sample_data)
-fig, ax = plt.subplots(1, figsize=(10, 10))
-# show_points(sample_data, ax, index=False)
-grid_index = np.arange(2 ** (ORDER * DIM))
-# show_line_by_index_order(grid_index, ax)
-# plt.show(block=True)
+    side = np.sqrt(2 ** (ORDER * DIM))
+    scan_index = np.random.choice(2 ** (DIM * ORDER), size=DATA_SIZE, replace=False)
+    sample_data = np.array(list(map(lambda x: list([x // (side), x % (side)]), scan_index)))
+    # print(sample_index,'\n', sample_data)
+    fig, ax = plt.subplots(1, figsize=(10, 10))
+    # show_points(sample_data, ax, index=False)
+    grid_index = np.arange(2 ** (ORDER * DIM))
+    # show_line_by_index_order(grid_index, ax)
+    # plt.show(block=True)
 
-env = Env(data_index=scan_index, order=ORDER, max_episode=5000, max_step=1000, dimension=DIM)
-result_value, result_state = env.run()
+    env = Env(data_index=scan_index, order=ORDER, max_episode=5000, max_step=1000, dimension=DIM)
+    result_value, result_state = env.run()
 
-print(f'Recorded the minimum reverse of the locality :{result_value}')
-# fig, ax = plt.subplots(1, figsize=(10,10))
-# showPoints(sample_data, ax, index=False)
-# showlineByIndexorder(result_state[:,1:3].reshape([-1,2]), ax ,index = False)
-#
-# plt.show(block=True)
+    print(f'Recorded the minimum reverse of the locality :{result_value}')
+    # fig, ax = plt.subplots(1, figsize=(10,10))
+    # showPoints(sample_data, ax, index=False)
+    # showlineByIndexorder(result_state[:,1:3].reshape([-1,2]), ax ,index = False)
+    #
+    # plt.show(block=True)
