@@ -19,24 +19,13 @@ MAX_STEP = 200
 CAPACITY = 10000
 GAMMA = 0.99  # 시간 할인율
 LEARNING_RATE = 1e-3
-
-
-def decide_action(self, state, episode):
-    # ε-greedy 알고리즘에서 서서히 최적행동의 비중을 늘린다
-    epsilon = 0.5 * (1 / np.log2(episode + 1 + 1e-7))
-
-    if epsilon < np.random.uniform(0, 1):
-        self.model.eval()
-        with torch.no_grad():
-            first, second = self.model(state.view(1, -1))
-            return torch.cat((first, second)).max(1)[1].view(1, 2)
-    else:
-        action = np.random.choice(self.num_actions, size=(1, 2))
-    return action
+USE_RNN = False
 
 
 class QLDriver:
-    def __init__(self, dimension, order, data_size, learning_rate, capacity, batch_size):
+    def __init__(self, dimension, order, data_size, learning_rate, capacity, batch_size, use_rnn=False):
+        self.use_rnn = use_rnn
+
         self.env = CurveEnvironment(order=order, dim=dimension, data_size=data_size, life=20)
         self.agent = Agent(
             num_states=2 ** (dimension * order) * 3,
@@ -44,8 +33,16 @@ class QLDriver:
             network_type='dqn',
             learning_rate=learning_rate,
             capacity=capacity,
-            batch_size=batch_size
+            batch_size=batch_size,
+            use_rnn=use_rnn
         )
+
+    def convert_state(self, inp_state):
+        if self.use_rnn:
+            torch_state = torch.tensor(inp_state, dtype=torch.float32).view(1, -1, self.env.dim + 1)
+        else:
+            torch_state = torch.tensor(inp_state, dtype=torch.float32).view(1, -1)
+        return torch_state
 
     def run(self, max_episode=5000, max_step=1000, target_step=500, span=10):
         cost_list = np.zeros(span)  # 에피소드 당 달성할 수 있는 평균 cost
@@ -55,14 +52,14 @@ class QLDriver:
             obs = self.env.reset()
             self.agent.replay_memory.reset()
 
-            state = torch.tensor(obs, dtype=torch.float32).view(1, -1)
+            state = self.convert_state(obs)
             mean_cost = 0
             mean_reward = 0
             for step in range(1, max_step + 1):
                 action = self.agent.get_action(state, ep)
                 next_obs, reward, done, infos = self.env.step(action)
 
-                next_state = torch.tensor(next_obs, dtype=torch.float32).view(1, -1)
+                next_state = self.convert_state(next_obs)
                 # state, action, reward, next_state, done
                 self.agent.replay_memory.memorize(state, action, next_state, reward, done)
                 self.agent.update()
@@ -93,5 +90,5 @@ if __name__ == '__main__':
     np.random.seed(210)
 
     driver = QLDriver(dimension=DIM, order=ORDER, data_size=DATA_SIZE, learning_rate=LEARNING_RATE,
-                      capacity=CAPACITY, batch_size=BATCH_SIZE)
+                      capacity=CAPACITY, batch_size=BATCH_SIZE, use_rnn=USE_RNN)
     driver.run(max_episode=5000, max_step=1000, target_step=500)

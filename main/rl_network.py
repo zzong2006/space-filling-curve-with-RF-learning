@@ -4,6 +4,34 @@ import torch.nn.functional as F
 import numpy as np
 
 
+class InputLayer(nn.Module):
+    def __init__(self, n_in, n_out, n_features=3, use_rnn=False):
+        """
+        입력 layer. 신경망의 state를 가장 처음으로 입력받는 레이어다. 
+        note) LSTM의 sequence feature는 3으로 hardcoded 되어 있음
+        :param n_in: 
+        :param n_out: 
+        :param use_rnn: LSTM 사용 유무
+        """
+        super(InputLayer, self).__init__()
+        self.use_rnn = use_rnn
+        self.n_features = n_features
+
+        if use_rnn:
+            self.lstm = nn.LSTM(input_size=n_features, hidden_size=n_out, batch_first=True)
+        else:
+            self.fc = nn.Linear(in_features=n_in, out_features=n_out)
+
+    def forward(self, x, *args):
+        if self.use_rnn:
+            output, _ = self.lstm(x)  # hidden state는 사용하지 않음
+            output = output[:, -1:, :]
+            output = output.squeeze(dim=1)
+        else:
+            output = self.fc(x)
+        return output
+
+
 class Actor(nn.Module):
     def __init__(self, n_in, n_out, n_mid=None):
         super(Actor, self).__init__()
@@ -39,10 +67,11 @@ class ActorCritic(nn.Module):
         One-step Actor-Critic
     """
 
-    def __init__(self, n_in, n_out, n_mid=None):
+    def __init__(self, n_in, n_out, n_mid=None, use_rnn=False):
         super(ActorCritic, self).__init__()
         n_mid = n_mid or (n_in + n_out) // 2
-        self.input_layer = nn.Linear(n_in, n_mid)
+
+        self.input_layer = InputLayer(n_in=n_in, n_out=n_mid, use_rnn=use_rnn)
         self.first_actor = Actor(n_in=n_mid, n_mid=n_mid, n_out=n_out)
         self.second_actor = Actor(n_in=n_mid, n_mid=n_mid, n_out=n_out)
         self.critic = Critic(n_in=n_mid, n_mid=n_mid, n_out=1)
@@ -53,7 +82,7 @@ class ActorCritic(nn.Module):
         :param x: input state
         :return:
         """
-        x = self.input_layer(x)
+        x = torch.relu(self.input_layer(x))
         a1 = self.first_actor(x)
         a2 = self.second_actor(x)
         cr = self.critic(x)
@@ -84,16 +113,16 @@ class DQN(nn.Module):
         DQN with replay buffer and double network
     """
 
-    def __init__(self, input_size, output_size, hidden_size=None, lstm=False):
+    def __init__(self, input_size, output_size, hidden_size=None, use_rnn=False):
         super(DQN, self).__init__()
-        m_in = hidden_size or ((input_size + output_size) // 2)
+        m_mid = hidden_size or ((input_size + output_size) // 2)
         self.action_space = output_size
 
-        self.input_layer = nn.Linear(input_size, m_in)
-        self.fc1_1 = nn.Linear(m_in, m_in)
-        self.fc1_2 = nn.Linear(m_in, output_size)
-        self.fc2_1 = nn.Linear(m_in, m_in)
-        self.fc2_2 = nn.Linear(m_in, output_size)
+        self.input_layer = InputLayer(n_in=input_size, n_out=m_mid, use_rnn=use_rnn)
+        self.fc1_1 = nn.Linear(m_mid, m_mid)
+        self.fc1_2 = nn.Linear(m_mid, output_size)
+        self.fc2_1 = nn.Linear(m_mid, m_mid)
+        self.fc2_2 = nn.Linear(m_mid, output_size)
 
     def forward(self, x):
         x = torch.relu(self.input_layer(x))
@@ -127,26 +156,19 @@ class PolicyGradient(nn.Module):
         REINFORCE with Entropy (Monte Carlo)
     """
 
-    def __init__(self, input_size, output_size, hidden_size=None, lstm=False):
+    def __init__(self, input_size, output_size, hidden_size=None, use_rnn=False):
         super(PolicyGradient, self).__init__()
-        self.hidden_size = hidden_size or ((input_size + output_size) // 2)
-        self.lstm = lstm
+        hidden_size = hidden_size or ((input_size + output_size) // 2)
 
-        if lstm is False:
-            self.first = nn.Linear(input_size, self.hidden_size)
-        else:
-            self.first = nn.LSTM(input_size, self.hidden_size, num_layers=1, batch_first=True)
-        self.first_add = nn.Linear(self.hidden_size, self.hidden_size)
-        self.first_out = nn.Linear(self.hidden_size, output_size)
-        self.second = nn.Linear(self.hidden_size, self.hidden_size)
-        self.second_add = nn.Linear(self.hidden_size, self.hidden_size)
-        self.second_out = nn.Linear(self.hidden_size, output_size)
+        self.first = InputLayer(n_in=input_size, n_out=hidden_size, use_rnn=use_rnn)
+        self.first_add = nn.Linear(hidden_size, hidden_size)
+        self.first_out = nn.Linear(hidden_size, output_size)
+        self.second = nn.Linear(hidden_size, hidden_size)
+        self.second_add = nn.Linear(hidden_size, hidden_size)
+        self.second_out = nn.Linear(hidden_size, output_size)
 
     def forward(self, x):
-        if self.lstm is False:
-            output = torch.relu(self.first(x))
-        else:
-            pass
+        output = torch.relu(self.first(x))
         output = torch.relu(self.first_add(output))
         first = self.first_out(output)
         first_output = torch.softmax(first, dim=-1)

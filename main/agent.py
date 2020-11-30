@@ -13,20 +13,22 @@ class Agent:
         네트워크 모델을 받고, 학습을 수행함
     """
 
-    def __init__(self, num_states, num_actions, network_type, learning_rate,
+    def __init__(self, num_states, num_actions, network_type, learning_rate, use_rnn=False,
                  gamma=0.99, capacity=10000, batch_size=16):
         self.gamma = gamma
         self.network_type = network_type
+        self.use_rnn = use_rnn
+
         # 신경망 생성
         try:
             if network_type == 'policy_gradient':  # policy gradient
-                self.network = PolicyGradient(num_states, num_actions)
+                self.network = PolicyGradient(num_states, num_actions, use_rnn=use_rnn)
             elif network_type == 'actor_critic':
-                self.network = ActorCritic(n_in=num_states, n_out=num_actions)
+                self.network = ActorCritic(n_in=num_states, n_out=num_actions, use_rnn=use_rnn)
                 self.large_i = 1  # for update actor
             elif network_type == 'dqn':
-                self.network = DQN(input_size=num_states, output_size=num_actions)
-                self.target_network = DQN(input_size=num_states, output_size=num_actions)
+                self.network = DQN(input_size=num_states, output_size=num_actions, use_rnn=use_rnn)
+                self.target_network = DQN(input_size=num_states, output_size=num_actions, use_rnn=use_rnn)
                 self.target_network.load_state_dict(self.network.state_dict())  # target Q makes same weights as Q
                 self.replay_memory = ReplayMemory(capacity, batch_size)
             else:
@@ -60,7 +62,6 @@ class Agent:
             log_prob, reward, entropy, value, next_state, done = history[-1]
             with torch.no_grad():
                 if not done:
-                    next_state = torch.tensor(next_state, dtype=torch.float32).view(1, -1)
                     next_value, _, _ = self.network(next_state)
                 else:
                     next_value = 0

@@ -18,17 +18,28 @@ DATA_SIZE = 15
 MAX_STEP = 200
 GAMMA = 0.99  # 시간 할인율
 LEARNING_RATE = 1e-3  # 학습률
+USE_RNN = True
 
 
 class ACDriver:
-    def __init__(self, dimension, order, data_size, learning_rate):
+    def __init__(self, dimension, order, data_size, learning_rate, use_rnn=False):
+        self.use_rnn = use_rnn
+
         self.env = CurveEnvironment(order=order, dim=dimension, data_size=data_size)
         self.agent = Agent(
             num_states=2 ** (dimension * order) * 3,
             num_actions=2 ** (dimension * order),
             network_type='actor_critic',
-            learning_rate=learning_rate
+            learning_rate=learning_rate,
+            use_rnn=use_rnn
         )
+
+    def convert_state(self, inp_state):
+        if self.use_rnn:
+            torch_state = torch.tensor(inp_state, dtype=torch.float32).view(1, -1, self.env.dim + 1)
+        else:
+            torch_state = torch.tensor(inp_state, dtype=torch.float32).view(1, -1)
+        return torch_state
 
     def run(self, max_episode=5000, max_step=1000, span=10):
         """
@@ -44,7 +55,7 @@ class ACDriver:
         for ep in range(1, max_episode + 1):  # 최대 에피소드 수만큼 반복
             obs = self.env.reset()
 
-            state = torch.tensor(obs, dtype=torch.float32).view(1, -1)
+            state = self.convert_state(obs)
             mean_cost = 0
             mean_reward = 0
             ep_history = []
@@ -52,10 +63,11 @@ class ACDriver:
             for step in range(1, max_step + 1):
                 action, log_prob, entropy, value = self.agent.get_action(state)
                 next_obs, reward, done, infos = self.env.step(action)
+                next_state = self.convert_state(next_obs)
 
-                ep_history.append([log_prob, reward, entropy, value, next_obs, done])
+                ep_history.append([log_prob, reward, entropy, value, next_state, done])
 
-                state = torch.tensor(next_obs, dtype=torch.float32).view(1, -1)
+                state = next_state
                 # one-step update
                 self.agent.update(ep_history)
 
@@ -82,6 +94,5 @@ class ACDriver:
 if __name__ == '__main__':
     np.random.seed(210)
 
-    driver = ACDriver(dimension=DIM, order=ORDER, data_size=DATA_SIZE, learning_rate=LEARNING_RATE)
+    driver = ACDriver(dimension=DIM, order=ORDER, data_size=DATA_SIZE, learning_rate=LEARNING_RATE, use_rnn=USE_RNN)
     driver.run(max_episode=5000, max_step=1000)
-
