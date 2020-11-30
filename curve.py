@@ -12,8 +12,12 @@ class HilbertCurve:
     def __init__(self, dimension):
         self.DIM = dimension
 
-    # convert (x,y) to d
     def xy2d(self, n, x, y):
+        """
+        convert (x, y) coordinate to d
+        :param n: dimension
+        :return:
+        """
         d = 0
         s = n // 2
         while s > 0:

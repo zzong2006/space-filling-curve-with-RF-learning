@@ -56,6 +56,7 @@ class ACDriver:
                 ep_history.append([log_prob, reward, entropy, value, next_obs, done])
 
                 state = torch.tensor(next_obs, dtype=torch.float32).view(1, -1)
+                # one-step update
                 self.agent.update(ep_history)
 
                 if done:
@@ -84,4 +85,3 @@ if __name__ == '__main__':
     driver = ACDriver(dimension=DIM, order=ORDER, data_size=DATA_SIZE, learning_rate=LEARNING_RATE)
     driver.run(max_episode=5000, max_step=1000)
 
-    # print(f'Recorded the minimum reverse of the locality :{result_value}')

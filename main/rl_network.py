@@ -60,7 +60,7 @@ class ActorCritic(nn.Module):
 
         return cr, a1, a2
 
-    def get_action(self, x):
+    def get_action(self, x, *args):
         """상태 x로부터 행동을 확률적으로 결정"""
         value, ac1, ac2 = self(x)
 
@@ -78,28 +78,48 @@ class ActorCritic(nn.Module):
             entropy.append(act_entropy)
         return actions, log_prob, entropy, value
 
+
 class DQN(nn.Module):
     """
         DQN with replay buffer and double network
     """
 
     def __init__(self, input_size, output_size, hidden_size=None, lstm=False):
+        super(DQN, self).__init__()
         m_in = hidden_size or ((input_size + output_size) // 2)
+        self.action_space = output_size
 
-        self.first = nn.Linear(input_size, m_in)
-        self.first_out = nn.Linear(m_in, output_size)
-        self.second = nn.Linear(m_in, m_in)
-        self.second_out = nn.Linear(self.hidden_size, output_size)
+        self.input_layer = nn.Linear(input_size, m_in)
+        self.fc1_1 = nn.Linear(m_in, m_in)
+        self.fc1_2 = nn.Linear(m_in, output_size)
+        self.fc2_1 = nn.Linear(m_in, m_in)
+        self.fc2_2 = nn.Linear(m_in, output_size)
 
     def forward(self, x):
-        output = torch.relu(self.first(x))
-        first_output = self.first_out(output)
-        output = torch.relu(self.second(output))
-        second_output = self.second_out(output)
-        return first_output, second_output
+        x = torch.relu(self.input_layer(x))
+        h_x_1 = torch.relu(self.fc1_1(x))
+        v_1 = self.fc1_2(h_x_1)
+        h_x_2 = torch.relu(self.fc2_1(x))
+        v_2 = self.fc2_2(h_x_2)
+        return v_1, v_2
 
-    def get_action(self):
-        pass
+    def get_action(self, state, *args):
+        """
+            epsilon-greedy selection
+            :param state:
+            :param args: args[0]: the number of episode
+            :return:
+        """
+        episode_num = args[0]
+        eps = 0.5 * (1 / np.log2(episode_num + 1 + 1e-7))
+
+        if eps < np.random.uniform(0, 1):
+            with torch.no_grad():  # greedy selection
+                a1, a2 = self(state)
+                actions = list(map(lambda x: x.item(), (a1, a2)))
+        else:       # random selection
+            actions = np.random.choice(self.action_space, size=(1, 2))
+        return actions
 
 
 class PolicyGradient(nn.Module):
@@ -132,7 +152,7 @@ class PolicyGradient(nn.Module):
         second_output = torch.softmax(second, dim=-1)
         return first_output, second_output
 
-    def get_action(self, state):
+    def get_action(self, state, *args):
         action = []
         log_prob = []
         entropy = []

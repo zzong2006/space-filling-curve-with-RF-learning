@@ -2,17 +2,6 @@ from curve import HilbertCurve, ZCurve
 import numpy as np
 import matplotlib.pyplot as plt
 
-'''
-초기 SFC 생성 함수 : 이후 class 형태로 바꿀거임
-'''
-
-
-
-'''
-Grid (회색 선) 을 그릴 좌표를 써주는 함수
-Arg : pmax 값
-'''
-
 
 def get_grid_coordinate(num):
     grid_ticks = np.array([0, 2 ** num])
@@ -29,6 +18,10 @@ def get_grid_coordinate(num):
 
 
 def show_points(data, side, ax=None, index=True):
+    """
+        Grid (회색 선) 을 그릴 좌표를 써주는 함수
+        Arg : pmax 값
+    """
     ax = ax or plt.gca()
     pmax = np.ceil(np.log2(np.max(data)))
     pmax = pmax.astype(int)
