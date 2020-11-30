@@ -14,7 +14,7 @@ CUDA = torch.cuda.is_available()
 DIM = 2
 ORDER = 3
 DATA_SIZE = 15
-BATCH_SIZE = 32
+BATCH_SIZE = 16
 MAX_STEP = 200
 CAPACITY = 10000
 GAMMA = 0.99  # 시간 할인율
@@ -41,25 +41,25 @@ class QLDriver:
         self.agent = Agent(
             num_states=2 ** (dimension * order) * 3,
             num_actions=2 ** (dimension * order),
-            network_type='q_learning',
+            network_type='dqn',
             learning_rate=learning_rate,
             capacity=capacity,
             batch_size=batch_size
         )
 
-    def run(self, max_episode=5000, max_step=1000, span=10):
+    def run(self, max_episode=5000, max_step=1000, target_step=500, span=10):
         cost_list = np.zeros(span)  # 에피소드 당 달성할 수 있는 평균 cost
         reward_list = np.zeros(span)  # 에피소드 당 달성할 수 있는 평균 reward
         global_step = 0  # behavior net 를 업데이트하는 기준, 일정 steps 마다 behavior net를 target net로 업데이트 해준다.
-        for ep in range(max_episode):  # 최대 에피소드 수만큼 반복
+        for ep in range(1, max_episode + 1):  # 최대 에피소드 수만큼 반복
             obs = self.env.reset()
+            self.agent.replay_memory.reset()
 
             state = torch.tensor(obs, dtype=torch.float32).view(1, -1)
             mean_cost = 0
             mean_reward = 0
-            for step in range(max_step):
+            for step in range(1, max_step + 1):
                 action = self.agent.get_action(state, ep)
-
                 next_obs, reward, done, infos = self.env.step(action)
 
                 next_state = torch.tensor(next_obs, dtype=torch.float32).view(1, -1)
@@ -71,6 +71,10 @@ class QLDriver:
 
                 if done:
                     break
+
+                global_step += 1
+                if global_step % target_step == 0:
+                    self.agent.update_network(global_step, verbose=False)
 
                 # 추가 정보
                 mean_cost = mean_cost + 1 / step * (infos['cost'] - mean_cost)
@@ -90,4 +94,4 @@ if __name__ == '__main__':
 
     driver = QLDriver(dimension=DIM, order=ORDER, data_size=DATA_SIZE, learning_rate=LEARNING_RATE,
                       capacity=CAPACITY, batch_size=BATCH_SIZE)
-    driver.run(max_episode=5000, max_step=1000)
+    driver.run(max_episode=5000, max_step=1000, target_step=500)

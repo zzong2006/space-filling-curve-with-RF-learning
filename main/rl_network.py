@@ -116,9 +116,9 @@ class DQN(nn.Module):
         if eps < np.random.uniform(0, 1):
             with torch.no_grad():  # greedy selection
                 a1, a2 = self(state)
-                actions = list(map(lambda x: x.item(), (a1, a2)))
-        else:       # random selection
-            actions = np.random.choice(self.action_space, size=(1, 2))
+                actions = np.array(list(map(lambda x: torch.argmax(x).item(), (a1, a2))), dtype=np.int)
+        else:  # random selection
+            actions = np.random.choice(self.action_space, size=(2,))
         return actions
 
 
@@ -130,6 +130,8 @@ class PolicyGradient(nn.Module):
     def __init__(self, input_size, output_size, hidden_size=None, lstm=False):
         super(PolicyGradient, self).__init__()
         self.hidden_size = hidden_size or ((input_size + output_size) // 2)
+        self.lstm = lstm
+
         if lstm is False:
             self.first = nn.Linear(input_size, self.hidden_size)
         else:
@@ -140,8 +142,11 @@ class PolicyGradient(nn.Module):
         self.second_add = nn.Linear(self.hidden_size, self.hidden_size)
         self.second_out = nn.Linear(self.hidden_size, output_size)
 
-    def forward(self, input_val):
-        output = torch.relu(self.first(input_val))
+    def forward(self, x):
+        if self.lstm is False:
+            output = torch.relu(self.first(x))
+        else:
+            pass
         output = torch.relu(self.first_add(output))
         first = self.first_out(output)
         first_output = torch.softmax(first, dim=-1)
