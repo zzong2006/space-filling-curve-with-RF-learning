@@ -22,13 +22,9 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="764d8ad5-a26e-4d98-a098-77a218712d28" name="Default Changelist" comment="Q Learning 수정">
+    <list default="true" id="764d8ad5-a26e-4d98-a098-77a218712d28" name="Default Changelist" comment="Add Input Layer with LSTM">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/agent.py" beforeDir="false" afterPath="$PROJECT_DIR$/main/agent.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/driver_actor_critic.py" beforeDir="false" afterPath="$PROJECT_DIR$/main/driver_actor_critic.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/driver_policy_gradient.py" beforeDir="false" afterPath="$PROJECT_DIR$/main/driver_policy_gradient.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/driver_q_learning.py" beforeDir="false" afterPath="$PROJECT_DIR$/main/driver_q_learning.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main/rl_network.py" beforeDir="false" afterPath="$PROJECT_DIR$/main/rl_network.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -154,6 +150,9 @@
       <module name="rlCurve" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
       <option name="SDK_HOME" value="" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/main" />
       <option name="IS_MODULE_SDK" value="true" />
@@ -173,6 +172,9 @@
       <module name="rlCurve" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
       <option name="SDK_HOME" value="" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/main" />
       <option name="IS_MODULE_SDK" value="true" />
@@ -214,6 +216,9 @@
       <module name="rlCurve" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
       <option name="SDK_HOME" value="" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/main" />
       <option name="IS_MODULE_SDK" value="true" />
@@ -233,6 +238,9 @@
       <module name="rlCurve" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
       <option name="SDK_HOME" value="" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/main" />
       <option name="IS_MODULE_SDK" value="true" />
@@ -279,7 +287,7 @@
       <workItem from="1606585316593" duration="2930000" />
       <workItem from="1606588287721" duration="306000" />
       <workItem from="1606622684786" duration="46470000" />
-      <workItem from="1606705536169" duration="17664000" />
+      <workItem from="1606705536169" duration="17825000" />
     </task>
     <task id="LOCAL-00001" summary="README.md 추가 수정">
       <created>1602346141058</created>
@@ -351,7 +359,14 @@
       <option name="project" value="LOCAL" />
       <updated>1606718770095</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="Add Input Layer with LSTM">
+      <created>1606724141993</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1606724141993</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -377,7 +392,8 @@
     <MESSAGE value="policy Gradient 수정" />
     <MESSAGE value="Actor Critic 수정" />
     <MESSAGE value="Q Learning 수정" />
-    <option name="LAST_COMMIT_MESSAGE" value="Q Learning 수정" />
+    <MESSAGE value="Add Input Layer with LSTM" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add Input Layer with LSTM" />
   </component>
   <component name="WindowStateProjectService">
     <state x="552" y="178" key="#Deployment" timestamp="1605520299801">
@@ -406,51 +422,51 @@
     <state x="-669" y="102" key="FileChooserDialogImpl/0.0.1920.1040/-1080.-446.1080.1880@-1080.-446.1080.1880" timestamp="1602329208369" />
     <state x="731" y="303" key="FileChooserDialogImpl/0.0.1920.1040/-1080.-446.1080.1880@0.0.1920.1040" timestamp="1606586022470" />
     <state x="730" y="303" key="FileChooserDialogImpl/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1601280865376" />
-    <state width="1877" height="384" key="GridCell.Tab.0.bottom" timestamp="1606723143222">
+    <state width="1877" height="229" key="GridCell.Tab.0.bottom" timestamp="1606724256757">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="384" key="GridCell.Tab.0.bottom/0.0.1920.1040/-1080.-446.1080.1880@0.0.1920.1040" timestamp="1606723143222" />
+    <state width="1877" height="229" key="GridCell.Tab.0.bottom/0.0.1920.1040/-1080.-446.1080.1880@0.0.1920.1040" timestamp="1606724256757" />
     <state width="1877" height="196" key="GridCell.Tab.0.bottom/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1601286682161" />
-    <state width="1877" height="384" key="GridCell.Tab.0.center" timestamp="1606723143222">
+    <state width="1877" height="229" key="GridCell.Tab.0.center" timestamp="1606724256757">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="384" key="GridCell.Tab.0.center/0.0.1920.1040/-1080.-446.1080.1880@0.0.1920.1040" timestamp="1606723143222" />
+    <state width="1877" height="229" key="GridCell.Tab.0.center/0.0.1920.1040/-1080.-446.1080.1880@0.0.1920.1040" timestamp="1606724256757" />
     <state width="1877" height="196" key="GridCell.Tab.0.center/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1601286682161" />
-    <state width="1877" height="384" key="GridCell.Tab.0.left" timestamp="1606723143222">
+    <state width="1877" height="229" key="GridCell.Tab.0.left" timestamp="1606724256756">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="384" key="GridCell.Tab.0.left/0.0.1920.1040/-1080.-446.1080.1880@0.0.1920.1040" timestamp="1606723143222" />
+    <state width="1877" height="229" key="GridCell.Tab.0.left/0.0.1920.1040/-1080.-446.1080.1880@0.0.1920.1040" timestamp="1606724256756" />
     <state width="1877" height="196" key="GridCell.Tab.0.left/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1601286682161" />
-    <state width="1877" height="384" key="GridCell.Tab.0.right" timestamp="1606723143222">
+    <state width="1877" height="229" key="GridCell.Tab.0.right" timestamp="1606724256757">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="384" key="GridCell.Tab.0.right/0.0.1920.1040/-1080.-446.1080.1880@0.0.1920.1040" timestamp="1606723143222" />
+    <state width="1877" height="229" key="GridCell.Tab.0.right/0.0.1920.1040/-1080.-446.1080.1880@0.0.1920.1040" timestamp="1606724256757" />
     <state width="1877" height="196" key="GridCell.Tab.0.right/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1601286682161" />
-    <state width="1877" height="384" key="GridCell.Tab.1.bottom" timestamp="1606723118204">
+    <state width="1877" height="229" key="GridCell.Tab.1.bottom" timestamp="1606724256757">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="384" key="GridCell.Tab.1.bottom/0.0.1920.1040/-1080.-446.1080.1880@0.0.1920.1040" timestamp="1606723118204" />
-    <state width="1877" height="384" key="GridCell.Tab.1.center" timestamp="1606723118204">
+    <state width="1877" height="229" key="GridCell.Tab.1.bottom/0.0.1920.1040/-1080.-446.1080.1880@0.0.1920.1040" timestamp="1606724256757" />
+    <state width="1877" height="229" key="GridCell.Tab.1.center" timestamp="1606724256757">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="384" key="GridCell.Tab.1.center/0.0.1920.1040/-1080.-446.1080.1880@0.0.1920.1040" timestamp="1606723118204" />
-    <state width="1877" height="384" key="GridCell.Tab.1.left" timestamp="1606723118204">
+    <state width="1877" height="229" key="GridCell.Tab.1.center/0.0.1920.1040/-1080.-446.1080.1880@0.0.1920.1040" timestamp="1606724256757" />
+    <state width="1877" height="229" key="GridCell.Tab.1.left" timestamp="1606724256757">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="384" key="GridCell.Tab.1.left/0.0.1920.1040/-1080.-446.1080.1880@0.0.1920.1040" timestamp="1606723118204" />
-    <state width="1877" height="384" key="GridCell.Tab.1.right" timestamp="1606723118204">
+    <state width="1877" height="229" key="GridCell.Tab.1.left/0.0.1920.1040/-1080.-446.1080.1880@0.0.1920.1040" timestamp="1606724256757" />
+    <state width="1877" height="229" key="GridCell.Tab.1.right" timestamp="1606724256757">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="384" key="GridCell.Tab.1.right/0.0.1920.1040/-1080.-446.1080.1880@0.0.1920.1040" timestamp="1606723118204" />
+    <state width="1877" height="229" key="GridCell.Tab.1.right/0.0.1920.1040/-1080.-446.1080.1880@0.0.1920.1040" timestamp="1606724256757" />
     <state x="461" y="164" key="SettingsEditor" timestamp="1606588167434">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="461" y="164" key="SettingsEditor/0.0.1920.1040/-1080.-446.1080.1880@0.0.1920.1040" timestamp="1606588167434" />
     <state x="461" y="164" key="SettingsEditor/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1601280917379" />
-    <state x="552" y="253" key="Vcs.Push.Dialog.v2" timestamp="1606718771163">
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2" timestamp="1606724142955">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="552" y="253" key="Vcs.Push.Dialog.v2/0.0.1920.1040/-1080.-446.1080.1880@0.0.1920.1040" timestamp="1606718771163" />
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2/0.0.1920.1040/-1080.-446.1080.1880@0.0.1920.1040" timestamp="1606724142955" />
     <state width="968" height="528" key="XDebugger.FullValuePopup" timestamp="1606721985962">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>

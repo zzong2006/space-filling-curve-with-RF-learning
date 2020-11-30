@@ -23,7 +23,7 @@ This is the deep learning project for building the optimal space filling curve w
     * `rl_network`: 모델의 신경망
     * `environment` : 커브 환경 모듈, `gym` library의 환경과 최대한 비슷하게 구성하려고 했음
     * `driver_{algorithms}` : `environment`에 학습 알고리즘을 각기 다르게 적용한 테스트 드라이브 결과들
-    
+        * 성능이 좋은 쪽은 `LSTM + Actor Critic (One-step)` 또는 `REINFORCE (Monte Carlo)`.
     
 * `deprecated`
     * 이런 저런 모델을 실험했는데, 성능도 좋지 않고 OOP 느낌이 나지 않아서 버려진 코드들
